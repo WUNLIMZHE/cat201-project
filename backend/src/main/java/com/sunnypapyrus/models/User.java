@@ -20,72 +20,6 @@ public class User {
     public User() {
     }
 
-    public long getCurrentUserid() {
-        // return the current user id from database
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
-            Object obj = parser.parse(reader);
-            JSONArray usersArray = (JSONArray) obj;
-            if (!usersArray.isEmpty()) {
-                JSONObject lastUser = (JSONObject) usersArray.get(usersArray.size() - 1);
-                return (long) lastUser.get("userId");
-            }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-    public User(String username, String password, String firstName, String lastName, String phoneNumber, String email) {
-        this.userId = getCurrentUserid() + 1;
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        saveUserData();
-    }
-
-    // validate login
-    public boolean loginUser(String username, String password) {
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
-            Object obj = parser.parse(reader);
-            JSONArray usersArray = (JSONArray) obj;
-            for (Object user : usersArray) {
-                JSONObject userDetails = (JSONObject) user;
-                if (userDetails.get("username").equals(username) && userDetails.get("password").equals(password)) {
-                    return true;
-                }
-            }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public User getUserByUsername(String username) {
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
-            Object obj = parser.parse(reader);
-            JSONArray usersArray = (JSONArray) obj;
-            for (Object user : usersArray) {
-                JSONObject userDetails = (JSONObject) user;
-                if (userDetails.get("username").equals(username)) {
-                    User currentUser = new User();
-                    currentUser.setUsername((String) userDetails.get("username"));
-                    currentUser.setEmail((String) userDetails.get("email"));
-                    currentUser.setFirstName((String) userDetails.get("firstName"));
-                    currentUser.setLastName((String) userDetails.get("lastName"));
-                    return currentUser;
-                }
-            }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public String getUsername() {
         return this.username;
     }
@@ -126,9 +60,82 @@ public class User {
         return this.lastName;
     }
 
+    public long getCurrentUserid() {
+        // return the current user id from database
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader(
+                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
+            Object obj = parser.parse(reader);
+            JSONArray usersArray = (JSONArray) obj;
+            if (!usersArray.isEmpty()) {
+                JSONObject lastUser = (JSONObject) usersArray.get(usersArray.size() - 1);
+                return (long) lastUser.get("userId");
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public User(String username, String password, String firstName, String lastName, String phoneNumber, String email) {
+        this.userId = getCurrentUserid() + 1;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        saveUserData();
+    }
+
+    // validate login
+    public boolean loginUser(String username, String password) {
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader(
+                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
+            Object obj = parser.parse(reader);
+            JSONArray usersArray = (JSONArray) obj;
+            for (Object user : usersArray) {
+                JSONObject userDetails = (JSONObject) user;
+                if (userDetails.get("username").equals(username) && userDetails.get("password").equals(password)) {
+                    return true;
+                }
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    // get user by username
+    public User getUserByUsername(String username) {
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader(
+                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
+            Object obj = parser.parse(reader);
+            JSONArray usersArray = (JSONArray) obj;
+            for (Object user : usersArray) {
+                JSONObject userDetails = (JSONObject) user;
+                if (userDetails.get("username").equals(username)) {
+                    User currentUser = new User();
+                    currentUser.setUsername((String) userDetails.get("username"));
+                    currentUser.setEmail((String) userDetails.get("email"));
+                    currentUser.setFirstName((String) userDetails.get("firstName"));
+                    currentUser.setLastName((String) userDetails.get("lastName"));
+                    return currentUser;
+                }
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //get user by email
     public User getUserByEmail(String email) {
         JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
+        try (FileReader reader = new FileReader(
+                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
             Object obj = parser.parse(reader);
             JSONArray usersArray = (JSONArray) obj;
             for (Object user : usersArray) {
@@ -148,10 +155,12 @@ public class User {
         return null;
     }
 
+    // save user data
     private void saveUserData() {
         JSONParser parser = new JSONParser();
         JSONArray usersArray = new JSONArray();
-        try (FileReader reader = new FileReader("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
+        try (FileReader reader = new FileReader(
+                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
             Object obj = parser.parse(reader);
             usersArray = (JSONArray) obj;
         } catch (IOException | ParseException e) {
@@ -177,6 +186,28 @@ public class User {
         }
     }
 
+    //register user function, with validating the username and email
+    public boolean registerUser(String username, String password, String firstName, String lastName, String phoneNumber,
+            String email) {
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader(
+                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
+            Object obj = parser.parse(reader);
+            JSONArray usersArray = (JSONArray) obj;
+            for (Object user : usersArray) {
+                JSONObject userDetails = (JSONObject) user;
+                if (userDetails.get("username").equals(username) || userDetails.get("email").equals(email)) {
+                    return false;
+                }
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        User newUser = new User(username, password, firstName, lastName, phoneNumber, email);
+        return true;
+    }
+
+
     public static void main(String[] args) {
         User newUser = new User("sunnypapyrus", "password", "Sunny", "Papyrus", "1234567890", "sunny@example.com");
         System.out.println("User " + newUser.getUsername() + " has been signed up successfully.");
@@ -186,5 +217,3 @@ public class User {
         return "UserSingup(username=" + this.getUsername() + ", password=" + this.getPassword() + ")";
     }
 }
-
-

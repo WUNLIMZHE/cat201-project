@@ -7,5 +7,14 @@
         "userId": 1,
         "email": "ali@gmail.com",
         "username": "asd"
+    },
+    {
+        "firstName": "qwe@gmail.com",
+        "lastName": "wqe",
+        "password": "qwe",
+        "phoneNumber": "qwe",
+        "userId": 2,
+        "email": "123",
+        "username": "qwe"
     }
 ]

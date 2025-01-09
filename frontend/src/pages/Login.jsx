@@ -73,7 +73,7 @@ function Login() {
   };
 
   return (
-    <div className="limiter">
+    <div className="limiter bg-gray-800">
       <div className="container-login100">
         <div className="wrap-login100">
           <form className="login100-form validate-form" onSubmit={handleSubmit}>
@@ -126,7 +126,7 @@ function Login() {
               </svg>
               {error}</div>}
 
-            <div className="text-right p-t-8 p-b-31 link link-hover">
+            <div className="text-right pt-8 pb-31 link link-hover">
               <a href="#">
                 Forgot password?
               </a>
@@ -134,20 +134,20 @@ function Login() {
 
             <div className="container-login100-form-btn">
               <div className="wrap-login100-form-btn">
-                <div className="login100-form-bgbtn"></div>
-                <button className="login100-form-btn" type="submit">
+                <button className="btn login100-form-btn" type="submit">
                   Login
                 </button>
               </div>
             </div>
-            <div className="flex-col-c pt-32">
+            <div className="flex-col-c ">
               <span className="txt1 p-b-17">
                 Or Sign Up Using
               </span>
-
-              <Link to="/signup" className="signup100-form-btn">
-                Sign Up
-              </Link>
+              <div className="wrap-login100-form-btn">
+                <Link to="/signup" className="btn signup100-form-btn">
+                  Sign Up
+                </Link>
+              </div>
             </div>
           </form>
         </div>
