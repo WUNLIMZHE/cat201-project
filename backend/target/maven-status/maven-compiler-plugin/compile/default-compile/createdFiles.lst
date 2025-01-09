@@ -1,9 +1,9 @@
-<<<<<<< HEAD
-MongoDBConnection.class
-Book.class
 BookServlet.class
 BookDAO.class
-=======
-com\sunnypapyrus\AppContextListener.class
 com\sunnypapyrus\Main.class
->>>>>>> 713a202355cfeab26cdf057c9747381e6e2a3788
+com\sunnypapyrus\api\UsersLoginServlet.class
+com\sunnypapyrus\api\CorsFilter.class
+com\sunnypapyrus\models\UserSignup.class
+MongoDBConnection.class
+Book.class
+com\sunnypapyrus\AppContextListener.class
