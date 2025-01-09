@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sunnypapyrus.models.UserSignup;
+import com.sunnypapyrus.models.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -39,21 +39,21 @@ public class UsersLoginServlet extends HttpServlet {
         // Parse JSON request body
         Gson gson = new Gson();
         JsonObject jsonObject = gson.fromJson(sb.toString(), JsonObject.class);
-        String email = jsonObject.get("email").getAsString();
+        String username = jsonObject.get("username").getAsString();
         String password = jsonObject.get("password").getAsString();
 
-        System.out.println("UsersLoginServlet POST request received with parameters: " + email + " = " + password);
+        System.out.println("UsersLoginServlet POST request received with parameters: " + username + " = " + password);
 
         // Validate user login
-        UserSignup userSignup = new UserSignup();
-        boolean loginStatus = userSignup.loginUser(email, password);
+        User userSignup = new User();
+        boolean loginStatus = userSignup.loginUser(username, password);
 
         // Create JSON response
         JsonObject jsonResponse = new JsonObject();
         jsonResponse.addProperty("loginStatus", loginStatus);
 
         if (loginStatus) {
-            UserSignup currentUser = userSignup.getUserByEmail(email);
+            User currentUser = userSignup.getUserByUsername(username);
             JsonObject userJson = new JsonObject();
             userJson.addProperty("username", currentUser.getUsername());
             userJson.addProperty("email", currentUser.getEmail());

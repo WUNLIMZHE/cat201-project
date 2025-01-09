@@ -22,16 +22,22 @@ body, html {
 }
 
 .wrap-login100 {
-  width: 960px;
+  width: 600px; /* Adjusted width */
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
-  padding: 55px 55px 37px 55px;
+  padding: 40px 40px 30px 40px; /* Adjusted padding */
   box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login100-form {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login100-form-title {
@@ -46,6 +52,18 @@ body, html {
   width: 100%;
   z-index: 1;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.wrap-input100 label {
+  display: flex;
+  align-items: center;
+  width: 90%; /* Adjusted width */
+}
+
+.wrap-input100 svg {
+  margin-right: 10px; /* Adjusted margin */
 }
 
 .label-input100 {
@@ -60,11 +78,11 @@ body, html {
   color: #333333;
   line-height: 1.2;
   display: block;
-  width: 100%;
+  width: 90%; /* Adjusted width */
   background: #e6e6e6;
   height: 50px;
   border-radius: 25px;
-  padding: 0 30px 0 68px;
+  padding: 0 20px; /* Adjusted padding */
 }
 
 .focus-input100 {
@@ -84,7 +102,8 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 90%; /* Adjusted width */
+  margin-top: 20px;
 }
 
 .wrap-login100-form-btn {
@@ -96,6 +115,7 @@ body, html {
   background-color: #57b846;
   border-radius: 25px;
   overflow: hidden;
+  transition: background-color 0.3s ease; /* Added transition */
 }
 
 .login100-form-btn {
@@ -115,6 +135,7 @@ body, html {
 
 .login100-form-btn:hover {
   background-color: #333333;
+  transform: scale(1.05); /* Added scale effect */
 }
 
 .text-right {
@@ -157,6 +178,8 @@ body, html {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
+  width: 90%; /* Adjusted width */
 }
 
 .p-t-54 {
@@ -255,7 +278,7 @@ body, html {
 
 .input100 {
   font-size: 15px;
-  color: #333333;
+  color: #e6e6e6;
   line-height: 1.2;
   display: block;
   width: 100%;
@@ -296,6 +319,8 @@ body, html {
   background-color: #57b846;
   border-radius: 25px;
   overflow: hidden;
+  transition: background-color 0.3s ease; /* Added transition */
+  border-radius: 10px;
 }
 
 .signup100-form-btn {
@@ -315,6 +340,7 @@ body, html {
 
 .signup100-form-btn:hover {
   background-color: #333333;
+  transform: scale(1.05); /* Added scale effect */
 }
 
 .signup100-social-item {
