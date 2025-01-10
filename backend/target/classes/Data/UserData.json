@@ -1,20 +1,12 @@
 [
     {
-        "firstName": "Ali",
-        "lastName": "Mohamed",
-        "password": "asd",
-        "phoneNumber": "+60124609110",
-        "userId": 1,
-        "email": "ali@gmail.com",
-        "username": "asd"
-    },
-    {
-        "firstName": "qwe@gmail.com",
-        "lastName": "wqe",
+        "firstName": "qwe",
+        "lastName": "qwe",
         "password": "qwe",
         "phoneNumber": "qwe",
-        "userId": 2,
+        "paymentMethods": [],
         "email": "123",
-        "username": "qwe"
+        "username": "qwe",
+        "shippingAddresses": []
     }
 ]

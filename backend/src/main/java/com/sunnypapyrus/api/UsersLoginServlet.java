@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sunnypapyrus.models.User;
+import com.sunnypapyrus.models.UserEntity;
+import com.sunnypapyrus.models.UserList;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -45,20 +46,22 @@ public class UsersLoginServlet extends HttpServlet {
         System.out.println("UsersLoginServlet POST request received with parameters: " + username + " = " + password);
 
         // Validate user login
-        User userSignup = new User();
-        boolean loginStatus = userSignup.loginUser(username, password);
+        UserList userLogin = new UserList();
+        boolean loginStatus = userLogin.loginUser(username, password);
 
         // Create JSON response
         JsonObject jsonResponse = new JsonObject();
         jsonResponse.addProperty("loginStatus", loginStatus);
 
         if (loginStatus) {
-            User currentUser = userSignup.getUserByUsername(username);
+            UserEntity currentUser = userLogin.getUserByUsername(username);
             JsonObject userJson = new JsonObject();
             userJson.addProperty("username", currentUser.getUsername());
             userJson.addProperty("email", currentUser.getEmail());
             userJson.addProperty("firstName", currentUser.getFirstName());
             userJson.addProperty("lastName", currentUser.getLastName());
+            userJson.addProperty("phoneNumber", currentUser.getPhoneNumber());
+            userJson.addProperty("role", currentUser.getRole());
             jsonResponse.addProperty("user", userJson.toString());
         }
 

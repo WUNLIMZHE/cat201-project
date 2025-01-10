@@ -1,50 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import handleApiCall from '../utils/handleApiCall';
 import '../style.css';
 
-function Login() {
+function Login({setLoggedIn, setAuthUsername}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [userLoginStatus, setUserLoginStatus] = useState(false);
-  const [showUserLoginStatus, setShowUserLoginStatus] = useState(false);
-  const [currentUserGeneralDetails, setCurrentUserGeneralDetails] = useState({});
+
   const navigate = useNavigate();
-
-  const handleApiCall = async (
-    url,
-    method,
-    body,
-    onSuccess,
-    onError
-  ) => {
-    try {
-      const response = await fetch("http://localhost:9090/api/" + url, {
-        method: method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: body ? JSON.stringify(body) : null,
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log("API call result: " + JSON.stringify(result));
-        onSuccess(result);
-        setError(null);
-      } else {
-        console.error(
-          "HTTP error",
-          response.status,
-          response.statusText
-        );
-        onError(response.statusText);
-      }
-    } catch (err) {
-      onError(err.message);
-    }
-  };
 
   const validateUserLoginMethod = async (username, password) => {
     await handleApiCall(
@@ -52,20 +16,19 @@ function Login() {
       "POST",
       { username, password },
       async (result) => {
-        if (await result.loginStatus) {
-          setCurrentUserGeneralDetails(JSON.parse(result.user));
-          setUserLoginStatus(true);
-          console.log("User login status: " + userLoginStatus);
-          console.log("Current user general details: " + currentUserGeneralDetails);
+        if (result.loginStatus) {
+          setAuthUsername(username);
+          setLoggedIn(true);
+          localStorage.setItem("userLoginStatus", true); // Store login status in local storage
           navigate('/testhome');
         } else {
           setError("Invalid username or password");
         }
-        setShowUserLoginStatus(true);
       },
       (error) => setError("Error validating user login: " + error)
     );
   };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,7 +54,12 @@ function Login() {
                   <path
                     d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
                 </svg>
-                <input className="input100" type="text" name="username" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)} />
+                <input className="input100"
+                  type="text"
+                  name="username"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)} />
               </label>
               <span className="focus-input100" data-symbol="&#xf206;"></span>
             </div>
@@ -107,7 +75,12 @@ function Login() {
                     d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
                     clipRule="evenodd" />
                 </svg>
-                <input className="input100" type="password" name="pass" placeholder="Type your password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <input className="input100"
+                  type="password"
+                  name="pass"
+                  placeholder="Type your password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)} />
               </label>
               <span className="focus-input100" data-symbol="&#xf190;"></span>
             </div>

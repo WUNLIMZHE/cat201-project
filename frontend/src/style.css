@@ -1,7 +1,9 @@
 body, html {
   height: 100%;
   font-family: Poppins-Regular, sans-serif;
-  background: #f0f2f5; /* Light background color */
+  color:black;
+  background: linear-gradient(135deg, #ab98fc, #928dab); /* Dark gradient background */
+  background-attachment: fixed; /* Ensures the background stays fixed */
 }
 
 .limiter {
