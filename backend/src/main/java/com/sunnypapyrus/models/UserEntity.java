@@ -64,19 +64,9 @@ public class UserEntity {
         return this.addresses;
     }
 
-    public long getCurrentAddressId() {
-        // return the current address id from database
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader(
-                "d:/CAT Project/Paperme/backend/src/main/resources/Data/AddressData.json")) {
-            Object obj = parser.parse(reader);
-            JSONArray addressesArray = (JSONArray) obj;
-            if (!addressesArray.isEmpty()) {
-                JSONObject lastAddress = (JSONObject) addressesArray.get(addressesArray.size() - 1);
-                return (long) lastAddress.get("addressId");
-            }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+    public long getCurrentAddressId(UserEntity user) {
+        if (user.getAddresses().size() > 0) {
+            return user.getAddresses().get(user.getAddresses().size() - 1).getAddressId();
         }
         return 0;
     }
@@ -132,26 +122,6 @@ public class UserEntity {
         return this.role.equals(role);
     }
 
-    public boolean addAddress(String username, String street, String city, String state, String zipCode,
-            String country) {
-        UserEntity user = getUserByUsername(username);
-        if (user != null) {
-            Address newAddress = new Address(user.getCurrentAddressId() + 1, street, city, state, zipCode, country);
-            this.addresses.add(newAddress);
-            JSONParser parser = new JSONParser();
-            JSONArray addressesArray = new JSONArray();
-            try (FileReader reader = new FileReader(
-                    "d:/CAT Project/Paperme/backend/src/main/resources/Data/AddressData.json")) {
-                Object obj = parser.parse(reader);
-                addressesArray = (JSONArray) obj;
-            } catch (IOException | ParseException e) {
-                e.printStackTrace();
-            }
-            return true;
-        }
-        return false;
-    }
-
     public UserEntity getUserByUsername(String username) {
         JSONParser parser = new JSONParser();
         try (FileReader reader = new FileReader(
@@ -178,7 +148,6 @@ public class UserEntity {
         return null;
     }
 
-
     private void saveUserData() {
         JSONParser parser = new JSONParser();
         JSONArray usersArray = new JSONArray();
@@ -197,7 +166,9 @@ public class UserEntity {
         userDetails.put("lastName", this.lastName);
         userDetails.put("phoneNumber", this.phoneNumber);
         userDetails.put("email", this.email);
-
+        userDetails.put("role", this.role);
+        userDetails.put("addresses", this.addresses);
+        userDetails.put("payments", this.payments);
         usersArray.add(userDetails);
 
         try (FileWriter file = new FileWriter("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
@@ -208,7 +179,8 @@ public class UserEntity {
         }
     }
 
-    public UserEntity(String username, String password, String firstName, String lastName, String phoneNumber, String email) {
+    public UserEntity(String username, String password, String firstName, String lastName, String phoneNumber,
+            String email) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -219,6 +191,11 @@ public class UserEntity {
         this.payments = new ArrayList<Payment>();
         this.addresses = new ArrayList<Address>();
         saveUserData();
+    }
+
+    public void addAddress(Address address) {
+        this.addresses.add(address);
+        System.out.println("Address " + address.getStreet() + " has been added to " + this.username + "'s profile.");
     }
 
     public static void main(String[] args) {

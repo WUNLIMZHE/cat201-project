@@ -21,16 +21,6 @@ public class Address {
         this.country = country;
     }
     
-    public void addAddress(Address address) {
-        this.addressId = address.getAddressId();
-        this.street = address.getStreet();
-        this.city = address.getCity();
-        this.state = address.getState();
-        this.zipCode = address.getZipCode();
-        this.country = address.getCountry();
-    }
-
-    
     public long getAddressId() {
         return this.addressId;
     }

@@ -47,17 +47,27 @@ public class UserList {
             userJson.put("username", user.getUsername());
             userJson.put("email", user.getEmail());
             userJson.put("firstName", user.getFirstName());
-
             userJson.put("lastName", user.getLastName());
-            userJson.put("address", user.getAddresses());
-            userJson.put("phone", user.getPhoneNumber());
-
+            userJson.put("phoneNumber", user.getPhoneNumber());
             userJson.put("role", user.getRole());
+
+            JSONArray addressesArray = new JSONArray();
+            for (Address address : user.getAddresses()) {
+                JSONObject addressJson = new JSONObject();
+                addressJson.put("addressId", address.getAddressId());
+                addressJson.put("street", address.getStreet());
+                addressJson.put("city", address.getCity());
+                addressJson.put("state", address.getState());
+                addressJson.put("zipCode", address.getZipCode());
+                addressJson.put("country", address.getCountry());
+                addressesArray.add(addressJson);
+            }
+            userJson.put("addresses", addressesArray);
 
             userList.add(userJson);
         }
 
-        try (FileWriter file = new FileWriter("users.json")) {
+        try (FileWriter file = new FileWriter("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
             file.write(userList.toJSONString());
             file.flush();
         } catch (IOException e) {
@@ -68,14 +78,35 @@ public class UserList {
     public void loadUsers() {
         JSONParser parser = new JSONParser();
         try {
-            JSONArray userList = (JSONArray) parser.parse(new FileReader("users.json"));
+            JSONArray userList = (JSONArray) parser.parse(new FileReader("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json"));
             for (Object obj : userList) {
                 JSONObject userJson = (JSONObject) obj;
                 UserEntity user = new UserEntity();
-                user.setUsername((String) userJson.get("username"));
-                user.setEmail((String) userJson.get("email"));
                 user.setFirstName((String) userJson.get("firstName"));
                 user.setLastName((String) userJson.get("lastName"));
+                user.setPhoneNumber((String) userJson.get("phoneNumber"));
+                user.setEmail((String) userJson.get("email"));
+                user.setUsername((String) userJson.get("username"));
+                user.setRole((String) userJson.get("role"));
+
+                JSONArray addressesArray = (JSONArray) userJson.get("addresses");
+                for (Object addressObj : addressesArray) {
+                    JSONObject addressJson = (JSONObject) addressObj;
+                    Long addressId = (Long) addressJson.get("addressId");
+                    if (addressId == null) {
+                        addressId = 0L; // Default value if addressId is null
+                    }
+                    Address address = new Address(
+                        addressId,
+                        (String) addressJson.get("street"),
+                        (String) addressJson.get("city"),
+                        (String) addressJson.get("state"),
+                        (String) addressJson.get("zipCode"),
+                        (String) addressJson.get("country")
+                    );
+                    user.getAddresses().add(address);
+                }
+
                 this.users.add(user);
             }
         } catch (Exception e) {
@@ -85,87 +116,49 @@ public class UserList {
 
     public boolean registerUser(String username, String password, String firstName, String lastName, String phoneNumber,
             String email) {
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader(
-                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
-            Object obj = parser.parse(reader);
-            JSONArray usersArray = (JSONArray) obj;
-            for (Object user : usersArray) {
-                JSONObject userDetails = (JSONObject) user;
-                if (userDetails.get("username").equals(username) || userDetails.get("email").equals(email)
-                        || userDetails.get("phoneNumber").equals(phoneNumber)) {
-                    return false;
-                }
+        for (UserEntity user : users) {
+            if (user.getUsername().equals(username) || user.getEmail().equals(email) || user.getPhoneNumber().equals(phoneNumber)) {
+                return false;
             }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
         }
-        UserEntity newUser = new UserEntity(username, password, firstName, lastName, phoneNumber, email);
+        UserEntity newUser = new UserEntity();
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setPhoneNumber(phoneNumber);
+        newUser.setEmail(email);
         this.addUser(newUser);
+        saveUsers();
         return true;
     }
 
     public boolean loginUser(String username, String password) {
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader(
-                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
-            Object obj = parser.parse(reader);
-            JSONArray usersArray = (JSONArray) obj;
-            for (Object user : usersArray) {
-                JSONObject userDetails = (JSONObject) user;
-                if (userDetails.get("username").equals(username) && userDetails.get("password").equals(password)) {
-                    return true;
-                }
+        for (UserEntity user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return true;
             }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
         }
         return false;
     }
 
     public UserEntity getUserByUsername(String username) {
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader(
-                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
-            Object obj = parser.parse(reader);
-            JSONArray usersArray = (JSONArray) obj;
-            for (Object user : usersArray) {
-                JSONObject userDetails = (JSONObject) user;
-                if (userDetails.get("username").equals(username)) {
-                    UserEntity currentUser = new UserEntity();
-                    currentUser.setUsername((String) userDetails.get("username"));
-                    currentUser.setEmail((String) userDetails.get("email"));
-                    currentUser.setFirstName((String) userDetails.get("firstName"));
-                    currentUser.setLastName((String) userDetails.get("lastName"));
-                    return currentUser;
-                }
+        for (UserEntity user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
             }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
         }
         return null;
     }
 
-    public UserEntity getUserByEmail(String email) {
-        JSONParser parser = new JSONParser();
-        try (FileReader reader = new FileReader(
-                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
-            Object obj = parser.parse(reader);
-            JSONArray usersArray = (JSONArray) obj;
-            for (Object user : usersArray) {
-                JSONObject userDetails = (JSONObject) user;
-                if (userDetails.get("email").equals(email)) {
-                    UserEntity currentUser = new UserEntity();
-                    currentUser.setUsername((String) userDetails.get("username"));
-                    currentUser.setEmail((String) userDetails.get("email"));
-                    currentUser.setFirstName((String) userDetails.get("firstName"));
-                    currentUser.setLastName((String) userDetails.get("lastName"));
-                    return currentUser;
-                }
-            }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
+    public boolean addAddress(String username, String street, String city, String state, String zipCode, String country) {
+        UserEntity user = getUserByUsername(username);
+        if (user != null) {
+            Address newAddress = new Address(user.getCurrentAddressId(user) + 1, street, city, state, zipCode, country);
+            user.addAddress(newAddress);
+            saveUsers();
+            return true;
         }
-        return null;
+        return false;
     }
 }

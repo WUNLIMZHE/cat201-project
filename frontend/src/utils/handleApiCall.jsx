@@ -1,14 +1,12 @@
-const BASE_URL = "http://localhost:9090/api/";
-
 const handleApiCall = async (
   url,
-  method,
-  body,
-  onSuccess,
-  onError
+  method = "GET",
+  body = null,
+  onSuccess = () => {},
+  onError = () => {}
 ) => {
   try {
-    const response = await fetch(BASE_URL + url, {
+    const response = await fetch("http://localhost:9090/api/" + url, {
       method: method,
       headers: {
         "Content-Type": "application/json",
@@ -22,14 +20,11 @@ const handleApiCall = async (
       console.log("API call result: " + JSON.stringify(result));
       onSuccess(result);
     } else {
-      console.error(
-        "HTTP error",
-        response.status,
-        response.statusText
-      );
+      console.error("HTTP error", response.status, response.statusText);
       onError(response.statusText);
     }
   } catch (err) {
+    console.error("Network error", err);
     onError(err.message);
   }
 };

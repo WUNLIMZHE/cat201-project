@@ -1,7 +1,7 @@
 body, html {
   height: 100%;
   font-family: Poppins-Regular, sans-serif;
-  color:black;
+  color:rgb(196, 254, 49);
   background: linear-gradient(135deg, #ab98fc, #928dab); /* Dark gradient background */
   background-attachment: fixed; /* Ensures the background stays fixed */
 }

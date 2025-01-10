@@ -18,11 +18,11 @@ function TestHome({ loggedIn, username }) {
         }
     }, [loggedIn, navigate]);
 
-    const addressSubmitionMethod = async (street, city, state, zipcode, country) => {
+    const addressSubmitionMethod = async (username, street, city, state, zipcode, country) => {
         await handleApiCall(
-            "address",
+            "users/address",
             "POST",
-            { street, city, state, zipcode, country },
+            { username, street, city, state, zipcode, country },
             async (result) => {
                 console.log("Address submission result: " + JSON.stringify(result));
             },
@@ -35,8 +35,13 @@ function TestHome({ loggedIn, username }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addressSubmitionMethod(street, city, state, zipcode, country);
-        console.log({ street, city, state, zipcode, country });
+        addressSubmitionMethod(username, street, city, state, zipcode, country);
+        console.log({ username, street, city, state, zipcode, country });
+    };
+
+    const handleLogout = () => {
+        localStorage.setItem("userLoginStatus", false);
+        navigate('/login');
     };
 
     return loggedIn ? (
@@ -49,7 +54,7 @@ function TestHome({ loggedIn, username }) {
             <p>
                 <Link to="/signup">Signup</Link>
             </p>
-
+            <button onClick={handleLogout} className="btn btn-danger">Log Out</button>
             <h2>Address Details</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">

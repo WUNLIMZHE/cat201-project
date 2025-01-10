@@ -2,11 +2,19 @@
     {
         "firstName": "qwe",
         "lastName": "qwe",
-        "password": "qwe",
-        "phoneNumber": "qwe",
-        "paymentMethods": [],
+        "addresses": [
+            {
+                "zipCode": "94105",
+                "country": "USA",
+                "city": "San Francisco",
+                "street": "Apt 1",
+                "state": "CA",
+                "addressId": 1
+            }
+        ],
+        "phoneNumber": null,
+        "role": "ROLE_USER",
         "email": "123",
-        "username": "qwe",
-        "shippingAddresses": []
+        "username": "qwe"
     }
 ]
