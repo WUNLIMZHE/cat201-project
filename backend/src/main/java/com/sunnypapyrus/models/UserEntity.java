@@ -71,6 +71,13 @@ public class UserEntity {
         return 0;
     }
 
+    public long getCurrentPaymentId(UserEntity user) {
+        if (user.getPayments().size() > 0) {
+            return user.getPayments().get(user.getPayments().size() - 1).getpaymentMethod();
+        }
+        return 0;
+    }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -103,9 +110,6 @@ public class UserEntity {
         this.addresses = addresses;
     }
 
-    public void addPayment(Payment payment) {
-        this.payments.add(payment);
-    }
 
     public void setRole(String role) {
         this.role = role;
@@ -196,6 +200,39 @@ public class UserEntity {
     public void addAddress(Address address) {
         this.addresses.add(address);
         System.out.println("Address " + address.getStreet() + " has been added to " + this.username + "'s profile.");
+    }
+
+    public void removeAddress(Address address) {
+        this.addresses.remove(address);
+        System.out.println("Address " + address.getStreet() + " has been removed from " + this.username + "'s profile.");
+    }
+
+    public void addPayment(Payment payment) {
+        this.payments.add(payment);
+        System.out.println("Payment method " + payment.getcardType() + " has been added to " + this.username + "'s profile.");
+    }
+
+    public void removePayment(Payment payment) {
+        this.payments.remove(payment);
+        System.out.println("Payment method " + payment.getcardType() + " has been removed from " + this.username + "'s profile.");
+    }
+
+    public Address getAddressById(long addressId) {
+        for (Address address : this.addresses) {
+            if (address.getAddressId() == addressId) {
+                return address;
+            }
+        }
+        return null;
+    }
+
+    public Payment getPaymentByPaymentMethod(long paymentMethod) {
+        for (Payment payment : this.payments) {
+            if (payment.getpaymentMethod() == paymentMethod) {
+                return payment;
+            }
+        }
+        return null;
     }
 
     public static void main(String[] args) {

@@ -9,11 +9,37 @@
                 "city": "San Francisco",
                 "street": "Apt 1",
                 "state": "CA",
-                "addressId": 1
+                "addressId": 2
+            },
+            {
+                "zipCode": "94105",
+                "country": "USA",
+                "city": "San Francisco",
+                "street": "Apt 1",
+                "state": "CA",
+                "addressId": 3
+            },
+            {
+                "zipCode": "94105",
+                "country": "USA",
+                "city": "San Francisco",
+                "street": "Apt 1",
+                "state": "CA",
+                "addressId": 4
             }
         ],
         "phoneNumber": null,
         "role": "ROLE_USER",
+        "payments": [
+            {
+                "expiryDate": "10\/27",
+                "cvv": 123,
+                "cardholderName": "handsome",
+                "cardType": "VISA",
+                "paymentMethod": 1,
+                "cardNumber": 1027
+            }
+        ],
         "email": "123",
         "username": "qwe"
     }

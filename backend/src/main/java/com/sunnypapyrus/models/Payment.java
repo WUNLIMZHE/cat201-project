@@ -1,67 +1,71 @@
-//create a class that stores the payment information
 package com.sunnypapyrus.models;
 
 public class Payment {
-    private long paymentId;
-    private long userId;
-    private String cardNumber;
-    private String cardHolder;
-    private String expirationDate;
-    private String cvv;
 
-    public Payment( long userId, String cardNumber, String cardHolder, String expirationDate, String cvv) {
-        this.userId = userId;
+    private long paymentMethod;
+
+    private String cardholderName;
+    private long cardNumber;
+
+    private String expiryDate;
+    private String cardType;
+
+    private long cvv;
+
+    public Payment(long paymentMethod, String cardholderName, long cardNumber, String expiryDate, String cardType, long cvv) {
+        this.paymentMethod = paymentMethod;
+        this.cardholderName = cardholderName;
         this.cardNumber = cardNumber;
-        this.cardHolder = cardHolder;
-        this.expirationDate = expirationDate;
+        this.expiryDate = expiryDate;
+        this.cardType = cardType;
         this.cvv = cvv;
     }
-
-    public long getPaymentId() {
-        return this.paymentId;
+    
+    public long getpaymentMethod() {
+        return this.paymentMethod;
     }
-
-    public long getUserId() {
-        return this.userId;
+    
+    public String getcardholderName() {
+        return this.cardholderName;
     }
-
-    public String getCardNumber() {
+    
+    public long getcardNumber() {
         return this.cardNumber;
     }
-
-    public String getCardHolder() {
-        return this.cardHolder;
+    
+    public String getexpiryDate() {
+        return this.expiryDate;
     }
-
-    public String getExpirationDate() {
-        return this.expirationDate;
+    
+    public String getcardType() {
+        return this.cardType;
     }
-
-    public String getCvv() {
+    
+    public long getCvv() {
         return this.cvv;
     }
-
-    public void setPaymentId(long paymentId) {
-        this.paymentId = paymentId;
+    
+    public void setpaymentMethod(long paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
+    
+    public void setcardholderName(String cardholderName) {
+        this.cardholderName = cardholderName;
     }
-
-    public void setCardNumber(String cardNumber) {
+    
+    public void setcardNumber(long cardNumber) {
         this.cardNumber = cardNumber;
     }
-
-    public void setCardHolder(String cardHolder) {
-        this.cardHolder = cardHolder;
+    
+    public void setexpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
     }
-
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
+    
+    public void setcardType(String cardType) {
+        this.cardType = cardType;
     }
-
-    public void setCvv(String cvv) {
+    
+    public void setCvv(long cvv) {
         this.cvv = cvv;
     }
 }

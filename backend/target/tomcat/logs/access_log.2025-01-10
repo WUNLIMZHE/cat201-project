@@ -246,3 +246,9 @@
 0:0:0:0:0:0:0:1 - - [10/Jan/2025:22:03:55 +0800] "POST /api/users/signup HTTP/1.1" 200 74 http-bio-9090-exec-8 32
 0:0:0:0:0:0:0:1 - - [10/Jan/2025:22:07:29 +0800] "OPTIONS /api/users/signup HTTP/1.1" 200 - http-bio-9090-exec-10 0
 0:0:0:0:0:0:0:1 - - [10/Jan/2025:22:07:29 +0800] "POST /api/users/signup HTTP/1.1" 200 74 http-bio-9090-exec-2 10
+0:0:0:0:0:0:0:1 - - [10/Jan/2025:22:09:33 +0800] "OPTIONS /api/users/signup HTTP/1.1" 200 - http-bio-9090-exec-1 24
+0:0:0:0:0:0:0:1 - - [10/Jan/2025:22:09:33 +0800] "POST /api/users/signup HTTP/1.1" 200 74 http-bio-9090-exec-2 48
+0:0:0:0:0:0:0:1 - - [10/Jan/2025:22:11:14 +0800] "OPTIONS /api/users/login HTTP/1.1" 200 - http-bio-9090-exec-5 2
+0:0:0:0:0:0:0:1 - - [10/Jan/2025:22:11:14 +0800] "POST /api/users/login HTTP/1.1" 200 181 http-bio-9090-exec-7 10
+0:0:0:0:0:0:0:1 - - [10/Jan/2025:22:14:45 +0800] "OPTIONS /api/users/address HTTP/1.1" 200 - http-bio-9090-exec-9 1
+0:0:0:0:0:0:0:1 - - [10/Jan/2025:22:14:45 +0800] "POST /api/users/address HTTP/1.1" 404 985 http-bio-9090-exec-1 2
