@@ -1,124 +1,144 @@
-import org.bson.Document;
-
 public class Book {
-  private String _id; // Use MongoDB's _id
-    private String title;
-    private String author;
-    private String isbn;
-    private String image;
-    private String genre;
-    private double price;
-    private double review;
-    private int soldUnits;
-    private int stock;
+  private int id;
+  private String title;
+  private long isbn;
+  private String image;
+  private String author;
+  private String genre;
+  private String category;
+  private String description;
+  private double price;
+  private double review;
+  private int soldUnits;
+  private String language;
 
-    // Constructors, getters, and setters
-    public String getId() {
-        return _id;
-    }
-
-    public void setId(String id) {
-        this._id = id;
-    }
-
-  public String getIsbn() {
-    return isbn;
+  public Book(int id, String title, long isbn, String image, String author, String genre, String category, 
+              String description, double price, double review, int soldUnits, String language) {
+      this.id = id;
+      this.title = title;
+      this.isbn = isbn;
+      this.image = image;
+      this.author = author;
+      this.genre = genre;
+      this.category = category;
+      this.description = description;
+      this.price = price;
+      this.review = review;
+      this.soldUnits = soldUnits;
+      this.language = language;
   }
 
-  public Book(String id, String isbn, String title, String author, String genre, String image, double price, double review, int soldUnits, int stock) {
-    this.title = title;
-    this.author = author;
-    this.isbn = isbn;
-    this.image = image;
-    this.genre = genre;
-    this.price = price;
-    this.review = review;
-    this.soldUnits = soldUnits;
-    this.stock = stock;
+  public int getId() {
+      return id;
   }
 
-  public void setIsbn(String isbn) {
-    this.isbn = isbn;
+  public void setId(int id) {
+      this.id = id;
+  }
+
+  public String getTitle() {
+      return title;
+  }
+
+  public void setTitle(String title) {
+      this.title = title;
+  }
+
+  public long getIsbn() {
+      return isbn;
+  }
+
+  public void setIsbn(long isbn) {
+      this.isbn = isbn;
   }
 
   public String getImage() {
-    return image;
+      return image;
   }
 
   public void setImage(String image) {
-    this.image = image;
+      this.image = image;
+  }
+
+  public String getAuthor() {
+      return author;
+  }
+
+  public void setAuthor(String author) {
+      this.author = author;
   }
 
   public String getGenre() {
-    return genre;
+      return genre;
   }
 
   public void setGenre(String genre) {
-    this.genre = genre;
+      this.genre = genre;
+  }
+
+  public String getCategory() {
+      return category;
+  }
+
+  public void setCategory(String category) {
+      this.category = category;
+  }
+
+  public String getDescription() {
+      return description;
+  }
+
+  public void setDescription(String description) {
+      this.description = description;
   }
 
   public double getPrice() {
-    return price;
+      return price;
   }
 
   public void setPrice(double price) {
-    this.price = price;
+      this.price = price;
   }
 
   public double getReview() {
-    return review;
+      return review;
   }
 
   public void setReview(double review) {
-    this.review = review;
+      this.review = review;
   }
 
   public int getSoldUnits() {
-    return soldUnits;
+      return soldUnits;
   }
 
   public void setSoldUnits(int soldUnits) {
-    this.soldUnits = soldUnits;
+      this.soldUnits = soldUnits;
   }
 
-  // Constructors
-  public Book() {}
+  public String getLanguage() {
+      return language;
+  }
 
-  // Getters and Setters
-  public String getTitle() { return title; }
-  public void setTitle(String title) { this.title = title; }
-  public String getAuthor() { return author; }
-  public void setAuthor(String author) { this.author = author; }
+  public void setLanguage(String language) {
+      this.language = language;
+  }
 
-  // Convert MongoDB Document to Book Object
-  public static Book fromDocument(Document doc) {
-    return new Book(
-        doc.getObjectId("_id").toString(),
-        doc.getString("isbn"),
-        doc.getString("title"),
-        doc.getString("author"),
-        doc.getString("genre"),
-        doc.getString("image"),
-        doc.getDouble("price"),
-        doc.getDouble("review"),
-        doc.getInteger("soldUnits"),
-        doc.getInteger("stock")
-    );
+  @Override
+  public String toString() {
+      return "Book{" +
+              "id=" + id +
+              ", title='" + title + '\'' +
+              ", isbn=" + isbn +
+              ", image='" + image + '\'' +
+              ", author='" + author + '\'' +
+              ", genre='" + genre + '\'' +
+              ", category='" + category + '\'' +
+              ", description='" + description + '\'' +
+              ", price=" + price +
+              ", review=" + review +
+              ", soldUnits=" + soldUnits +
+              ", language='" + language + '\'' +
+              '}';
+  }
 }
-
-// Convert Book Object to MongoDB Document
-public Document toDocument() {
-    return new Document("_id", _id)
-        .append("isbn", isbn)
-        .append("title", title)
-        .append("author", author)
-        .append("genre", genre)
-        .append("image", image)
-        .append("price", price)
-        .append("review", review)
-        .append("soldUnits", soldUnits)
-        .append("stock", stock);
-}
-
-}
-
