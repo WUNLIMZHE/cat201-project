@@ -1,11 +1,11 @@
 // import React from "react";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "../components/Card";
+import Card from "./Card/Card";
 import PropTypes from "prop-types"; // Import PropTypes
 
 // Layout for rendering food, tourist spots, and hotel cards
-const CardsLayout = ({ data }) => {
+const CardsLayout = ({ products }) => {
   useEffect(() => {
     // Scroll to the top of the page on component mount
     window.scrollTo(0, 0);
@@ -13,16 +13,19 @@ const CardsLayout = ({ data }) => {
 
   const navigate = useNavigate();
 
+  console.log(products);
   function createCard(card) {
     return (
       <Card
         key={card.id}
         id={card.id}
-        name={card.name}
-        location={card.location}
-        rating={card.rating}
-        description={card.description}
-        img={card.img}
+        title={card.title}
+        rating={card.review}
+        language={card.language}
+        category={card.category}
+        image={card.image}
+        price={card.price}
+        soldUnits={card.soldUnits}
         onClick={handleDetailsButtonClick}
       />
     );
@@ -30,7 +33,7 @@ const CardsLayout = ({ data }) => {
 
   function handleDetailsButtonClick(id) {
     console.log("Looking for details for cardid: ", id);
-    const card = data.find((e) => e.id === id);
+    const card = products.find((e) => e.id === id);
     console.log("Card found: ", card);
     if (card) {
       console.log("Card found!");
@@ -43,7 +46,11 @@ const CardsLayout = ({ data }) => {
   return (
     <div className="flex justify-center data-center min-h-screen">
       <section className="mt-[128px] grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 justify-data-center mb-10">
-        {data.map(createCard)}
+        {products.length > 0 ? (
+          products.map((product) => createCard(product))
+        ) : (
+          <p>No products available.</p>
+        )}
       </section>
     </div>
   );
@@ -53,5 +60,5 @@ export default CardsLayout;
 
 // Validate the 'data' prop
 CardsLayout.propTypes = {
-  data: PropTypes.array.isRequired, // Ensure data is an array and is required
+  products: PropTypes.array.isRequired, // Ensure data is an array and is required
 };

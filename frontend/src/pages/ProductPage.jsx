@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import CardsLayout from "../components/CardsLayout";
+import Card from "../components/Card/Card";
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]); // To store list of books
@@ -39,49 +41,7 @@ const ProductPage = () => {
   return (
     <div>
       <h1>Product Page</h1>
-      {products.length > 0 ? (
-        <div>
-          {products.map((product) => (
-            <div key={product.id}>
-              <h2>{product.title}</h2>
-              <img
-                src={product.image}
-                alt={product.title}
-                style={{ maxWidth: "300px" }}
-              />
-              <p>
-                <strong>Author:</strong> {product.author}
-              </p>
-              <p>
-                <strong>Genre:</strong> {product.genre}
-              </p>
-              <p>
-                <strong>Category:</strong> {product.category}
-              </p>
-              <p>
-                <strong>Price:</strong> RM {product.price}
-              </p>
-              <p>
-                <strong>Language:</strong> {product.language}
-              </p>
-              <p>
-                <strong>Description:</strong> {product.description}
-              </p>
-              <p>
-                <strong>Rating:</strong> {product.review} stars
-              </p>
-              <p>
-                <strong>Sold Units:</strong> {product["sold-units"]}
-              </p>
-              <p>
-                <strong>ISBN:</strong> {product.isbn}
-              </p>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>No products available.</p>
-      )}
+      <CardsLayout products={products} />
     </div>
   );
 };
