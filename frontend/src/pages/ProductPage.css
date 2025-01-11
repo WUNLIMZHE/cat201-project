@@ -1,0 +1,30 @@
+/* Centering the heading */
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100px;
+}
+
+/* Animation with gradient text */
+.animate-heading {
+  font-size: 3rem;
+  font-weight: bold;
+  background: linear-gradient(90deg, #3498db, #e74c3c, #f1c40f, #2ecc71, #3498db);
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: smoothGradient 6s infinite linear;
+  font-family: 'Poppins', sans-serif; /* Fancy font */
+}
+
+/* Gradient animation */
+@keyframes smoothGradient {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}

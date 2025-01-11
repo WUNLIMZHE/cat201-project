@@ -45,7 +45,7 @@ const CardsLayout = ({ products }) => {
 
   return (
     <div className="flex justify-center data-center min-h-screen">
-      <section className="mt-[128px] grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 justify-data-center mb-10">
+      <section className="mt-2 grid md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 justify-data-center mb-10">
         {products.length > 0 ? (
           products.map((product) => createCard(product))
         ) : (

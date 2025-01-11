@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import CardsLayout from "../components/CardsLayout";
-import Card from "../components/Card/Card";
+import Filter from "../components/Filter";
+import SearchBar from "../components/SearchBar";
+import "./ProductPage.css";
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]); // To store list of books
@@ -41,6 +43,9 @@ const ProductPage = () => {
   return (
     <div>
       <h1>Product Page</h1>
+      <Filter />
+      <h1 className="center animate-heading">Book Search</h1>
+      <SearchBar />
       <CardsLayout products={products} />
     </div>
   );
