@@ -24,7 +24,7 @@ const Card = ({ onClick, ...props }) => {
 
   return (
     <div
-      className="group my-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md"
+      className="group flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md"
       onClick={() => onClick(props.id)}
     >
       <a
