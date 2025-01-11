@@ -1,0 +1,49 @@
+.Item{
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding: 2rem 1rem;
+    background-color: aliceblue;
+    gap: 1rem;
+    font-size: 1rem;
+    margin: 1rem 0;
+}
+img{
+    height: auto;
+    width: auto;
+    text-align: center;
+}
+
+.right-sidebar{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.info{
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.info.title{
+    font-size: 3em;
+
+}
+
+.info.author{
+    font-size: 0.7em;
+    font-weight: 200;
+}
+
+.info.category{
+    margin-bottom: 1rem;
+}
+
+.info.price{
+    font-size: 2rem;
+}
+
+.change-quantity{
+    display: flex;
+    text-align: right;
+    padding-right: 0.5rem;
+}

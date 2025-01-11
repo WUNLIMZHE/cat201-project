@@ -1,0 +1,56 @@
+[
+    {
+        "firstName": "Sunny",
+        "lastName": "Papyrus",
+        "password": "123456",
+        "phoneNumber": "+60124609110",
+        "userId": 1,
+        "email": "sunny@example.com",
+        "username": "sunnypapyrus"
+    },
+    {
+        "firstName": "Sunny",
+        "lastName": "Papyrus",
+        "password": "123456",
+        "phoneNumber": "+60124609110",
+        "userId": 2,
+        "email": "sunny@example.com",
+        "username": "sunnypapyrus"
+    },
+    {
+        "firstName": "Sunny",
+        "lastName": "Papyrus",
+        "password": "123456",
+        "phoneNumber": "+60124609110",
+        "userId": 3,
+        "email": "sunny@example.com",
+        "username": "sunnypapyrus"
+    },
+    {
+        "firstName": "Sunny",
+        "lastName": "Papyrus",
+        "password": "123456",
+        "phoneNumber": "+60124609110",
+        "userId": 4,
+        "email": "sunny@example.com",
+        "username": "sunnypapyrus"
+    },
+    {
+        "firstName": "Sunny",
+        "lastName": "Papyrus",
+        "password": "123456",
+        "phoneNumber": "+60124609110",
+        "userId": 5,
+        "email": "sunny@example.com",
+        "username": "sunnypapyrus"
+    },
+    {
+        "firstName": "Sunny",
+        "lastName": "Papyrus",
+        "password": "123456",
+        "phoneNumber": "+60124609110",
+        "userId": 6,
+        "email": "sunny@example.com",
+        "username": "sunnypapyrus"
+    }
+]
