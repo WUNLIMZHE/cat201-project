@@ -24,17 +24,19 @@ const Card = ({ onClick, ...props }) => {
 
   return (
     <div
-      className="group flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md"
+      className="group flex w-full min-w-[318px] max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:cursor-pointer"
       onClick={() => onClick(props.id)}
     >
-      <a
+      <div
         className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
-        href="#"
+        onClick={() => onClick(props.id)}
         onMouseEnter={handleMouseOverImg}
         onMouseLeave={handleMouseLeaveImg}
       >
         <img
-          className={`peer absolute top-0 right-0 w-full object-cover ${isMouseOverImg && "opacity-70"}`}
+          className={`peer absolute top-0 right-0 w-full object-cover ${
+            isMouseOverImg && "opacity-70"
+          }`}
           src={props.image}
           alt="product image"
         />
@@ -90,13 +92,11 @@ const Card = ({ onClick, ...props }) => {
           />
         </svg>
         {/* <!-- <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> --> */}
-      </a>
+      </div>
       <div className="mt-4 px-5 pb-5">
-        <a href="#">
-          <h5 className="text-xl tracking-tight text-slate-900">
-            {props.title ? props.title : "title undefined"}
-          </h5>
-        </a>
+        <h5 className="text-xl tracking-tight text-slate-900">
+          {props.title ? props.title : "title undefined"}
+        </h5>
         <div className="card-actions mt-2 flex flex-wrap gap-2">
           <div className="badge border-0 p-3 font-bold text-white bg-theme-700 tag1">
             {props.language
@@ -163,7 +163,7 @@ const Card = ({ onClick, ...props }) => {
           </p>
         </div>
 
-        <div className="mt-2 mb-5 flex items-around justify-between items-center">
+        <div className="mt-2 flex items-around justify-between items-center">
           <p>
             <span className="text-3xl font-bold text-slate-900">
               RM{props.price.toFixed(2)}
@@ -177,9 +177,11 @@ const Card = ({ onClick, ...props }) => {
             sold
           </p>
         </div>
+      </div>
+      <div className="mt-auto mx-5">
         <a
           href="#"
-          className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+          className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300 mb-5"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

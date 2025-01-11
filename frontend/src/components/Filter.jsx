@@ -1,29 +1,52 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { FaTimes } from "react-icons/fa";
 
-const Filter = () => {
+const Filter = ({ products, onFilterChange }) => {
   const [filters, setFilters] = useState({
-    category: "",
-    price: "",
+    language: "",
+    bookCategory: "",
     rating: "",
-    brand: "",
+    sales: "",
   });
+
+  // Extract unique languages and categories dynamically
+  const { languages, categories } = useMemo(() => {
+    const languages = Array.from(
+      new Set(products.map((product) => product.language))
+    );
+    const categories = Array.from(
+      new Set(products.map((product) => product.category))
+    );
+    return { languages, categories };
+  }, [products]);
 
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
-    setFilters((prevFilters) => ({
-      ...prevFilters,
+    const updatedFilters = {
+      ...filters,
       [name]: value,
-    }));
+    };
+    setFilters(updatedFilters);
+
+    // Notify the parent about filter changes
+    if (onFilterChange) {
+      onFilterChange(updatedFilters);
+    }
   };
 
   const clearAllFilters = () => {
-    setFilters({
-      category: "",
-      price: "",
+    const clearedFilters = {
+      language: "",
+      bookCategory: "",
       rating: "",
-      brand: "",
-    });
+      sales: "",
+    };
+    setFilters(clearedFilters);
+
+    // Notify the parent about cleared filters
+    if (onFilterChange) {
+      onFilterChange(clearedFilters);
+    }
   };
 
   return (
@@ -45,43 +68,53 @@ const Filter = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="space-y-2">
           <label
-            htmlFor="category"
+            htmlFor="language"
             className="block text-sm font-medium text-gray-700"
           >
             Language
           </label>
           <select
-            id="category"
-            name="category"
-            value={filters.category}
+            id="language"
+            name="language"
+            value={filters.language}
             onChange={handleFilterChange}
             className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           >
-            <option value="">All Categories</option>
-            <option value="electronics">Electronics</option>
-            <option value="clothing">Clothing</option>
-            <option value="books">Books</option>
+            <option value="">All Languages</option>
+            {languages.map((language) => (
+              <option key={language} value={language}>
+                {language
+                  .split(" ")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")}
+              </option>
+            ))}
           </select>
         </div>
 
         <div className="space-y-2">
           <label
-            htmlFor="price"
+            htmlFor="bookCategory"
             className="block text-sm font-medium text-gray-700"
           >
-            Book category
+            Book Category
           </label>
           <select
-            id="price"
-            name="price"
-            value={filters.price}
+            id="bookCategory"
+            name="bookCategory"
+            value={filters.bookCategory}
             onChange={handleFilterChange}
             className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           >
-            <option value="">All Prices</option>
-            <option value="0-50">$0 - $50</option>
-            <option value="50-100">$50 - $100</option>
-            <option value="100+">$100+</option>
+            <option value="">All Categories</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category
+                  .split(" ")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -99,7 +132,7 @@ const Filter = () => {
             onChange={handleFilterChange}
             className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           >
-            <option value="">Sort rating</option>
+            <option value="">Sort by Rating</option>
             <option value="highest">Highest</option>
             <option value="lowest">Lowest</option>
           </select>
@@ -107,19 +140,19 @@ const Filter = () => {
 
         <div className="space-y-2">
           <label
-            htmlFor="brand"
+            htmlFor="sales"
             className="block text-sm font-medium text-gray-700"
           >
             Sales
           </label>
           <select
-            id="brand"
-            name="brand"
-            value={filters.brand}
+            id="sales"
+            name="sales"
+            value={filters.sales}
             onChange={handleFilterChange}
             className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
           >
-            <option value="">Sort sales</option>
+            <option value="">Sort by Sales</option>
             <option value="highest">Highest</option>
             <option value="lowest">Lowest</option>
           </select>
