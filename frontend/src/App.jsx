@@ -4,6 +4,7 @@ import './style.css';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Order from './pages/Admin/Order';
+import OrderDetail from './components/OrderDetail'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/order" element={<Order />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/orders/:id" element={<OrderDetail />} />
       </Routes>
     </Router>
   );

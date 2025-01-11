@@ -86,4 +86,11 @@
     cursor: not-allowed;
   }
 
+  .clickable-row {
+    cursor: pointer; /* Indicates that the row is clickable */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+  }
   
+  .clickable-row:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+  }
