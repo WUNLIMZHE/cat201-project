@@ -3,11 +3,18 @@
     padding: 20px;
     font-family: Arial, sans-serif;
   }
+  .header-container {
+    display: flex; /* Use flexbox to arrange items horizontally */
+    align-items: center; /* Vertically align button and heading */
+    justify-content: space-between; /* Push items to opposite sides */
+    margin-bottom: 20px;
+  }
+  
   
   /* Header style */
   .order-detail-container h1 {
     font-size: 2rem;
-    margin-bottom: 20px;
+    margin-top: 20px;
     color: #333;
   }
   
@@ -36,6 +43,7 @@
   
   /* Button to go back or perform actions */
   .back-button {
+    display: flex;
     padding: 10px 20px;
     font-size: 1rem;
     background-color: #007bff;
@@ -50,6 +58,31 @@
   }
   
   /* Hover effect for the button */
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+
+  .back-button {
+    display: flex; /* Use flexbox to place items side by side */
+    align-items: center; /* Align items vertically at the center */
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; /* Ensure the button is inline */
+    transition: background-color 0.3s;
+  }
+  
+  .back-button img {
+    width: 20px; /* Adjust the width of the image */
+    height: 20px; /* Adjust the height of the image */
+    margin-right: 10px; /* Adds space between the image and text */
+  }
+  
   .back-button:hover {
     background-color: #0056b3;
   }
