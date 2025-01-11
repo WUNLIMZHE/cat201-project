@@ -39,17 +39,22 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </li>
           <li className="fancy-hover relative">
-            <Link to="/">Food</Link>
+            <Link to="/order">Order</Link>
           </li>
           <li className="fancy-hover relative">
-            <Link to="/">Tourist Attractions</Link>
+            <Link to="/payment">Payment</Link>
           </li>
           <li className="fancy-hover relative">
-            <Link to="/">Hotels</Link>
+            <Link to="/chart">Chart</Link>
           </li>
           <li className="hover:scale-110 transition-transform duration-300 ease-in-out">
             <Link to="/login">
               <button className="btn">Login</button>
+            </Link>
+          </li>
+          <li className="hover:scale-110 transition-transform duration-300 ease-in-out">
+            <Link to="/signup">
+              <button className="btn">Sign up</button>
             </Link>
           </li>
         </ul>
