@@ -59,7 +59,7 @@ const Order = () => {
             <table>
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Order ID</th>
                   <th>Full Name</th>
                   <th>Mobile</th>
                   <th>Total</th>

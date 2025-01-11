@@ -18,14 +18,44 @@
     color: #333;
   }
   
-  /* Order detail section */
   .order-detail-section {
-    background-color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
     border: 1px solid #ddd;
-    border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  /* Left side: Details */
+  .order-detail-content {
+    flex: 2;
+  }
+  
+  /* Right side: Image */
+.status-image {
+    flex: 1;
+    max-width: 300px; /* Increase the maximum width */
+    width: 100%; /* Allow image to take full width of its container */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px;
+    box-shadow: none; /* Remove the box shadow if you want no background effect */
+    object-fit: contain; /* Ensure the image fits within its container */
+    background-color: transparent; /* Ensure no background color */
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .order-detail-section {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .status-image {
+      max-width: 100%;
+    }
   }
   
   /* Each detail item styling */
@@ -85,4 +115,16 @@
   
   .back-button:hover {
     background-color: #0056b3;
+  }
+
+  .status-container {
+    margin-top: 15px;
+  }
+  
+  .status-select {
+    padding: 5px;
+    font-size: 1rem;
+    margin-left: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
   }
