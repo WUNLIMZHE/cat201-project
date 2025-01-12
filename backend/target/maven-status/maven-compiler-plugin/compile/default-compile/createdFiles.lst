@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 com\sunnypapyrus\api\UsersLoginServlet.class
 com\sunnypapyrus\api\CorsFilter.class
 com\sunnypapyrus\models\UserSignup.class
@@ -6,3 +7,13 @@ com\sunnypapyrus\AppContextListener.class
 BookServlet.class
 com\sunnypapyrus\Main.class
 MongoDBConnection.class
+=======
+BookServlet.class
+com\sunnypapyrus\Main.class
+com\sunnypapyrus\api\UsersLoginServlet.class
+com\sunnypapyrus\api\CorsFilter.class
+com\sunnypapyrus\models\UserSignup.class
+MongoDBConnection.class
+Book.class
+com\sunnypapyrus\AppContextListener.class
+>>>>>>> 978967a878519044df9e6b24bbbfed86b9a1e45b

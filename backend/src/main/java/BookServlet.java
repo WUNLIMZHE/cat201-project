@@ -82,7 +82,10 @@ public class BookServlet extends HttpServlet {
     }
 
     private String getFilePath(HttpServletRequest req) {
+<<<<<<< HEAD
         // System.out.println("REQ" + req);
+=======
+>>>>>>> 978967a878519044df9e6b24bbbfed86b9a1e45b
         // Resolve the relative path to an absolute path based on the servlet context
         return getServletContext().getRealPath(RELATIVE_FILE_PATH);
     }
