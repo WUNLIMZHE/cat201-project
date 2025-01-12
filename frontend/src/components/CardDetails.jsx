@@ -26,7 +26,7 @@ function CardDetails({ data }) {
         <img
           src={card.image}
           alt={`${card.title} book cover image`}
-          className="sm:float-right mx-auto sm:ml-6 sm:mr-0 rounded shadow mb-5 "
+          className="sm:float-right mx-auto sm:ml-6 sm:mr-0 rounded shadow mb-5 max-w-[300px]"
           // width={card.category === "tourist-spot" ? "400px" : "360px"}
         />
         <h1 className="mb-3 text-4xl font-bold">{card.title}</h1>
@@ -134,10 +134,15 @@ function CardDetails({ data }) {
           </div>
           <div className="flex items-center font-bold text-lg">
             {card.review} / 5.0{" "}
-            <span className="text-sm ml-2">{`\t\t\t ${card.soldUnits} sold`}</span>
+            <span className="text-sm ml-2 text-gray-600">
+              {card.soldUnits >= 1000
+                ? `${(card.soldUnits / 1000).toFixed(1)}k`
+                : card.soldUnits}
+              {`  sold`}
+            </span>
           </div>
         </div>
-        <div className="flex gap-x-3 mb-5">
+        <div className="flex gap-x-3 mb-1">
           <div className="grid gap-1 items-center text-theme-800 content-start mt-1">
             <svg
               width="1em"
@@ -177,6 +182,53 @@ function CardDetails({ data }) {
           </div>
           <div className="grid gap-1 items-center font-bold text-lg content-start">
             <span>{`RM ${card.price.toFixed(2)}`}</span>
+          </div>
+        </div>
+        <div className="flex gap-x-3 mb-5">
+          <div className="grid gap-1 items-center text-theme-800 content-start mt-1">
+            <svg
+              width="1em"
+              height="1em"
+              viewBox="0 0 24 24"
+              className="text-xl"
+              data-icon="box-package"
+            >
+              <symbol id="icon:boxPackage">
+                <path
+                  d="M3 9l9-5 9 5-9 5-9-5z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M3 9v10l9 5 9-5V9"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                />
+                <path
+                  d="M12 14v10"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                />
+              </symbol>
+              <use xlinkHref="#icon:boxPackage"></use>
+            </svg>
+          </div>
+          <div className="grid gap-1 items-center font-bold text-lg content-start mt-1">
+            <span>
+              {card.stock >= 1000
+                ? `${(card.stock / 1000).toFixed(1)}k`
+                : card.stock}
+              {`  stock left`}
+            </span>
           </div>
         </div>
         {card.description.split("\n").map((line, index) => (

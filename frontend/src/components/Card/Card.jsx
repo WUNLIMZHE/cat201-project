@@ -100,8 +100,12 @@ const Card = ({ onClick, ...props }) => {
         <div className="card-actions mt-2 flex flex-wrap gap-2">
           <div className="badge border-0 p-3 font-bold text-white bg-theme-700 tag1">
             {props.language
-              ? props.language.charAt(0).toUpperCase() + props.language.slice(1)
-              : "Undefined"}
+              .split(" ")
+              .map(
+                (word) =>
+                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+              )
+              .join(" ")}
           </div>
           <div className="badge border-0 p-3 font-bold text-black bg-theme-100 tag2">
             {props.category
