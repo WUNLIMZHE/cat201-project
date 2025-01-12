@@ -6,3 +6,11 @@
 .return{
     padding: 0;
 }
+
+.checkout-button{
+    margin: 0.2rem;
+    padding: 0.2rem 0.6rem;
+    color: white;
+    background-color: orange;
+    font-size: 1.2rem;
+}

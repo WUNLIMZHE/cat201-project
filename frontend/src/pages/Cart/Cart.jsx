@@ -1,5 +1,5 @@
 import './Cart.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import CartItems from '../../components/cartItem/cartItem';
 import cartList from '../../cartList';
@@ -44,6 +44,30 @@ const Cart = (props) => {
     function updateTotalPrice(bookPrice, qtyChange){
         setTotalPrice(totalPrice + bookPrice*qtyChange);
     }
+    useEffect(() => {
+        const fetchProducts = async () => {
+          try {
+            const response = await fetch("http://localhost:9000/cart");
+            if (!response.ok) {
+              throw new Error('HTTP error! Status: ${response.status}');
+            }
+            const data = await response.json();
+            setProducts(data); // Store the list of books in state
+            setFilteredProducts(data); // Initialize filtered products with all products
+          } catch (err) {
+            setError(err.message); // Capture error message
+          } finally {
+            setLoading(false); // Stop loading
+          }
+        };
+    
+        fetchProducts();
+    
+        // Cleanup function
+        return () => {
+          setLoading(false); // Optional: to stop loading if component unmounts
+        };
+      }, []);    
     return (
         <>
             <Navbar/>
@@ -58,6 +82,7 @@ const Cart = (props) => {
             </div>
             <div className="checkout">
                 <span className='finalPrice' ></span>
+                <button className='checkout-button'>Checkout</button>
             </div>
         </>
     );
