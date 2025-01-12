@@ -34,7 +34,7 @@ const cartItems = (props) => {
         if (result.isConfirmed) {
           // If the user confirms, delete the book
         //   handleBookDelete(props.id);
-        props.changeBookQty(props.id, props.purchaseUnit, 1);
+        props.changeBookQty(props.id, props.purchaseUnit, -1);
         } else {
           // If the user cancels, simply return
           Swal.fire({
@@ -66,7 +66,7 @@ const cartItems = (props) => {
           <button className="changeQty addBook" onClick={handleAddBook}>
             +
           </button>
-          <p className="info quantity">{props.purchaseUnit} copies in cart</p>
+          <p className="info quantity">{props.purchaseUnit} {`${props.purchaseUnit == 1 ? "copy" : "copies"}`} in cart</p>
           <button className="changeQty removeBook" onClick={handleMinusBook}>
             -
           </button>

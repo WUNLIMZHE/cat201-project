@@ -186,14 +186,25 @@ public class CartItemServlet extends HttpServlet {
         response.setContentType("application/json; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        String cartIDParam = request.getParameter("cartID");
-        if (cartIDParam == null) {
-            response.getWriter().write("{\"error\": \"Cart ID is required!\"}");
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return;
-        }
+        // String cartIDParam = request.getParameter("cartID");
+        // if (cartIDParam == null) {
+        //     response.getWriter().write("{\"error\": \"Cart ID is required!\"}");
+        //     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        //     return;
+        // }
 
-        int cartID = Integer.parseInt(cartIDParam);
+        // int cartID = Integer.parseInt(cartIDParam);
+
+        BufferedReader reader = request.getReader();
+        StringBuilder jsonContent = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonContent.append(line);
+        }
+        System.out.println("Received PUT Request: " + jsonContent.toString());
+
+        JSONObject jsonRequest = new JSONObject(jsonContent.toString());
+        int cartID = jsonRequest.getInt("cartID");
 
         JSONArray cartItems = loadAllCartItems(request);
 

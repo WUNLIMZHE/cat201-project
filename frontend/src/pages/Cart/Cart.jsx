@@ -42,6 +42,9 @@ const Cart = (props) => {
   useEffect(() => {
     console.log("===== Updated Cart =====");
     console.log(cart);
+    let totalPurchaseAmmount = 0;
+    cart.map((item) => (totalPurchaseAmmount += item.totalPrice));
+    setTotalPrice(totalPurchaseAmmount);
   }, [cart]);
 
   //   // Update total price
@@ -72,7 +75,7 @@ const Cart = (props) => {
   const updateBookDetails = async (bookId, updatedData) => {
     try {
       const response = await fetch(`http://localhost:9000/cart`, {
-        method: "PUT", 
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData),
       });
@@ -86,10 +89,11 @@ const Cart = (props) => {
     }
   };
 
-  const deleteBook = async (bookId) => {
+  const deleteBook = async (bookId, deleteTarget) => {
     try {
       const response = await fetch(`http://localhost:9000/cart`, {
         method: "DELETE",
+        body: JSON.stringify(deleteTarget),
       });
 
       if (!response.ok) {
@@ -108,13 +112,18 @@ const Cart = (props) => {
     const newQuantity = originalQty + qtyChange;
     const totalPrice = newQuantity * cart[cartContentIndex].price;
     if (newQuantity === 0) {
+      const cartID = cart[cartContentIndex].cartID;
       // remove item from cart
-      deleteBook(bookId); // Call DELETE request
+      console.log(cartID);
+      const deleteTarget = {
+        cartID: cart[cartContentIndex].cartID,
+      };
+      deleteBook(bookId, deleteTarget); // Call DELETE request
       setCart(cart.filter((item) => item.id !== bookId));
     } else {
       // Update item in cart
       const updatedData = {
-        id: bookId,
+        cartID: cart[cartContentIndex].cartID,
         purchaseUnit: newQuantity,
         totalPrice: newQuantity * cart[cartContentIndex].price,
       };
@@ -158,6 +167,9 @@ const Cart = (props) => {
           Total Price: ${totalPrice.toFixed(2)}
         </span>
       </div>
+      <button className="bg-green-500 text-white font-bold text-lg py-2 px-4 rounded shadow-md hover:bg-green-600 hover:shadow-lg active:bg-green-700 active:shadow-sm active:translate-y-0.5 transition duration-300">
+        Pay
+      </button>
     </>
   );
 };
