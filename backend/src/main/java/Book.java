@@ -10,10 +10,11 @@ public class Book {
   private double price;
   private double review;
   private int soldUnits;
+  private int stock;
   private String language;
 
   public Book(int id, String title, long isbn, String image, String author, String genre, String category, 
-              String description, double price, double review, int soldUnits, String language) {
+              String description, double price, double review, int soldUnits, int stock, String language) {
       this.id = id;
       this.title = title;
       this.isbn = isbn;
@@ -25,6 +26,7 @@ public class Book {
       this.price = price;
       this.review = review;
       this.soldUnits = soldUnits;
+      this.stock = stock;
       this.language = language;
   }
 
@@ -116,6 +118,14 @@ public class Book {
       this.soldUnits = soldUnits;
   }
 
+  public int getStock() {
+    return stock;
+  }
+
+public void setStock(int stock) {
+    this.stock = stock;
+}
+
   public String getLanguage() {
       return language;
   }
@@ -138,6 +148,7 @@ public class Book {
               ", price=" + price +
               ", review=" + review +
               ", soldUnits=" + soldUnits +
+              ", stock=" + stock +
               ", language='" + language + '\'' +
               '}';
   }

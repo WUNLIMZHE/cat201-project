@@ -4,6 +4,7 @@ import './style.css';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import ProductPage from './pages/ProductPage'; // Adjust the path to your component
+import CardDetailsPage from './pages/CardDetailsPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/books" element={<ProductPage />} />
+        <Route path="/book/details" element={<CardDetailsPage />} />
       </Routes>
     </Router>
   );
