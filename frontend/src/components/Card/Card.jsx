@@ -52,6 +52,7 @@ const Card = ({ onClick, ...props }) => {
       };
 
       try {
+        console.log(props.title);
         // Send a POST request to the backend
         const response = await fetch("http://localhost:9000/add-cart", {
           method: "POST",
