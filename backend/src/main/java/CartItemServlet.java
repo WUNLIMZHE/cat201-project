@@ -5,7 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.annotation.WebServlet;
-@WebServlet("/add-cart")
+@WebServlet("/cart")
 public class CartItemServlet extends HttpServlet {
     private static boolean isLoadFromCart = false;
     private static int nextCartID;
