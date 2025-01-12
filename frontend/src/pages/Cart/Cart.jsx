@@ -25,7 +25,7 @@ const Cart = (props) => {
 
         const userCart = data.filter((item) => item.userID === props.userID);
         let totalPurchaseAmmount = 0;
-        data.map(item => totalPurchaseAmmount += item.totalPrice);
+        data.map((item) => (totalPurchaseAmmount += item.totalPrice));
         setTotalPrice(totalPurchaseAmmount);
         setCart(userCart); // Update cart state
       } catch (err) {
@@ -44,30 +44,93 @@ const Cart = (props) => {
     console.log(cart);
   }, [cart]);
 
-  // Update total price
-  const updateTotalPrice = (bookPrice, qtyChange) => {
-    setTotalPrice((prevPrice) => prevPrice + bookPrice * qtyChange);
-  };
+  //   // Update total price
+  //   const updateTotalPrice = (bookPrice, qtyChange) => {
+  //     setTotalPrice((prevPrice) => prevPrice + bookPrice * qtyChange);
+  //   };
 
   // Change quantity of books in cart
-  const changeBookQtyFromMenu = (bookId, qtyChange) => {
-    setCart((prevCart) => {
-      const updatedCart = prevCart.map((item) =>
-        item.id === bookId
-          ? { ...item, quantity: item.quantity + qtyChange }
-          : item
-      );
+  //   const changeBookQtyFromMenu = (bookId, qtyChange) => {
+  //     setCart((prevCart) => {
+  //       const updatedCart = prevCart.map((item) =>
+  //         item.id === bookId
+  //           ? { ...item, quantity: item.quantity + qtyChange }
+  //           : item
+  //       );
 
-      const newCart = updatedCart.filter((item) => item.quantity > 0); // Remove if quantity is zero
-      return newCart;
-    });
+  //       const newCart = updatedCart.filter((item) => item.quantity > 0); // Remove if quantity is zero
+  //       return newCart;
+  //     });
 
-    // Find the price of the book (this assumes book price is available in `cart`)
-    const book = cart.find((item) => item.id === bookId);
-    if (book) {
-      updateTotalPrice(book.price, qtyChange);
+  //     // Find the price of the book (this assumes book price is available in `cart`)
+  //     const book = cart.find((item) => item.id === bookId);
+  //     if (book) {
+  //       updateTotalPrice(book.price, qtyChange);
+  //     }
+  //   };
+
+  const updateBookDetails = async (bookId, updatedData) => {
+    try {
+      const response = await fetch(`http://localhost:9000/cart`, {
+        method: "PUT", 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update book details: ${response.status}`);
+      }
+      console.log("Book updated successfully");
+    } catch (error) {
+      console.error(error.message);
     }
   };
+
+  const deleteBook = async (bookId) => {
+    try {
+      const response = await fetch(`http://localhost:9000/cart`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to delete book: ${response.status}`);
+      }
+      console.log("Book deleted successfully");
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
+  // to be called by cartItems, not to be exported
+  // qtyChange and originalQty are entered separately to keep track of qtyChange for the price calculation
+  function changeBookQty(bookId, originalQty, qtyChange) {
+    const cartContentIndex = cart.findIndex((item) => item.id === bookId);
+    const newQuantity = originalQty + qtyChange;
+    const totalPrice = newQuantity * cart[cartContentIndex].price;
+    if (newQuantity === 0) {
+      // remove item from cart
+      deleteBook(bookId); // Call DELETE request
+      setCart(cart.filter((item) => item.id !== bookId));
+    } else {
+      // Update item in cart
+      const updatedData = {
+        id: bookId,
+        purchaseUnit: newQuantity,
+        totalPrice: newQuantity * cart[cartContentIndex].price,
+      };
+      updateBookDetails(bookId, updatedData); // Call PATCH request
+
+      // Update state
+      cart[cartContentIndex] = { ...cart[cartContentIndex], ...updatedData };
+      setCart([...cart]);
+    }
+
+    // Important: This line below will cause the rerendering of the cartList component
+    // hence this component does not need to be manually rerendered via use state
+    // updateFinalPrice(bookPrice, qtyChange);
+    // cart[cartContentIndex].totalPrice = totalPrice;
+    console.log(cart);
+  }
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -85,7 +148,8 @@ const Cart = (props) => {
           <CartItems
             key={book.id} // Add unique key
             {...book}
-            updateFinalPrice={updateTotalPrice}
+            // updateFinalPrice={updateTotalPrice}
+            changeBookQty={changeBookQty}
           />
         ))}
       </div>

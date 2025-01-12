@@ -12,139 +12,11 @@ public class CartItemServlet extends HttpServlet {
     private static final String CART_FILE = "/data/cart.json"; // File path under webapp/data
     private static final String BOOKS_FILE = "/data/books.json"; // File path under webapp/data
 
-    private int cartID;
-    private int userID;
-    private int id; // Book ID
-    private String title;
-    private String image;
-    private String genre;
-    private String category;
-    private double price;
-    private int purchaseUnit;
-    private double totalPrice;
-    private int stock;
-    private String language;
-
     // Default constructor (no parameters)
     public CartItemServlet() {
         // This constructor is required for the servlet container to instantiate the servlet
     }
 
-    // Getters and Setters
-    public int getCartID() {
-        return cartID;
-    }
-
-    public void setCartID(int cartID) {
-        this.cartID = cartID;
-    }
-
-    public int getUserID() {
-        return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getPurchaseUnit() {
-        return purchaseUnit;
-    }
-
-    public void setPurchaseUnit(int purchaseUnit) {
-        this.purchaseUnit = purchaseUnit;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public int getStock() {
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
-
-    public String getLanguage() {
-        return language;
-    }
-
-    public void setLanguage(String language) {
-        this.language = language;
-    }
-
-    // toString() Method for Debugging and Display
-    @Override
-    public String toString() {
-        return "CartItem{" +
-                "cartID=" + cartID +
-                ", userID=" + userID +
-                ", id=" + id +
-                ", title='" + title + '\'' +
-                ", image='" + image + '\'' +
-                ", genre='" + genre + '\'' +
-                ", category='" + category + '\'' +
-                ", price=" + price +
-                ", purchaseUnit=" + purchaseUnit +
-                ", totalPrice=" + totalPrice +
-                ", stock=" + stock +
-                ", language='" + language + '\'' +
-                '}';
-    }
     // Load all cart items from cart.json
     private JSONArray loadAllCartItems(HttpServletRequest req) {
         JSONArray cartItems = new JSONArray();
@@ -212,7 +84,7 @@ public class CartItemServlet extends HttpServlet {
 
         System.out.println("Book title" + title);
 
-        CartItemServlet newCartItem = new CartItemServlet();
+        CartItem newCartItem = new CartItem();
         newCartItem.setCartID(nextCartID++);
         newCartItem.setUserID(userID);
         newCartItem.setId(id);
@@ -263,6 +135,89 @@ public class CartItemServlet extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        BufferedReader reader = request.getReader();
+        StringBuilder jsonContent = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            jsonContent.append(line);
+        }
+        System.out.println("Received PUT Request: " + jsonContent.toString());
+
+        JSONObject jsonRequest = new JSONObject(jsonContent.toString());
+        int cartID = jsonRequest.getInt("cartID");
+
+        JSONArray cartItems = loadAllCartItems(request);
+
+        boolean itemUpdated = false;
+        for (int i = 0; i < cartItems.length(); i++) {
+            JSONObject item = cartItems.getJSONObject(i);
+            if (item.getInt("cartID") == cartID) {
+                // Update fields
+                if (jsonRequest.has("purchaseUnit")) {
+                    item.put("purchaseUnit", jsonRequest.getInt("purchaseUnit"));
+                    item.put("totalPrice", item.getDouble("price") * jsonRequest.getInt("purchaseUnit"));
+                }
+                if (jsonRequest.has("stock")) {
+                    item.put("stock", jsonRequest.getInt("stock"));
+                }
+                itemUpdated = true;
+                break;
+            }
+        }
+
+        if (itemUpdated) {
+            saveCartItems(cartItems, request);
+            response.getWriter().write("{\"message\": \"Cart item updated successfully!\"}");
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.getWriter().write("{\"error\": \"Cart item not found!\"}");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
+@Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
+        String cartIDParam = request.getParameter("cartID");
+        if (cartIDParam == null) {
+            response.getWriter().write("{\"error\": \"Cart ID is required!\"}");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return;
+        }
+
+        int cartID = Integer.parseInt(cartIDParam);
+
+        JSONArray cartItems = loadAllCartItems(request);
+
+        boolean itemDeleted = false;
+        for (int i = 0; i < cartItems.length(); i++) {
+            JSONObject item = cartItems.getJSONObject(i);
+            if (item.getInt("cartID") == cartID) {
+                cartItems.remove(i);
+                itemDeleted = true;
+                break;
+            }
+        }
+
+        if (itemDeleted) {
+            saveCartItems(cartItems, request);
+            response.getWriter().write("{\"message\": \"Cart item deleted successfully!\"}");
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            response.getWriter().write("{\"error\": \"Cart item not found!\"}");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+        }
+    }
+
+
     private void loadNextCartID(HttpServletRequest req) {
         JSONArray cartItems = loadAllCartItems(req);
         if (cartItems.length() > 0) {
@@ -275,6 +230,27 @@ public class CartItemServlet extends HttpServlet {
 
     private String getCartFilePath(HttpServletRequest req) {
         return getServletContext().getRealPath(CART_FILE);
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173"); // Replace with the actual origin
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Add CORS headers to all responses
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173"); // Replace with the actual origin
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+
+        // Continue with the original method
+        super.service(request, response);
     }
 
 }
