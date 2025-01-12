@@ -1,10 +1,7 @@
 D:\cat201-project\backend\src\main\java\BackendServer.java
 D:\cat201-project\backend\src\main\java\Book.java
 D:\cat201-project\backend\src\main\java\BookServlet.java
-<<<<<<< HEAD
 D:\cat201-project\backend\src\main\java\CartItemServlet.java
-=======
->>>>>>> 978967a878519044df9e6b24bbbfed86b9a1e45b
 D:\cat201-project\backend\src\main\java\com\sunnypapyrus\api\CorsFilter.java
 D:\cat201-project\backend\src\main\java\com\sunnypapyrus\api\UsersLoginServlet.java
 D:\cat201-project\backend\src\main\java\com\sunnypapyrus\AppContextListener.java

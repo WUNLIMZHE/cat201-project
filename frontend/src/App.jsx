@@ -4,10 +4,8 @@ import './style.css';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import ProductPage from './pages/ProductPage'; // Adjust the path to your component
-<<<<<<< HEAD
 import CardDetailsPage from './pages/CardDetailsPage';
-=======
->>>>>>> 978967a878519044df9e6b24bbbfed86b9a1e45b
+import Cart from "./pages/Cart/Cart"
 
 function App() {
   return (
@@ -16,10 +14,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/books" element={<ProductPage />} />
-<<<<<<< HEAD
         <Route path="/book/details" element={<CardDetailsPage />} />
-=======
->>>>>>> 978967a878519044df9e6b24bbbfed86b9a1e45b
+        <Route path="/view-my-cart" element={<Cart userID={1}/>} />
       </Routes>
     </Router>
   );

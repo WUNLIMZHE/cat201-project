@@ -12,10 +12,7 @@
     <properties>
         <maven.compiler.source>20</maven.compiler.source>
         <maven.compiler.target>20</maven.compiler.target>
-<<<<<<< HEAD
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-=======
->>>>>>> 978967a878519044df9e6b24bbbfed86b9a1e45b
     </properties>
 
     <dependencies>
@@ -52,14 +49,11 @@
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>4.8.0</version>  <!-- Use the latest version -->
-<<<<<<< HEAD
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20210307</version> <!-- Use the latest version available -->
-=======
->>>>>>> 978967a878519044df9e6b24bbbfed86b9a1e45b
         </dependency>
     </dependencies>
 
