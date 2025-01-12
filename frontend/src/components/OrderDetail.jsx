@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./OrderDetail.css"; // Ensure this is imported
 import back from "/back.webp";
 import cancel from "/cancelled.png";
@@ -29,6 +29,7 @@ const OrderDetail = () => {
   }
 
   const [newStatus, setNewStatus] = useState(order.status || "Pending");
+  const [books, setBooks] = useState(order.books); // Maintain state for books with quantities
 
   const handleStatusChange = (e) => {
     setNewStatus(e.target.value);
@@ -41,7 +42,7 @@ const OrderDetail = () => {
     // Update the status of the current order
     const updatedOrders = orders.map((o) => {
       if (o.id === order.id) {
-        return { ...o, status: newStatus };
+        return { ...o, status: newStatus, books }; // Save the updated books as well
       }
       return o;
     });
@@ -78,6 +79,28 @@ const OrderDetail = () => {
     }
   };
 
+  // Handle change in book quantity
+  const handleQuantityChange = (bookId, newQuantity) => {
+    if (newQuantity < 1) return; // Prevent negative or zero quantity
+
+    const updatedBooks = books.map((book) =>
+      book.bookId === bookId ? { ...book, quantity: newQuantity } : book
+    );
+
+    setBooks(updatedBooks); // Update the state with the new book quantities
+  };
+
+  // Calculate total price for the order and apply discount if available
+  const calculateTotalPrice = () => {
+    let total = books.reduce((acc, book) => acc + book.pricePerUnit * book.quantity, 0);
+
+    if (order.discount) {
+      total -= total * (order.discount / 100); // Apply discount percentage
+    }
+
+    return total.toFixed(2); // Return the total price with two decimal places
+  };
+
   return (
     <div className="order-detail-container">
       <div className="header-container">
@@ -88,23 +111,24 @@ const OrderDetail = () => {
         <h1>Order Status</h1>
       </div>
 
-      <div className="order-detail-section">
-        {/* Left Side: Order Details */}
-        <div className="order-detail-content">
+      <div className="order-detail-wrapper">
+        {/* Order Details */}
+        <div className="order-detail-section">
+          <img src={getStatusImage(newStatus)} alt="Order Status" className="status-image" />
+          <div className="order-detail-content">
             <p><strong>Purchase ID:</strong> {order.id}</p>
             <p><strong>Full Name:</strong> {order.fullName}</p>
             <p><strong>Mobile:</strong> {order.mobile}</p>
-            <p><strong>Total:</strong> RM {order.total}</p>
+            <p><strong>Total:</strong> RM {calculateTotalPrice()}</p>
             <p><strong>Payment Type:</strong> {order.paymentType}</p>
-            <p><strong>Status:</strong> {newStatus}</p>
             <div className="status-container">
-            <label htmlFor="status"><strong>Order Status:</strong></label>
-            <select
+              <label htmlFor="status"><strong>Order Status:</strong></label>
+              <select
                 id="status"
                 value={newStatus}
                 onChange={handleStatusChange}
                 className="status-select"
-            >
+              >
                 <option value="Pending">Pending</option>
                 <option value="Shipping">Shipping</option>
                 <option value="Delivered">Delivered</option>
@@ -114,14 +138,51 @@ const OrderDetail = () => {
                 <option value="Delivering">Delivering</option>
                 <option value="Payment Pending">Payment Pending</option>
                 <option value="Completed">Completed</option>
-            </select>
+              </select>
             </div>
+
+            {/* Discount section */}
+            {order.discount && (
+              <p><strong>Discount Applied:</strong> {order.discount}%</p>
+            )}
             <button className="back-button" onClick={handleSave}>Save Changes</button>
+          </div>
         </div>
 
-        {/* Right Side: Status Image */}
-        <img src={getStatusImage(newStatus)} alt="Order Status" className="status-image" />
+        {/* Book Details Table */}
+        <div className="book-details">
+          <table>
+            <thead>
+              <tr>
+                <th>Book ID</th>
+                <th>Book Name</th>
+                <th>Price Per Unit</th>
+                <th>Quantity</th>
+                <th>Total Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              {books.map((book) => (
+                <tr key={book.bookId}>
+                  <td>{book.bookId}</td>
+                  <td>{book.bookName}</td>
+                  <td>RM {book.pricePerUnit}</td>
+                  <td>
+                    <input
+                      type="number"
+                      value={book.quantity}
+                      onChange={(e) => handleQuantityChange(book.bookId, parseInt(e.target.value))}
+                      min="1"
+                      className="quantity-input"
+                    />
+                  </td>
+                  <td>RM {book.pricePerUnit * book.quantity}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/AdminSidebar/Sidebar";
+import orders from "../../data/orderData";
 import "./Order.css";
-import orders from "../../data/orderData"
+
 const chunkOrders = (orders, chunkSize) => {
   const result = [];
   for (let i = 0; i < orders.length; i += chunkSize) {
