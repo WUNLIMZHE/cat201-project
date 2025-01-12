@@ -19,13 +19,16 @@ const CardsLayout = ({ products }) => {
       <Card
         key={card.id}
         id={card.id}
+        userID = "1"
         title={card.title}
         rating={card.review}
         language={card.language}
         category={card.category}
+        genre={card.genre}
         image={card.image}
         price={card.price}
         soldUnits={card.soldUnits}
+        stock={card.stock}
         onClick={handleDetailsButtonClick}
       />
     );

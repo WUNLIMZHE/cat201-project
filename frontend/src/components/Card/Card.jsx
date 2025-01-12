@@ -1,3 +1,4 @@
+import Swal from "sweetalert2";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import "./Card.css";
@@ -22,10 +23,87 @@ const Card = ({ onClick, ...props }) => {
     setIsMouseOverBtn(false);
   }
 
+  const handleAddCart = async () => {
+    console.log(`stock ${props.stock}`);
+
+    if (props.stock <= 0) {
+      // Show a warning if the stock is insufficient
+      Swal.fire({
+        icon: "warning",
+        title: "Insufficient Stock",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Ok",
+      });
+    } else {
+      // Data to send in POST request
+      const cartData = {
+        userID: props.userID,
+        id: props.id,
+        title: props.title,
+        image: props.image,
+        genre: props.genre,
+        category: props.category,
+        price: props.price,
+        purchaseUnit: 1,
+        totalPrice: props.price,
+        stock: props.stock,
+        language: props.language,
+      };
+
+      try {
+        // Send a POST request to the backend
+        const response = await fetch("http://localhost:9000/add-cart", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(cartData), // Send data as JSON
+        });
+
+        if (response.ok) {
+          const result = await response.json();
+
+          // Show success notification if the response contains valid JSON
+          Swal.fire({
+            icon: "success",
+            title: "Book added to cart",
+            text: `${props.title} has been added successfully!`,
+            showCancelButton: false,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Ok",
+          });
+        } else {
+          // Handle non-OK responses (like 4xx or 5xx)
+          const errorMessage = await response.text(); // Retrieve plain text for error message
+          Swal.fire({
+            icon: "error",
+            title: "Failed to add to cart",
+            text: errorMessage || "Something went wrong!",
+            showCancelButton: false,
+            confirmButtonColor: "#d33",
+            confirmButtonText: "Ok",
+          });
+        }
+      } catch (error) {
+        // Handle error in the request
+        Swal.fire({
+          icon: "error",
+          title: "Request failed",
+          text: `${error.message}`,
+          showCancelButton: false,
+          confirmButtonColor: "#d33",
+          confirmButtonText: "Ok",
+        });
+        console.error(error);
+      }
+    }
+  };
+
   return (
     <div
       className="group flex w-full min-w-[318px] max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:cursor-pointer"
-      onClick={() => onClick(props.id)}
+      // onClick={() => onClick(props.id)}
     >
       <div
         className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
@@ -182,11 +260,8 @@ const Card = ({ onClick, ...props }) => {
           </p>
         </div>
       </div>
-      <div className="mt-auto mx-5">
-        <a
-          href="#"
-          className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300 mb-5"
-        >
+      <div className="mt-auto mx-5" onClick={handleAddCart}>
+        <div className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300 mb-5">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="mr-2 h-6 w-6"
@@ -202,7 +277,7 @@ const Card = ({ onClick, ...props }) => {
             />
           </svg>
           Add to cart
-        </a>
+        </div>
       </div>
     </div>
   );
