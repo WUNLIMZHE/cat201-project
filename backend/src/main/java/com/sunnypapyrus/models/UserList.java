@@ -45,6 +45,7 @@ public class UserList {
         for (UserEntity user : this.users) {
             JSONObject userJson = new JSONObject();
             userJson.put("username", user.getUsername());
+            userJson.put("password", user.getPassword());
             userJson.put("email", user.getEmail());
             userJson.put("firstName", user.getFirstName());
             userJson.put("lastName", user.getLastName());
@@ -97,6 +98,7 @@ public class UserList {
                 JSONObject userJson = (JSONObject) obj;
                 UserEntity user = new UserEntity();
                 user.setFirstName((String) userJson.get("firstName"));
+                user.setPassword((String) userJson.get("password"));
                 user.setLastName((String) userJson.get("lastName"));
                 user.setPhoneNumber((String) userJson.get("phoneNumber"));
                 user.setEmail((String) userJson.get("email"));

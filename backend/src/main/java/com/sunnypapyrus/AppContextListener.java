@@ -20,7 +20,7 @@ import java.io.Reader;
 
 @WebListener
 public class AppContextListener implements ServletContextListener {
-    private static final String USER_DATA_FILE = "src/main/resources/data/userData.json";
+    private static final String USER_DATA_FILE = "src/main/resources/data/UserData.json";
     private static final String PRODUCT_DATA_FILE = "src/main/resources/data/productData.json";
 
     @Override

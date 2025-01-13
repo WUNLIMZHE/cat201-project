@@ -6,8 +6,8 @@ import TestHome from './pages/TestHome';
 import { useState } from 'react';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [username, setAuthUsername] = useState("qwe");
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [username, setAuthUsername] = useState("");
 
   return (
     <Router>
