@@ -5,14 +5,14 @@ public class Payment {
     private long paymentMethod;
 
     private String cardholderName;
-    private long cardNumber;
+    private String cardNumber;
 
     private String expiryDate;
     private String cardType;
 
-    private long cvv;
+    private String cvv;
 
-    public Payment(long paymentMethod, String cardholderName, long cardNumber, String expiryDate, String cardType, long cvv) {
+    public Payment(long paymentMethod, String cardholderName, String cardNumber, String expiryDate, String cardType, String cvv) {
         this.paymentMethod = paymentMethod;
         this.cardholderName = cardholderName;
         this.cardNumber = cardNumber;
@@ -29,7 +29,7 @@ public class Payment {
         return this.cardholderName;
     }
     
-    public long getcardNumber() {
+    public String getcardNumber() {
         return this.cardNumber;
     }
     
@@ -41,7 +41,7 @@ public class Payment {
         return this.cardType;
     }
     
-    public long getCvv() {
+    public String getCvv() {
         return this.cvv;
     }
     
@@ -53,7 +53,7 @@ public class Payment {
         this.cardholderName = cardholderName;
     }
     
-    public void setcardNumber(long cardNumber) {
+    public void setcardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
     }
     
@@ -65,7 +65,7 @@ public class Payment {
         this.cardType = cardType;
     }
     
-    public void setCvv(long cvv) {
+    public void setCvv(String cvv) {
         this.cvv = cvv;
     }
 }

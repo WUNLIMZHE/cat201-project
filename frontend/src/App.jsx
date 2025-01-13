@@ -7,12 +7,12 @@ import { useState } from 'react';
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [username, setAuthUsername] = useState("chewhong");
+  const [username, setAuthUsername] = useState("");
 
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/testhome  " />} />
+        <Route path="/" element={<Navigate to="/testhome" />} />
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setAuthUsername={setAuthUsername} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/testhome" element={<TestHome loggedIn={loggedIn} username={username} />} />

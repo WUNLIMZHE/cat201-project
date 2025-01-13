@@ -32,7 +32,8 @@ public class UserList {
         return currentUser;
     }
 
-    public static void setCurrentUser(UserEntity user) {
+    public void setCurrentUser(String currentuser) {
+        UserEntity user = getUserByUsername(currentuser);
         currentUser = user;
     }
 
@@ -132,10 +133,10 @@ public class UserList {
                     Payment payment = new Payment(
                             paymentMethod,
                             (String) paymentJson.get("cardholderName"),
-                            (Long) paymentJson.get("cardNumber"),
+                            (String) paymentJson.get("cardNumber"),
                             (String) paymentJson.get("expiryDate"),
                             (String) paymentJson.get("cardType"),
-                            (Long) paymentJson.get("cvv"));
+                            (String) paymentJson.get("cvv"));
                     user.getPayments().add(payment);
                 }
 
@@ -202,10 +203,10 @@ public class UserList {
 
     public boolean addPayment(String username,
             String cardholderName,
-            long cardNumber,
+            String cardNumber,
             String expiryDate,
             String cardType,
-            long cvv) {
+            String cvv) {
         UserEntity user = getUserByUsername(username);
         if (user != null) {
             Payment newPayment = new Payment(user.getCurrentPaymentId(user) + 1, cardholderName, cardNumber, expiryDate,
