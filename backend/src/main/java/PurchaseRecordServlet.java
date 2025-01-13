@@ -17,25 +17,31 @@ public class PurchaseRecordServlet extends HttpServlet {
 
     // Load all purchased records from purchased_records.json
     private JSONArray loadAllPurchasedRecords(HttpServletRequest request) {
-        // Load the purchased records from a file or database
-        // In this case, it would load the JSON from a file
-        JSONArray purchasedRecords = new JSONArray();
-        try (BufferedReader reader = new BufferedReader(new FileReader("purchased.json"))) {
-            String line;
-            StringBuilder json = new StringBuilder();
-            while ((line = reader.readLine()) != null) {
-                json.append(line);
+        JSONArray purchaseHistory = new JSONArray();
+        try {
+            String filePath = getPurchaseRecordFilePath(request);
+            File file = new File(filePath);
+            if (file.exists()) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
+                StringBuilder jsonContent = new StringBuilder();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    jsonContent.append(line);
+                }
+                reader.close();
+                purchaseHistory = new JSONArray(jsonContent.toString());
+                System.out.println(purchaseHistory);
             }
-            purchasedRecords = new JSONArray(json.toString());
         } catch (IOException e) {
+            System.err.println("Error loading cart items:");
             e.printStackTrace();
         }
-        return purchasedRecords;
+        return purchaseHistory;
     }
 
     // Save all purchased records to purchased_records.json
     private void savePurchasedRecords(JSONArray purchasedRecords, HttpServletRequest req) {
-        String filePath = getPurchasedRecordFilePath(req);
+        String filePath = getPurchaseRecordFilePath(req);
         try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8"))) {
             writer.write(purchasedRecords.toString());
         } catch (IOException e) {
@@ -127,7 +133,7 @@ public class PurchaseRecordServlet extends HttpServlet {
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
-    private String getPurchasedRecordFilePath(HttpServletRequest req) {
+    private String getPurchaseRecordFilePath(HttpServletRequest req) {
         return getServletContext().getRealPath(PURCHASED_RECORD_FILE);
     }
 
