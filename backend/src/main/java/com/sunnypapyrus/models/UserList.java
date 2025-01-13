@@ -59,7 +59,7 @@ public class UserList {
                 addressJson.put("street", address.getStreet());
                 addressJson.put("city", address.getCity());
                 addressJson.put("state", address.getState());
-                addressJson.put("zipCode", address.getZipCode());
+                addressJson.put("zipcode", address.getzipcode());
                 addressJson.put("country", address.getCountry());
                 addressesArray.add(addressJson);
             }
@@ -117,7 +117,7 @@ public class UserList {
                             (String) addressJson.get("street"),
                             (String) addressJson.get("city"),
                             (String) addressJson.get("state"),
-                            (String) addressJson.get("zipCode"),
+                            (String) addressJson.get("zipcode"),
                             (String) addressJson.get("country"));
                     user.getAddresses().add(address);
                 }
@@ -161,6 +161,7 @@ public class UserList {
         newUser.setLastName(lastName);
         newUser.setPhoneNumber(phoneNumber);
         newUser.setEmail(email);
+        newUser.setRole("user");
         this.addUser(newUser);
         saveUsers();
         return true;
@@ -184,11 +185,14 @@ public class UserList {
         return null;
     }
 
-    public boolean addAddress(String username, String street, String city, String state, String zipCode,
+    public boolean addAddress(String username, String street, String city, String state, String zipcode,
             String country) {
+        if (username == null || street == null || city == null || state == null || zipcode == null || country == null) {
+            return false;
+        }
         UserEntity user = getUserByUsername(username);
         if (user != null) {
-            Address newAddress = new Address(user.getCurrentAddressId(user) + 1, street, city, state, zipCode, country);
+            Address newAddress = new Address(user.getCurrentAddressId(user) + 1, street, city, state, zipcode, country);
             user.addAddress(newAddress);
             saveUsers();
             return true;

@@ -8,16 +8,16 @@ public class Address {
     private String city;
 
     private String state;
-    private String zipCode;
+    private String zipcode;
 
     private String country;
 
-    public Address(long addressId, String street, String city, String state, String zipCode, String country) {
+    public Address(long addressId, String street, String city, String state, String zipcode, String country) {
         this.addressId = addressId;
         this.street = street;
         this.city = city;
         this.state = state;
-        this.zipCode = zipCode;
+        this.zipcode = zipcode;
         this.country = country;
     }
     
@@ -37,8 +37,8 @@ public class Address {
         return this.state;
     }
     
-    public String getZipCode() {
-        return this.zipCode;
+    public String getzipcode() {
+        return this.zipcode;
     }
     
     public String getCountry() {
@@ -61,8 +61,8 @@ public class Address {
         this.state = state;
     }
     
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setzipcode(String zipcode) {
+        this.zipcode = zipcode;
     }
     
     public void setCountry(String country) {

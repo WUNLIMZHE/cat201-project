@@ -7,7 +7,7 @@ function TestHome({ loggedIn, username }) {
     const [street, setStreet] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [zipcode, setZipcode] = useState('');
+    const [zipcode, setzipcode] = useState('');
     const [country, setCountry] = useState('');
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -25,6 +25,9 @@ function TestHome({ loggedIn, username }) {
             { username, street, city, state, zipcode, country },
             async (result) => {
                 console.log("Address submission result: " + JSON.stringify(result));
+                if (result.status !== "Address added successfully") {
+                    setError(result.status);
+                }
             },
             (error) => {
                 console.error("Error submitting address: " + error);
@@ -88,13 +91,13 @@ function TestHome({ loggedIn, username }) {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="zipcode">Zipcode</label>
+                    <label htmlFor="zipcode">zipcode</label>
                     <input
                         type="text"
                         id="zipcode"
                         className="form-control"
                         value={zipcode}
-                        onChange={(e) => setZipcode(e.target.value)}
+                        onChange={(e) => setzipcode(e.target.value)}
                     />
                 </div>
                 <div className="form-group">

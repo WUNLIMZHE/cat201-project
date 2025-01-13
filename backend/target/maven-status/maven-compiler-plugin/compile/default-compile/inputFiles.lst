@@ -1,6 +1,6 @@
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\CorsFilter.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\CurrentUserServlet.java
-D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UserAddressServlet.java
+D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UsersAddressServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UserSignUpServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UsersLoginServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\AppContextListener.java

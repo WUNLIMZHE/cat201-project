@@ -1,77 +1,22 @@
 [
     {
-        "firstName": "qwe",
-        "lastName": "qwe",
-        "password": "qwe",
+        "firstName": "user1",
+        "lastName": "lname",
+        "password": "123456",
         "addresses": [
             {
-                "zipCode": "94105",
-                "country": "USA",
-                "city": "San Francisco",
-                "street": "Apt 1",
-                "state": "CA",
-                "addressId": 2
-            },
-            {
-                "zipCode": "94105",
-                "country": "USA",
-                "city": "San Francisco",
-                "street": "Apt 1",
-                "state": "CA",
-                "addressId": 3
-            },
-            {
-                "zipCode": "94105",
-                "country": "USA",
-                "city": "San Francisco",
-                "street": "Apt 1",
-                "state": "CA",
-                "addressId": 4
+                "zipcode": "12345",
+                "country": "country1",
+                "city": "city1",
+                "street": "street1",
+                "state": "state1",
+                "addressId": 1
             }
         ],
-        "phoneNumber": "124115",
-        "role": "ROLE_USER",
-        "payments": [
-            {
-                "expiryDate": "10\/27",
-                "cvv": 123,
-                "cardholderName": "handsome",
-                "cardType": "VISA",
-                "paymentMethod": 1,
-                "cardNumber": 1027
-            },
-            {
-                "expiryDate": "10\/27",
-                "cvv": 123,
-                "cardholderName": "handsome",
-                "cardType": "VISA",
-                "paymentMethod": 2,
-                "cardNumber": 1027
-            }
-        ],
-        "email": "123",
-        "username": "qwe"
-    },
-    {
-        "firstName": "Sunny",
-        "lastName": "Papyrus",
-        "password": "password",
-        "addresses": [],
-        "phoneNumber": "1234567890",
-        "role": null,
+        "phoneNumber": "123456",
+        "role": "user",
         "payments": [],
-        "email": "chewhong@gmail.com",
-        "username": "sunnypapyrus"
-    },
-    {
-        "firstName": "chew",
-        "lastName": "hong",
-        "password": "chewhong",
-        "addresses": [],
-        "phoneNumber": "1293878",
-        "role": null,
-        "payments": [],
-        "email": "chewhong123@gmail.com",
-        "username": "chewhong"
+        "email": "user1@gmail.com",
+        "username": "user1"
     }
 ]
