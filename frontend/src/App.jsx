@@ -3,6 +3,7 @@ import './style.css';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import TestHome from './pages/TestHome';
+import TestAdmin from './pages/TestAdmin';
 import { useState } from 'react';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setAuthUsername={setAuthUsername} />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/testhome" element={<TestHome loggedIn={loggedIn} username={username} />} />
+        <Route path="/testadmin" element={<TestAdmin />} />
       </Routes>
     </Router>
   );

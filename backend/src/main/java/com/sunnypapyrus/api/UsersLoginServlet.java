@@ -66,6 +66,7 @@ public class UsersLoginServlet extends HttpServlet {
             userJson.addProperty("phoneNumber", currentUser.getPhoneNumber());
             userJson.addProperty("role", currentUser.getRole());
             jsonResponse.addProperty("user", userJson.toString());
+            jsonResponse.addProperty("userRole", currentUser.getRole());
         }
 
         // Write the response

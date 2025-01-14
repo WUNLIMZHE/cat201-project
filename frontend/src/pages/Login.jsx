@@ -7,6 +7,7 @@ function Login({setLoggedIn, setAuthUsername}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [userRole, setUserRole] = useState('');
 
   const navigate = useNavigate();
 
@@ -20,7 +21,11 @@ function Login({setLoggedIn, setAuthUsername}) {
           setAuthUsername(username);
           setLoggedIn(true);
           localStorage.setItem("userLoginStatus", true); // Store login status in local storage
-          navigate('/testhome');
+          if (result.userRole === 'admin') {
+            navigate('/testadmin');
+          } else {
+            navigate('/testhome');
+          }
         } else {
           setError("Invalid username or password");
         }
