@@ -17,6 +17,8 @@ function TestHome({ loggedIn, username }) {
     const [cardType, setCardType] = useState('');
     const [cvv, setCvv] = useState('');
     const [payments, setPayments] = useState([]);
+    const [selectedAddress, setSelectedAddress] = useState(null);
+    const [selectedPayment, setSelectedPayment] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -100,6 +102,46 @@ function TestHome({ loggedIn, username }) {
             (error) => {
                 console.error("Error submitting payment: " + error);
                 setError("Error submitting payment: " + error);
+            }
+        );
+    };
+
+    const deleteAddress = async (address) => {
+        if (!address) {
+            setError("No address selected");
+            return;
+        }
+        await handleApiCall(
+            "users/deleteaddress",
+            "DELETE",
+            { username, address: JSON.stringify(address) },
+            async (result) => {
+                console.log("Address deletion result: " + JSON.stringify(result));
+                fetchAddresses();
+            },
+            (error) => {
+                console.error("Error deleting address: " + error);
+                setError("Error deleting address: " + error);
+            }
+        );
+    };
+
+    const deletePayment = async (paymentId) => {
+        if (paymentId === null) {
+            setError("No payment selected");
+            return;
+        }
+        await handleApiCall(
+            "users/deletepayment",
+            "DELETE",
+            { username, paymentId },
+            async (result) => {
+                console.log("Payment deletion result: " + JSON.stringify(result));
+                fetchPayments();
+            },
+            (error) => {
+                console.error("Error deleting payment: " + error);
+                setError("Error deleting payment: " + error);
             }
         );
     };
@@ -195,9 +237,16 @@ function TestHome({ loggedIn, username }) {
             <ul>
                 {addresses.map((address, index) => (
                     <li key={index}>
+                        <input
+                            type="radio"
+                            name="selectedAddress"
+                            value={index}
+                            onChange={() => setSelectedAddress(address)}
+                        />
                         {address.street}, {address.city}, {address.state}, {address.zipcode}, {address.country}
                     </li>
                 ))}
+                <button onClick={() => deleteAddress(selectedAddress)} className="btn btn-danger">Delete</button>
             </ul>
             <h2>Payment Details</h2>
             <form onSubmit={handlePaymentSubmit}>
@@ -258,6 +307,12 @@ function TestHome({ loggedIn, username }) {
             <ul>
                 {payments.map((payment, index) => (
                     <li key={index}>
+                        <input
+                            type="radio"
+                            name="selectedPayment"
+                            value={index}
+                            onChange={() => setSelectedPayment(index)}
+                        />
                         <p>Payment Method: {payment.paymentMethod}</p>
                         <p>Cardholder Name: {payment.cardholderName}</p>
                         <p>Card Number: {payment.cardNumber}</p>
@@ -266,6 +321,7 @@ function TestHome({ loggedIn, username }) {
                         <p>CVV: {payment.cvv}</p>
                     </li>
                 ))}
+                <button onClick={() => deletePayment(payment.id)} className="btn btn-danger">Delete</button>
             </ul>
         </div>
     ) : (

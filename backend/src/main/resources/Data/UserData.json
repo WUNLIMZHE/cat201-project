@@ -10,19 +10,18 @@
                 "city": "City1",
                 "street": "Street1",
                 "state": "State1"
+            },
+            {
+                "zipcode": "zipcode2",
+                "country": "country2",
+                "city": "city2",
+                "street": "street2",
+                "state": "state2"
             }
         ],
         "phoneNumber": "123456",
         "role": "user",
-        "payments": [
-            {
-                "expiryDate": "Exp1",
-                "cvv": "Cvv1",
-                "cardholderName": "Holder1",
-                "cardType": "Type1",
-                "cardNumber": "Number1"
-            }
-        ],
+        "payments": [],
         "email": "user1@gmail.com",
         "username": "user1"
     }

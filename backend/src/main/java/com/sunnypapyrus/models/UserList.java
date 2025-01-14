@@ -216,4 +216,14 @@ public class UserList {
         }
         return false;
     }
+
+    public boolean removeAddress(String username, Address address) {
+        UserEntity user = getUserByUsername(username);
+        if (user != null) {
+            user.removeAddress(address);
+            saveUsers();
+            return true;
+        }
+        return false;
+    }
 }
