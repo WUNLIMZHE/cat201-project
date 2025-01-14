@@ -1,159 +1,102 @@
+import java.util.List;
+
 public class PurchaseRecord {
-  private int purchaseID;
-  private int userID;
-  private int id; // Book ID
-  private String title;
-  private String image;
-  private String genre;
-  private String category;
-  private double price;
-  private int purchaseUnit;
-  private double totalPrice;
-  private int stock;
-  private String status;
-  private String language;
+    private int purchaseID;
+    private int userID;
 
-  // Constructor
-  public PurchaseRecord(int purchaseID, int userID, int id, String title, String image, String genre,
-                        String category, double price, int purchaseUnit, double totalPrice,
-                        int stock, String status, String language) {
-      this.purchaseID = purchaseID;
-      this.userID = userID;
-      this.id = id;
-      this.title = title;
-      this.image = image;
-      this.genre = genre;
-      this.category = category;
-      this.price = price;
-      this.purchaseUnit = purchaseUnit;
-      this.totalPrice = totalPrice;
-      this.stock = stock;
-      this.status = status;
-      this.language = language;
-  }
+    /**
+     * 1. Pending
+    2. Confirmed
+    3. Processing
+    4. Shipped
+    5. Out for Delivery
+    6. Delivered
+    7. Cancelled/Failed
+    8. Returned/Refunded */
+    private String purchaseStatus;
+    private double totalAmount;
+    private String shippingAddress;
+    private List<CartItem> books; // Using CartItem to store purchased books
 
-  // Getters and Setters
-  public int getPurchaseID() {
-      return purchaseID;
-  }
+    // Constructor
+    public PurchaseRecord(int purchaseID, int userID, double totalAmount, String shippingAddress, List<CartItem> books) {
+        this.purchaseID = purchaseID;
+        this.userID = userID;
+        this.totalAmount = totalAmount;
+        this.shippingAddress = shippingAddress;
+        this.books = books;
+    }
 
-  public void setPurchaseID(int purchaseID) {
-      this.purchaseID = purchaseID;
-  }
+    // Getters and Setters
+    public int getPurchaseID() {
+        return purchaseID;
+    }
 
-  public int getUserID() {
-      return userID;
-  }
+    public void setPurchaseID(int purchaseID) {
+        this.purchaseID = purchaseID;
+    }
 
-  public void setUserID(int userID) {
-      this.userID = userID;
-  }
+    public int getUserID() {
+        return userID;
+    }
 
-  public int getId() {
-      return id;
-  }
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
 
-  public void setId(int id) {
-      this.id = id;
-  }
+    public String getPurchaseStatus() {
+        return purchaseStatus;
+    }
 
-  public String getTitle() {
-      return title;
-  }
+    public void setPurchaseStatus(String purchaseStatus) {
+        this.purchaseStatus = purchaseStatus;
+    }
 
-  public void setTitle(String title) {
-      this.title = title;
-  }
+    public double getTotalAmount() {
+        return totalAmount;
+    }
 
-  public String getImage() {
-      return image;
-  }
+    public void setTotalAmount(double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
 
-  public void setImage(String image) {
-      this.image = image;
-  }
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
 
-  public String getGenre() {
-      return genre;
-  }
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
 
-  public void setGenre(String genre) {
-      this.genre = genre;
-  }
+    public List<CartItem> getBooks() {
+        return books;
+    }
 
-  public String getCategory() {
-      return category;
-  }
+    public void setBooks(List<CartItem> books) {
+        this.books = books;
+    }
 
-  public void setCategory(String category) {
-      this.category = category;
-  }
-
-  public double getPrice() {
-      return price;
-  }
-
-  public void setPrice(double price) {
-      this.price = price;
-  }
-
-  public int getPurchaseUnit() {
-      return purchaseUnit;
-  }
-
-  public void setPurchaseUnit(int purchaseUnit) {
-      this.purchaseUnit = purchaseUnit;
-  }
-
-  public double getTotalPrice() {
-      return totalPrice;
-  }
-
-  public void setTotalPrice(double totalPrice) {
-      this.totalPrice = totalPrice;
-  }
-
-  public int getStock() {
-      return stock;
-  }
-
-  public void setStock(int stock) {
-      this.stock = stock;
-  }
-
-  public String getStatus() {
-      return status;
-  }
-
-  public void setStatus(String status) {
-      this.status = status;
-  }
-
-  public String getLanguage() {
-      return language;
-  }
-
-  public void setLanguage(String language) {
-      this.language = language;
-  }
-
-  // toString() Method for Debugging and Display
-  @Override
-  public String toString() {
-      return "PurchaseRecord{" +
-              "purchaseID=" + purchaseID +
-              ", userID=" + userID +
-              ", id=" + id +
-              ", title='" + title + '\'' +
-              ", image='" + image + '\'' +
-              ", genre='" + genre + '\'' +
-              ", category='" + category + '\'' +
-              ", price=" + price +
-              ", purchaseUnit=" + purchaseUnit +
-              ", totalPrice=" + totalPrice +
-              ", stock=" + stock +
-              ", status='" + status + '\'' +
-              ", language='" + language + '\'' +
-              '}';
-  }
+    // Method to display purchase record details
+    public void displayPurchaseRecord() {
+        System.out.println("Purchase ID: " + purchaseID);
+        System.out.println("User ID: " + userID);
+        System.out.println("Purchase Status: " + purchaseStatus);
+        System.out.println("Total Amount: $" + totalAmount);
+        System.out.println("Shipping Address: " + shippingAddress);
+        System.out.println("Books Purchased:");
+        for (CartItem book : books) {
+            System.out.println("  - Cart ID: " + book.getCartID());
+            System.out.println("    User ID: " + book.getUserID());
+            System.out.println("    Book ID: " + book.getId());
+            System.out.println("    Title: " + book.getTitle());
+            System.out.println("    Image: " + book.getImage());
+            System.out.println("    Genre: " + book.getGenre());
+            System.out.println("    Category: " + book.getCategory());
+            System.out.println("    Price: $" + book.getPrice());
+            System.out.println("    Units Purchased: " + book.getPurchaseUnit());
+            System.out.println("    Total Price: $" + book.getTotalPrice());
+            System.out.println("    Stock: " + book.getStock());
+            System.out.println("    Language: " + book.getLanguage());
+        }
+    }    
 }
