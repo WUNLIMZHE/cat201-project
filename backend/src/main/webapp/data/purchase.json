@@ -1,0 +1,36 @@
+[
+  {
+    "purchaseID": 1,
+    "userID": 1,
+    "totalAmmount": 80,
+    "shippingAddress": "6-6-6, TAMAN PEKAKA",
+    "books": [
+      {
+        "id": 42,
+        "title": "Laut Bercerita",
+        "image": "/src/assets/images/book-42.webp",
+        "author": "Leila S. Chudori",
+        "price": 45,
+        "purchaseUnit": 2,
+        "totalPrice": 90
+      }
+    ]
+  },
+  {
+    "purchaseID": 2,
+    "userID": 2,
+    "totalAmmount": 80,
+    "shippingAddress": "6-6-6, USM",
+    "books": [
+      {
+        "id": 42,
+        "title": "Laut Bercerita",
+        "image": "/src/assets/images/book-42.webp",
+        "author": "Leila S. Chudori",
+        "price": 45,
+        "purchaseUnit": 2,
+        "totalPrice": 90
+      }
+    ]
+  }
+]

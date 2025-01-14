@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (prefers-reduced-motion: no-preference) {
+  .btn {
+      animation: button-pop var(--animation-btn, .25s) ease-out;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  height: 3rem;
+  min-height: 3rem;
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  text-align: center;
+  font-size: .875rem;
+  line-height: 1em;
+  gap: .5rem;
+  font-weight: 600;
+}
+
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.25rem;
+  font-size: .875rem;
+  line-height: 1.25rem;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding-left: .563rem;
+  padding-right: .563rem;
+  border-radius: var(--rounded-badge, 1.9rem);
+  border-width: 1px;
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-b2, oklch(var(--b2) / var(--tw-border-opacity)));
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b1, oklch(var(--b1) / var(--tw-bg-opacity)));
+  --tw-text-opacity: 1;
+  color: var(--fallback-bc, oklch(var(--bc) / var(--tw-text-opacity)));
+}
+
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: .5rem;
+}
+
+.tag1{
+  --tw-bg-opacity: 1;
+  background-color: rgb(22 101 106 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.tag2{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 228 105 / var(--tw-bg-opacity));
+  border-width: 0;
+}
