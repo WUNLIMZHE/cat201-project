@@ -3,7 +3,7 @@ import "./Navbar.css";
 import logo from "../../assets/visitpenang_logo.png";
 import { Link } from "react-router-dom";
 import Dropdown from "../Dropdown/dropdown";
-import iconCart from '../../assets/iconCart.png';
+import iconCart from "../../assets/iconCart.png";
 const Navbar = () => {
   const [sticky, setSticky] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -40,13 +40,13 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </li>
           <li className="fancy-hover relative">
-            <Link to="/">Food</Link>
+            <Link to="/order">Order</Link>
           </li>
           <li className="fancy-hover relative">
-            <Link to="/">Tourist Attractions</Link>
+            <Link to="/payment">Payment</Link>
           </li>
           <li className="fancy-hover relative">
-            <Link to="/">Hotels</Link>
+            <Link to="/chart">Chart</Link>
           </li>
           <li className="hover:scale-110 transition-transform duration-300 ease-in-out">
             <Link to="/login">
@@ -54,9 +54,14 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to='/cart'>
-              <img src={iconCart} alt='' className="w-10 mr-2"/>
+            <Link to="/cart">
+              <img src={iconCart} alt="" className="w-10 mr-2" />
               Cart
+            </Link>
+          </li>
+          <li className="hover:scale-110 transition-transform duration-300 ease-in-out">
+            <Link to="/signup">
+              <button className="btn">Sign up</button>
             </Link>
           </li>
         </ul>
