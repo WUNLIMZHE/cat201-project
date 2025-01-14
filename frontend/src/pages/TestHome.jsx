@@ -93,6 +93,9 @@ function TestHome({ loggedIn, username }) {
                 if (result.status !== "Payment added successfully") {
                     setError(result.status);
                 } 
+                else {
+                    fetchPayments();
+                }
             },
             (error) => {
                 console.error("Error submitting payment: " + error);
@@ -105,6 +108,7 @@ function TestHome({ loggedIn, username }) {
         e.preventDefault();
         await addressSubmitionMethod(username, street, city, state, zipcode, country);
         await fetchAddresses(); // Fetch updated addresses
+        //window.location.reload(); // Refresh the webpage
         console.log({ username, street, city, state, zipcode, country });
     };
 
@@ -112,6 +116,7 @@ function TestHome({ loggedIn, username }) {
         e.preventDefault();
         await paymentSubmissionMethod(username, cardholderName, cardNumber, expiryDate, cardType, cvv);
         await fetchPayments(); // Fetch updated payments
+        //window.location.reload(); // Refresh the webpage
         console.log({ username, cardholderName, cardNumber, expiryDate, cardType, cvv });
     };
 

@@ -26,6 +26,9 @@ public class GetAddressServlet extends HttpServlet {
         resp.setContentType("application/json");
         String username = req.getParameter("username");
         userList.setCurrentUser(username);
+
+        // Reload the latest data
+        userList.loadUsers();
         // Get current user
         UserEntity currentUser = UserList.getCurrentUser();
         if (currentUser == null) {

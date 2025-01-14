@@ -65,6 +65,13 @@ public class UsersAddressServlet extends HttpServlet {
         // Add address to user
         boolean success = userList.addAddress(username, street, city, state, zipcode, country);
 
+        // // Reload the latest data
+        // userList.loadUsers();
+
+        // Add payment to currentUser
+        userList.setCurrentUser(username);
+        
+
         // Send response
         if (success) {
             response.setStatus(HttpServletResponse.SC_OK);

@@ -62,11 +62,18 @@ public class UserPaymentServlet extends HttpServlet {
             return;
         }
 
+        // // Reload the latest data
+        // userList.loadUsers();
+
         // Add payment to user
         userList.addPayment(username, cardHolder, cardNumber, expiryDate, cardType, cvv);
 
         // Save users to file
         userList.saveUsers();
+
+        // Add payment to currentUser
+        userList.setCurrentUser(username);
+        
 
         // Send success response
         response.setStatus(HttpServletResponse.SC_OK);

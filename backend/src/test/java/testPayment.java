@@ -9,10 +9,10 @@ public class testPayment {
         // Test the addPayment method
         boolean x = userList.addPayment("qwe", 
         "handsome", 
-        1027, 
+        "1027", 
         "10/27", 
         "VISA", 
-        123);
+        "123");
         
         if (x) {
             System.out.println("Test case 1 passed");

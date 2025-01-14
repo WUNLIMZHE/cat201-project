@@ -22,9 +22,11 @@ public class UserList {
 
     public void addUser(UserEntity user) {
         this.users.add(user);
+        saveUsers();
     }
 
     public List<UserEntity> getUsers() {
+        loadUsers(); // Reload the latest data
         return this.users;
     }
 
@@ -39,6 +41,7 @@ public class UserList {
 
     public void removeUserByUsername(String username) {
         this.users.removeIf(user -> user.getUsername().equals(username));
+        saveUsers();
     }
 
     public void saveUsers() {
@@ -95,6 +98,7 @@ public class UserList {
         try {
             JSONArray userList = (JSONArray) parser
                     .parse(new FileReader("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json"));
+            this.users.clear(); // Clear the current list before loading
             for (Object obj : userList) {
                 JSONObject userJson = (JSONObject) obj;
                 UserEntity user = new UserEntity();
@@ -195,7 +199,9 @@ public class UserList {
         if (user != null) {
             Address newAddress = new Address(user.getCurrentAddressId(user) + 1, street, city, state, zipcode, country);
             user.addAddress(newAddress);
+            currentUser.addAddress(newAddress);
             saveUsers();
+            loadUsers(); // Reload the latest data
             return true;
         }
         return false;
@@ -212,7 +218,9 @@ public class UserList {
             Payment newPayment = new Payment(user.getCurrentPaymentId(user) + 1, cardholderName, cardNumber, expiryDate,
                     cardType, cvv);
             user.addPayment(newPayment);
+            currentUser.addPayment(newPayment);
             saveUsers();
+            loadUsers(); // Reload the latest data
             return true;
         }
         return false;
@@ -225,6 +233,7 @@ public class UserList {
                     .orElse(null);
             user.removeAddress(address);
             saveUsers();
+            loadUsers(); // Reload the latest data
             return true;
         }
         return false;
@@ -236,8 +245,8 @@ public class UserList {
             Payment payment = user.getPayments().stream().filter(p -> p.getpaymentMethod() == paymentMethod).findFirst()
                     .orElse(null);
             user.removePayment(payment);
-            
             saveUsers();
+            loadUsers(); // Reload the latest data
             return true;
         }
         return false;
