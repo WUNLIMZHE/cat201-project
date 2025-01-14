@@ -9,6 +9,7 @@ import Cart from "./pages/Cart/Cart"
 import PurchaseRecord from './pages/PurchaseRecord';
 import Order from './pages/Admin/Order';
 import OrderDetail from './components/OrderDetail'
+import Inventory from './pages/Admin/Inventory';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/view-my-cart" element={<Cart userID={1}/>} />
         <Route path="/purchase-record" element={<PurchaseRecord userID={1}/>} />
         <Route path="/orders/:id" element={<OrderDetail />} />
+        <Route path="/inventory" element={<Inventory />} />
       </Routes>
     </Router>
   );

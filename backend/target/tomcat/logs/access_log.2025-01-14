@@ -6,3 +6,17 @@
 0:0:0:0:0:0:0:1 - - [14/Jan/2025:11:04:56 +0800] "GET /cart HTTP/1.1" 200 437 http-bio-9000-exec-10 3
 0:0:0:0:0:0:0:1 - - [14/Jan/2025:11:05:22 +0800] "GET /purchase-record?userID=1 HTTP/1.1" 200 246 http-bio-9000-exec-3 7
 0:0:0:0:0:0:0:1 - - [14/Jan/2025:11:05:22 +0800] "GET /purchase-record?userID=1 HTTP/1.1" 200 246 http-bio-9000-exec-3 4
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:11:28:00 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-1 85
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:11:28:00 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-3 13
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:11:33:56 +0800] "GET /cart HTTP/1.1" 200 437 http-bio-9000-exec-5 14
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:11:33:56 +0800] "GET /cart HTTP/1.1" 200 437 http-bio-9000-exec-6 2
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:11:34:10 +0800] "GET /purchase-record?userID=1 HTTP/1.1" 200 246 http-bio-9000-exec-7 16
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:11:34:11 +0800] "GET /purchase-record?userID=1 HTTP/1.1" 200 246 http-bio-9000-exec-8 4
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:12:11:12 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-10 186
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:12:11:12 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-1 24
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:12:11:20 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-1 22
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:12:11:20 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-10 14
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:12:11:27 +0800] "GET /cart HTTP/1.1" 200 437 http-bio-9000-exec-10 7
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:12:11:27 +0800] "GET /cart HTTP/1.1" 200 437 http-bio-9000-exec-10 3
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:12:11:33 +0800] "OPTIONS /cart HTTP/1.1" 200 - http-bio-9000-exec-10 12
+0:0:0:0:0:0:0:1 - - [14/Jan/2025:12:11:33 +0800] "PUT /cart HTTP/1.1" 200 46 http-bio-9000-exec-10 67
