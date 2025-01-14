@@ -1,21 +1,23 @@
-// import { useState } from "react";
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login";
-import Home from "./pages/Home"
-import CardDetailsPage from "./pages/CardDetailsPage"
-import "./App.css";
-import AdminPage from "./pages/AdminPage";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import 'font-awesome/css/font-awesome.min.css';
+import './style.css';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import ProductPage from './pages/ProductPage'; // Adjust the path to your component
+import CardDetailsPage from './pages/CardDetailsPage';
+import Cart from "./pages/Cart/Cart"
+import PurchaseRecord from './pages/PurchaseRecord';
 
 function App() {
-
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/details" element={<CardDetailsPage />}/>
         <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<AdminPage />} />
-        
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/books" element={<ProductPage />} />
+        <Route path="/book/details" element={<CardDetailsPage />} />
+        <Route path="/view-my-cart" element={<Cart userID={1}/>} />
+        <Route path="/purchase-record" element={<PurchaseRecord userID={1}/>} />
       </Routes>
     </Router>
   );
