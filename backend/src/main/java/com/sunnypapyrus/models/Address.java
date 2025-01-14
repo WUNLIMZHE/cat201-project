@@ -2,8 +2,6 @@ package com.sunnypapyrus.models;
 
 public class Address {
 
-    private long addressId;
-
     private String street;
     private String city;
 
@@ -12,8 +10,7 @@ public class Address {
 
     private String country;
 
-    public Address(long addressId, String street, String city, String state, String zipcode, String country) {
-        this.addressId = addressId;
+    public Address( String street, String city, String state, String zipcode, String country) {
         this.street = street;
         this.city = city;
         this.state = state;
@@ -21,9 +18,6 @@ public class Address {
         this.country = country;
     }
     
-    public long getAddressId() {
-        return this.addressId;
-    }
     
     public String getStreet() {
         return this.street;
@@ -43,10 +37,6 @@ public class Address {
     
     public String getCountry() {
         return this.country;
-    }
-    
-    public void setAddressId(long addressId) {
-        this.addressId = addressId;
     }
     
     public void setStreet(String street) {

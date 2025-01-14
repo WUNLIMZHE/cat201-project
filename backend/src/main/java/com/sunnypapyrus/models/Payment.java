@@ -2,8 +2,6 @@ package com.sunnypapyrus.models;
 
 public class Payment {
 
-    private long paymentMethod;
-
     private String cardholderName;
     private String cardNumber;
 
@@ -12,8 +10,7 @@ public class Payment {
 
     private String cvv;
 
-    public Payment(long paymentMethod, String cardholderName, String cardNumber, String expiryDate, String cardType, String cvv) {
-        this.paymentMethod = paymentMethod;
+    public Payment(String cardholderName, String cardNumber, String expiryDate, String cardType, String cvv) {
         this.cardholderName = cardholderName;
         this.cardNumber = cardNumber;
         this.expiryDate = expiryDate;
@@ -21,10 +18,7 @@ public class Payment {
         this.cvv = cvv;
     }
     
-    public long getpaymentMethod() {
-        return this.paymentMethod;
-    }
-    
+ 
     public String getcardholderName() {
         return this.cardholderName;
     }
@@ -45,9 +39,6 @@ public class Payment {
         return this.cvv;
     }
     
-    public void setpaymentMethod(long paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
     
     public void setcardholderName(String cardholderName) {
         this.cardholderName = cardholderName;

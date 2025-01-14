@@ -18,6 +18,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.FileReader;
 import java.io.Reader;
 
+@SuppressWarnings("unused")
 @WebListener
 public class AppContextListener implements ServletContextListener {
     private static final String USER_DATA_FILE = "src/main/resources/data/UserData.json";

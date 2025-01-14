@@ -24,7 +24,6 @@ public class testPayment {
         userList.setCurrentUser("qwe");
         List<Payment> payments = UserList.getCurrentUser().getPayments();
         for (Payment payment : payments) {
-            System.out.println("Payment Method: " + payment.getpaymentMethod());
             System.out.println("Cardholder Name: " + payment.getcardholderName());
             System.out.println("Card Number: " + payment.getcardNumber());
             System.out.println("Expiry Date: " + payment.getexpiryDate());

@@ -11,6 +11,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+@SuppressWarnings("unused")
 public class UserList {
     private List<UserEntity> users;
     private static UserEntity currentUser;
@@ -44,6 +45,7 @@ public class UserList {
         saveUsers();
     }
 
+    @SuppressWarnings("unchecked")
     public void saveUsers() {
         JSONArray userList = new JSONArray();
         for (UserEntity user : this.users) {
@@ -59,7 +61,6 @@ public class UserList {
             JSONArray addressesArray = new JSONArray();
             for (Address address : user.getAddresses()) {
                 JSONObject addressJson = new JSONObject();
-                addressJson.put("addressId", address.getAddressId());
                 addressJson.put("street", address.getStreet());
                 addressJson.put("city", address.getCity());
                 addressJson.put("state", address.getState());
@@ -72,7 +73,6 @@ public class UserList {
             JSONArray paymentArray = new JSONArray();
             for (Payment payment : user.getPayments()) {
                 JSONObject paymentJson = new JSONObject();
-                paymentJson.put("paymentMethod", payment.getpaymentMethod());
                 paymentJson.put("cardholderName", payment.getcardholderName());
                 paymentJson.put("cardNumber", payment.getcardNumber());
                 paymentJson.put("expiryDate", payment.getexpiryDate());
@@ -113,12 +113,7 @@ public class UserList {
                 JSONArray addressesArray = (JSONArray) userJson.get("addresses");
                 for (Object addressObj : addressesArray) {
                     JSONObject addressJson = (JSONObject) addressObj;
-                    Long addressId = (Long) addressJson.get("addressId");
-                    if (addressId == null) {
-                        addressId = 0L; // Default value if addressId is null
-                    }
                     Address address = new Address(
-                            addressId,
                             (String) addressJson.get("street"),
                             (String) addressJson.get("city"),
                             (String) addressJson.get("state"),
@@ -130,12 +125,8 @@ public class UserList {
                 JSONArray paymentArray = (JSONArray) userJson.get("payments");
                 for (Object paymentObj : paymentArray) {
                     JSONObject paymentJson = (JSONObject) paymentObj;
-                    Long paymentMethod = (Long) paymentJson.get("paymentMethod");
-                    if (paymentMethod == null) {
-                        paymentMethod = 0L; // Default value if paymentMethod is null
-                    }
+                    String paymentMethod = (String) paymentJson.get("paymentMethod");
                     Payment payment = new Payment(
-                            paymentMethod,
                             (String) paymentJson.get("cardholderName"),
                             (String) paymentJson.get("cardNumber"),
                             (String) paymentJson.get("expiryDate"),
@@ -197,7 +188,7 @@ public class UserList {
         }
         UserEntity user = getUserByUsername(username);
         if (user != null) {
-            Address newAddress = new Address(user.getCurrentAddressId(user) + 1, street, city, state, zipcode, country);
+            Address newAddress = new Address(street, city, state, zipcode, country);
             user.addAddress(newAddress);
             currentUser.addAddress(newAddress);
             saveUsers();
@@ -215,36 +206,10 @@ public class UserList {
             String cvv) {
         UserEntity user = getUserByUsername(username);
         if (user != null) {
-            Payment newPayment = new Payment(user.getCurrentPaymentId(user) + 1, cardholderName, cardNumber, expiryDate,
+            Payment newPayment = new Payment(cardholderName, cardNumber, expiryDate,
                     cardType, cvv);
             user.addPayment(newPayment);
             currentUser.addPayment(newPayment);
-            saveUsers();
-            loadUsers(); // Reload the latest data
-            return true;
-        }
-        return false;
-    }
-
-    public boolean removeAddress(String username, long addressId) {
-        UserEntity user = getUserByUsername(username);
-        if (user != null) {
-            Address address = user.getAddresses().stream().filter(a -> a.getAddressId() == addressId).findFirst()
-                    .orElse(null);
-            user.removeAddress(address);
-            saveUsers();
-            loadUsers(); // Reload the latest data
-            return true;
-        }
-        return false;
-    }
-
-    public boolean removePayment(String username, long paymentMethod) {
-        UserEntity user = getUserByUsername(username);
-        if (user != null) {
-            Payment payment = user.getPayments().stream().filter(p -> p.getpaymentMethod() == paymentMethod).findFirst()
-                    .orElse(null);
-            user.removePayment(payment);
             saveUsers();
             loadUsers(); // Reload the latest data
             return true;

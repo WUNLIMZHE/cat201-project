@@ -1,6 +1,7 @@
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\CorsFilter.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\GetAddressServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\GetPaymentServlet.java
+D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\RemovePaymentServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UserPaymentServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UsersAddressServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UserSignUpServlet.java

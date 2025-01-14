@@ -1,1 +1,29 @@
-[{"firstName":"user1","lastName":"lname","password":"123456","addresses":[{"zipcode":"12345","country":"country1","city":"city1","street":"street1","state":"state1","addressId":1},{"zipcode":"12345","country":"country2","city":"city2","street":"street2","state":"state2","addressId":2},{"zipcode":"12345","country":"country3","city":"city3","street":"street3","state":"state3","addressId":3},{"zipcode":"12345","country":"country4","city":"city4","street":"street4","state":"state4","addressId":4},{"zipcode":"zipcode5","country":"country5","city":"city5","street":"street5","state":"state5","addressId":5},{"zipcode":"2","country":"2","city":"2","street":"2","state":"2","addressId":6}],"phoneNumber":"123456","role":"user","payments":[{"expiryDate":"ert","cvv":"ert","cardholderName":"ert","cardType":"ert","paymentMethod":1,"cardNumber":"ert"},{"expiryDate":"2","cvv":"2","cardholderName":"2","cardType":"2","paymentMethod":2,"cardNumber":"2"},{"expiryDate":"3","cvv":"3","cardholderName":"3","cardType":"3","paymentMethod":3,"cardNumber":"3"},{"expiryDate":"4","cvv":"4","cardholderName":"4","cardType":"4","paymentMethod":4,"cardNumber":"4"},{"expiryDate":"5","cvv":"5","cardholderName":"5","cardType":"5","paymentMethod":5,"cardNumber":"5"}],"email":"user1@gmail.com","username":"user1"},{"firstName":"user2","lastName":"lastname","password":"123456","addresses":[{"zipcode":"zipcode1","country":"country1","city":"city1","street":"street1","state":"state1","addressId":1}],"phoneNumber":"1234566","role":"user","payments":[],"email":"user2@gmail.com","username":"user2"}]
+[
+    {
+        "firstName": "userFirstName",
+        "lastName": "userLastName",
+        "password": "123456",
+        "addresses": [
+            {
+                "zipcode": "Zipcode1",
+                "country": "Country1",
+                "city": "City1",
+                "street": "Street1",
+                "state": "State1"
+            }
+        ],
+        "phoneNumber": "123456",
+        "role": "user",
+        "payments": [
+            {
+                "expiryDate": "Exp1",
+                "cvv": "Cvv1",
+                "cardholderName": "Holder1",
+                "cardType": "Type1",
+                "cardNumber": "Number1"
+            }
+        ],
+        "email": "user1@gmail.com",
+        "username": "user1"
+    }
+]
