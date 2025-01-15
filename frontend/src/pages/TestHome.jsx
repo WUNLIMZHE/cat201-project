@@ -1,3 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import handleApiCall from '../utils/handleApiCall';
@@ -42,6 +45,7 @@ function TestHome({ loggedIn, username }) {
             { username },
             async (result) => {
                 setAddresses(result);
+                //console.log(result)
             },
             (error) => {
                 console.error("Error fetching addresses: " + error);
@@ -94,7 +98,7 @@ function TestHome({ loggedIn, username }) {
                 console.log("Payment submission result: " + JSON.stringify(result));
                 if (result.status !== "Payment added successfully") {
                     setError(result.status);
-                } 
+                }
                 else {
                     fetchPayments();
                 }
@@ -106,18 +110,22 @@ function TestHome({ loggedIn, username }) {
         );
     };
 
-    const deleteAddress = async (address) => {
-        if (!address) {
+    const deleteAddress = async (addressid) => {
+        if (!selectedAddress) {
             setError("No address selected");
             return;
         }
+        console.log(addressid)
         await handleApiCall(
             "users/deleteaddress",
             "DELETE",
-            { username, address: JSON.stringify(address) },
+            { username, addressid },
             async (result) => {
-                console.log("Address deletion result: " + JSON.stringify(result));
-                fetchAddresses();
+                if (result.message !== "Address deleted successfully") {
+                    setError(result.message);
+                } else {
+                    await fetchAddresses(); // Fetch updated addresses
+                }
             },
             (error) => {
                 console.error("Error deleting address: " + error);
@@ -126,22 +134,26 @@ function TestHome({ loggedIn, username }) {
         );
     };
 
-    const deletePayment = async (paymentId) => {
-        if (paymentId === null) {
+    const deletePayment = async (paymentid) => {
+        if (!selectedPayment) {
             setError("No payment selected");
             return;
         }
+        console.log(paymentid)
         await handleApiCall(
-            "users/deletepayment",
+            "users/removepayment",
             "DELETE",
-            { username, paymentId },
+            { username, paymentid },
             async (result) => {
-                console.log("Payment deletion result: " + JSON.stringify(result));
-                fetchPayments();
+                if (result.message !== "Address payment successfully") {
+                    setError(result.message);
+                } else {
+                    await fetchPayments(); // Fetch updated payment
+                }
             },
             (error) => {
-                console.error("Error deleting payment: " + error);
-                setError("Error deleting payment: " + error);
+                console.error("Error deleting address: " + error);
+                setError("Error deleting address: " + error);
             }
         );
     };
@@ -240,14 +252,17 @@ function TestHome({ loggedIn, username }) {
                         <input
                             type="radio"
                             name="selectedAddress"
-                            value={index}
-                            onChange={() => setSelectedAddress(address)}
+                            value={address.addressid}
+                            onChange={async () => {
+                                setSelectedAddress(address.addressid);
+                                //console.log(selectedAddress)
+                            }}
                         />
                         {address.street}, {address.city}, {address.state}, {address.zipcode}, {address.country}
                     </li>
                 ))}
-                <button onClick={() => deleteAddress(selectedAddress)} className="btn btn-danger">Delete</button>
             </ul>
+            <button onClick={() => deleteAddress(selectedAddress)} className="btn btn-danger">Delete</button>
             <h2>Payment Details</h2>
             <form onSubmit={handlePaymentSubmit}>
                 <div className="form-group">
@@ -310,8 +325,11 @@ function TestHome({ loggedIn, username }) {
                         <input
                             type="radio"
                             name="selectedPayment"
-                            value={index}
-                            onChange={() => setSelectedPayment(index)}
+                            value={payment.paymentid}
+                            onChange={async () => {
+                                setSelectedPayment(payment.paymentid);
+                                //console.log(selectedAddress)
+                            }}
                         />
                         <p>Payment Method: {payment.paymentMethod}</p>
                         <p>Cardholder Name: {payment.cardholderName}</p>
@@ -321,7 +339,7 @@ function TestHome({ loggedIn, username }) {
                         <p>CVV: {payment.cvv}</p>
                     </li>
                 ))}
-                <button onClick={() => deletePayment(payment.id)} className="btn btn-danger">Delete</button>
+                <button onClick={() => deletePayment(selectedPayment)} className="btn btn-danger">Delete</button>
             </ul>
         </div>
     ) : (

@@ -50,6 +50,7 @@ public class UserList {
         JSONArray userList = new JSONArray();
         for (UserEntity user : this.users) {
             JSONObject userJson = new JSONObject();
+            userJson.put("userid", user.getuserid());
             userJson.put("username", user.getUsername());
             userJson.put("password", user.getPassword());
             userJson.put("email", user.getEmail());
@@ -61,6 +62,7 @@ public class UserList {
             JSONArray addressesArray = new JSONArray();
             for (Address address : user.getAddresses()) {
                 JSONObject addressJson = new JSONObject();
+                addressJson.put("addressid", address.getAddressid());
                 addressJson.put("street", address.getStreet());
                 addressJson.put("city", address.getCity());
                 addressJson.put("state", address.getState());
@@ -73,6 +75,7 @@ public class UserList {
             JSONArray paymentArray = new JSONArray();
             for (Payment payment : user.getPayments()) {
                 JSONObject paymentJson = new JSONObject();
+                paymentJson.put("paymentid", payment.getPaymentid());
                 paymentJson.put("cardholderName", payment.getcardholderName());
                 paymentJson.put("cardNumber", payment.getcardNumber());
                 paymentJson.put("expiryDate", payment.getexpiryDate());
@@ -102,6 +105,7 @@ public class UserList {
             for (Object obj : userList) {
                 JSONObject userJson = (JSONObject) obj;
                 UserEntity user = new UserEntity();
+                user.setuserid((String) userJson.get("userid"));
                 user.setFirstName((String) userJson.get("firstName"));
                 user.setPassword((String) userJson.get("password"));
                 user.setLastName((String) userJson.get("lastName"));
@@ -114,6 +118,7 @@ public class UserList {
                 for (Object addressObj : addressesArray) {
                     JSONObject addressJson = (JSONObject) addressObj;
                     Address address = new Address(
+                            (String) addressJson.get("addressid"),
                             (String) addressJson.get("street"),
                             (String) addressJson.get("city"),
                             (String) addressJson.get("state"),
@@ -127,6 +132,7 @@ public class UserList {
                     JSONObject paymentJson = (JSONObject) paymentObj;
                     String paymentMethod = (String) paymentJson.get("paymentMethod");
                     Payment payment = new Payment(
+                            (String) paymentJson.get("paymentid"),
                             (String) paymentJson.get("cardholderName"),
                             (String) paymentJson.get("cardNumber"),
                             (String) paymentJson.get("expiryDate"),
@@ -151,6 +157,7 @@ public class UserList {
             }
         }
         UserEntity newUser = new UserEntity();
+        newUser.setuserid(getlatestuserid());
         newUser.setUsername(username);
         newUser.setPassword(password);
         newUser.setFirstName(firstName);
@@ -161,6 +168,52 @@ public class UserList {
         this.addUser(newUser);
         saveUsers();
         return true;
+    }
+
+    public String getlatestuserid() {
+        int latestuserid = 0;
+        for (UserEntity user : users) {
+            int userid = Integer.parseInt(user.getuserid());
+            if (userid > latestuserid) {
+                latestuserid = userid;
+            }
+        }
+        if (latestuserid == 0) {
+            return "1";
+        }
+        return String.valueOf(latestuserid + 1);
+    }
+
+    public String getlatestaddressid() {
+        int latestaddressid = 0;
+        for (UserEntity user : users) {
+            for (Address address : user.getAddresses()) {
+                int addressid = Integer.parseInt(address.getAddressid());
+                if (addressid > latestaddressid) {
+                    latestaddressid = addressid;
+                }
+            }
+        }
+        if (latestaddressid == 0) {
+            return "1";
+        }
+        return String.valueOf(latestaddressid + 1);
+    }
+
+    public String getlatestpaymentid() {
+        int latestpaymentid = 0;
+        for (UserEntity user : users) {
+            for (Payment payment : user.getPayments()) {
+                int paymentid = Integer.parseInt(payment.getPaymentid());
+                if (paymentid > latestpaymentid) {
+                    latestpaymentid = paymentid;
+                }
+            }
+        }
+        if (latestpaymentid == 0) {
+            return "1";
+        }
+        return String.valueOf(latestpaymentid + 1);
     }
 
     public boolean loginUser(String username, String password) {
@@ -188,7 +241,7 @@ public class UserList {
         }
         UserEntity user = getUserByUsername(username);
         if (user != null) {
-            Address newAddress = new Address(street, city, state, zipcode, country);
+            Address newAddress = new Address(getlatestaddressid(), street, city, state, zipcode, country);
             user.addAddress(newAddress);
             currentUser.addAddress(newAddress);
             saveUsers();
@@ -206,7 +259,7 @@ public class UserList {
             String cvv) {
         UserEntity user = getUserByUsername(username);
         if (user != null) {
-            Payment newPayment = new Payment(cardholderName, cardNumber, expiryDate,
+            Payment newPayment = new Payment(getlatestpaymentid(), cardholderName, cardNumber, expiryDate,
                     cardType, cvv);
             user.addPayment(newPayment);
             currentUser.addPayment(newPayment);
@@ -217,13 +270,30 @@ public class UserList {
         return false;
     }
 
-    public boolean removeAddress(String username, Address address) {
+    public boolean removeAddressById(String username, String addressid) {
         UserEntity user = getUserByUsername(username);
         if (user != null) {
-            user.removeAddress(address);
-            saveUsers();
-            return true;
+            boolean addressRemoved = user.removeAddressById(addressid);
+            if (addressRemoved) {
+                saveUsers();
+                loadUsers(); // Reload the latest data
+                return true;
+            }
         }
         return false;
     }
+
+    public boolean removePaymentById(String username, String paymentid) {
+        UserEntity user = getUserByUsername(username);
+        if (user != null) {
+            boolean paymentRemoved = user.removePaymentById(paymentid);
+            if (paymentRemoved) {
+                saveUsers();
+                loadUsers(); // Reload the latest data
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

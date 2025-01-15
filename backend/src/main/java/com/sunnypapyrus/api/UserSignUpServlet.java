@@ -59,7 +59,7 @@ public class UserSignUpServlet extends HttpServlet {
         if (signupStatus) {
             jsonResponse.addProperty("message", "User registered successfully.");
         } else {
-            jsonResponse.addProperty("message", "Username or email already exists.");
+            jsonResponse.addProperty("message", "Username or email or Phone number already exists.");
         }
 
         // Write the response

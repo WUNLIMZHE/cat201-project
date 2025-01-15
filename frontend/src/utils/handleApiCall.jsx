@@ -6,13 +6,13 @@ const handleApiCall = async (
   onError = () => {}
 ) => {
   try {
-    const queryString = method === "GET" && body ? `?${new URLSearchParams(body).toString()}` : "";
+    const queryString = (method === "GET" || method === "DELETE") && body ? `?${new URLSearchParams(body).toString()}` : "";
     const response = await fetch("http://localhost:9090/api/" + url + queryString, {
       method: method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: method !== "GET" && body ? JSON.stringify(body) : null,
+      body: method !== "GET" && method !== "DELETE" && body ? JSON.stringify(body) : null,
       credentials: "include",
     });
 

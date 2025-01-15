@@ -1,7 +1,5 @@
-//generate a servlet api for user to remove their choosen address from their account
 package com.sunnypapyrus.api;
 
-import com.google.gson.Gson;
 import com.sunnypapyrus.models.UserEntity;
 import com.sunnypapyrus.models.UserList;
 
@@ -12,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import com.sunnypapyrus.models.Address;
 
 @WebServlet("/api/users/deleteaddress")
 public class RemoveAddressServlet extends HttpServlet {
@@ -22,49 +19,42 @@ public class RemoveAddressServlet extends HttpServlet {
     public void init() throws ServletException {
         userList = new UserList();
         System.out.println("RemoveAddressServlet initialized.");
-
     }
 
     @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Set response content type
-        resp.setContentType("application/json");
-        String username = req.getParameter("username");
+        response.setContentType("application/json");
+        String username = request.getParameter("username");
+        String addressid = request.getParameter("addressid"); // Fix parameter name
+
         if (username == null || username.isEmpty()) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().write("{\"error\": \"Username is required\"}");
-            return;
-        }
-        userList.setCurrentUser(username);
-
-        // Reload the latest data
-        userList.loadUsers();
-
-        // Get current user
-        UserEntity currentUser = UserList.getCurrentUser();
-        if (currentUser == null) {
-            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            resp.getWriter().write("{\"error\": \"User not logged in\"}");
+            response.getWriter().write("{\"error\": \"Username is required\"}");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        // Get the address to remove
-        String addressJson = req.getParameter("address");
-        if (addressJson == null || addressJson.isEmpty()) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().write("{\"error\": \"No address provided\"}");
+        if (addressid == null || addressid.isEmpty()) {
+            response.getWriter().write("{\"error\": \"Address ID is required\"}");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        Address address = new Gson().fromJson(addressJson, Address.class);
+        UserEntity user = userList.getUserByUsername(username);
+        if (user == null) {
+            response.getWriter().write("{\"error\": \"User not found\"}");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
 
-        // Remove the address
-        currentUser.removeAddress(address);
+        boolean addressRemoved = userList.removeAddressById(username, addressid);
+        if (!addressRemoved) {
+            response.getWriter().write("{\"error\": \"Address not found\"}");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
 
-        // Save the updated user
-        userList.saveUsers();
-
-        // Write response
-        resp.getWriter().write("{\"success\": \"Address removed\"}");
+        response.getWriter().write("{\"message\": \"Address deleted successfully\"}");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 }
