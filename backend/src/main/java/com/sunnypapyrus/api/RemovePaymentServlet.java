@@ -9,9 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import com.sunnypapyrus.models.Address;
-
 @WebServlet("/api/users/removepayment")
 public class RemovePaymentServlet extends HttpServlet {
     private UserList userList;

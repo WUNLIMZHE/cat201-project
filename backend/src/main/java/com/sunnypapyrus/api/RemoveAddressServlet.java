@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import com.sunnypapyrus.models.Address;
 
 @WebServlet("/api/users/deleteaddress")
 public class RemoveAddressServlet extends HttpServlet {
