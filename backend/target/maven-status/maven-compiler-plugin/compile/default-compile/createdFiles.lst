@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 BookServlet.class
 BookDAO.class
 com\sunnypapyrus\Main.class
@@ -7,3 +8,5 @@ com\sunnypapyrus\models\UserSignup.class
 MongoDBConnection.class
 Book.class
 com\sunnypapyrus\AppContextListener.class
+=======
+>>>>>>> payment-address

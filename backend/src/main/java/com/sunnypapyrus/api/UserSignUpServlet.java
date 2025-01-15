@@ -10,26 +10,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sunnypapyrus.models.UserEntity;
 import com.sunnypapyrus.models.UserList;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-@WebServlet("/api/users/login")
-public class UsersLoginServlet extends HttpServlet {
+@WebServlet("/api/users/signup")
+public class UserSignUpServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        System.out.println("UsersLoginServlet initialized.");
+        System.out.println("UserSignUpServlet initialized.");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
         response.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
 
         // Read request body
         StringBuilder sb = new StringBuilder();
@@ -45,28 +41,25 @@ public class UsersLoginServlet extends HttpServlet {
         JsonObject jsonObject = gson.fromJson(sb.toString(), JsonObject.class);
         String username = jsonObject.get("username").getAsString();
         String password = jsonObject.get("password").getAsString();
+        String firstName = jsonObject.get("firstName").getAsString();
+        String lastName = jsonObject.get("lastName").getAsString();
+        String email = jsonObject.get("email").getAsString();
+        String phoneNumber = jsonObject.get("phoneNumber").getAsString();
 
-        System.out.println("UsersLoginServlet POST request received with parameters: " + username + " = " + password);
+        System.out.println("UserSignUpServlet POST request received with parameters: " + username + ", " + email);
 
-        // Validate user login
-        UserList userLogin = new UserList();
-        boolean loginStatus = userLogin.loginUser(username, password);
+        // Register user
+        UserList userList = new UserList();
+        boolean signupStatus = userList.registerUser(username, password, firstName, lastName, phoneNumber, email);
 
         // Create JSON response
         JsonObject jsonResponse = new JsonObject();
-        jsonResponse.addProperty("loginStatus", loginStatus);
+        jsonResponse.addProperty("signupStatus", signupStatus);
 
-        if (loginStatus) {
-            UserEntity currentUser = userLogin.getUserByUsername(username);
-            JsonObject userJson = new JsonObject();
-            userJson.addProperty("username", currentUser.getUsername());
-            userJson.addProperty("email", currentUser.getEmail());
-            userJson.addProperty("firstName", currentUser.getFirstName());
-            userJson.addProperty("lastName", currentUser.getLastName());
-            userJson.addProperty("phoneNumber", currentUser.getPhoneNumber());
-            userJson.addProperty("role", currentUser.getRole());
-            jsonResponse.addProperty("user", userJson.toString());
-            jsonResponse.addProperty("userRole", currentUser.getRole());
+        if (signupStatus) {
+            jsonResponse.addProperty("message", "User registered successfully.");
+        } else {
+            jsonResponse.addProperty("message", "Username or email already exists.");
         }
 
         // Write the response
