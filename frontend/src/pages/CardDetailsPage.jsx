@@ -19,7 +19,6 @@ function CardDetailsPage(data) {
       <div className="max-w-7xl mx-auto px-8">
         <CardDetails data={location.state} />
       </div>
-      <Footer />
     </div>
   );
 }
