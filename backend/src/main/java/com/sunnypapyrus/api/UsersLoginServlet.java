@@ -59,6 +59,7 @@ public class UsersLoginServlet extends HttpServlet {
         if (loginStatus) {
             UserEntity currentUser = userLogin.getUserByUsername(username);
             JsonObject userJson = new JsonObject();
+            userJson.addProperty("userid", currentUser.getuserid());
             userJson.addProperty("username", currentUser.getUsername());
             userJson.addProperty("email", currentUser.getEmail());
             userJson.addProperty("firstName", currentUser.getFirstName());

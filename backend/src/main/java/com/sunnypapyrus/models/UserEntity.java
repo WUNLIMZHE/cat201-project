@@ -12,6 +12,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class UserEntity {
+    private String userid;
     private String username;
     private String password;
 
@@ -26,6 +27,24 @@ public class UserEntity {
     private List<Address> addresses = new ArrayList<Address>();
 
     public UserEntity() {
+    }
+
+    public UserEntity(String username, String password, String firstName, String lastName, String phoneNumber,
+            String email) {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.role = "user";
+        this.payments = new ArrayList<Payment>();
+        this.addresses = new ArrayList<Address>();
+        saveUserData();
+    }
+
+    public String getuserid() {
+        return this.userid;
     }
 
     public String getUsername() {
@@ -64,6 +83,9 @@ public class UserEntity {
         return this.addresses;
     }
 
+    public void setuserid(String userid) {
+        this.userid = userid;
+    }
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
@@ -96,7 +118,6 @@ public class UserEntity {
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
     }
-
 
     public void setRole(String role) {
         this.role = role;
@@ -171,20 +192,6 @@ public class UserEntity {
         }
     }
 
-    public UserEntity(String username, String password, String firstName, String lastName, String phoneNumber,
-            String email) {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-        this.role = "user";
-        this.payments = new ArrayList<Payment>();
-        this.addresses = new ArrayList<Address>();
-        saveUserData();
-    }
-
     public void addAddress(Address address) {
         this.addresses.add(address);
         System.out.println("Address " + address.getStreet() + " has been added to " + this.username + "'s profile.");
@@ -192,17 +199,20 @@ public class UserEntity {
 
     public void removeAddress(Address address) {
         this.addresses.remove(address);
-        System.out.println("Address " + address.getStreet() + " has been removed from " + this.username + "'s profile.");
+        System.out
+                .println("Address " + address.getStreet() + " has been removed from " + this.username + "'s profile.");
     }
 
     public void addPayment(Payment payment) {
         this.payments.add(payment);
-        System.out.println("Payment method " + payment.getcardType() + " has been added to " + this.username + "'s profile.");
+        System.out.println(
+                "Payment method " + payment.getcardType() + " has been added to " + this.username + "'s profile.");
     }
 
     public void removePayment(Payment payment) {
         this.payments.remove(payment);
-        System.out.println("Payment method " + payment.getcardType() + " has been removed from " + this.username + "'s profile.");
+        System.out.println(
+                "Payment method " + payment.getcardType() + " has been removed from " + this.username + "'s profile.");
     }
 
     public static void main(String[] args) {
@@ -213,5 +223,27 @@ public class UserEntity {
 
     public String toString() {
         return "UserSingup(username=" + this.getUsername() + ", password=" + this.getPassword() + ")";
+    }
+
+    public boolean removeAddressById(String addressid) {
+        for (Address address : addresses) {
+            if (address.getAddressid().equals(addressid)) {
+                addresses.remove(address);
+                System.out.println("Address with id " + addressid + " has been removed from " + this.username + "'s profile.");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean removePaymentById(String paymentid) {
+        for (Payment payment : payments) {
+            if (payment.getPaymentid().equals(paymentid)) {
+                payments.remove(payment);
+                System.out.println("Payment with id " + paymentid + " has been removed from " + this.username + "'s profile.");
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -2,6 +2,7 @@ package com.sunnypapyrus.models;
 
 public class Payment {
 
+    private String paymentid;
     private String cardholderName;
     private String cardNumber;
 
@@ -10,7 +11,8 @@ public class Payment {
 
     private String cvv;
 
-    public Payment(String cardholderName, String cardNumber, String expiryDate, String cardType, String cvv) {
+    public Payment(String paymentid, String cardholderName, String cardNumber, String expiryDate, String cardType, String cvv) {
+        this.paymentid = paymentid;
         this.cardholderName = cardholderName;
         this.cardNumber = cardNumber;
         this.expiryDate = expiryDate;
@@ -18,6 +20,9 @@ public class Payment {
         this.cvv = cvv;
     }
     
+    public String getPaymentid() {
+        return this.paymentid;
+    }
  
     public String getcardholderName() {
         return this.cardholderName;
@@ -38,8 +43,10 @@ public class Payment {
     public String getCvv() {
         return this.cvv;
     }
-    
-    
+
+    public void setpaymentid(String paymentid) {
+        this.paymentid = paymentid;
+    }
     public void setcardholderName(String cardholderName) {
         this.cardholderName = cardholderName;
     }

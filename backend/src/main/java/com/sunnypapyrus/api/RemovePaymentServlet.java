@@ -1,7 +1,5 @@
-//generate a servlet api for user to remove their choosen address from their account
 package com.sunnypapyrus.api;
 
-import com.google.gson.Gson;
 import com.sunnypapyrus.models.UserEntity;
 import com.sunnypapyrus.models.UserList;
 
@@ -12,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@SuppressWarnings("unused")
+import com.sunnypapyrus.models.Address;
+
 @WebServlet("/api/users/removepayment")
 public class RemovePaymentServlet extends HttpServlet {
     private UserList userList;
@@ -20,42 +19,43 @@ public class RemovePaymentServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         userList = new UserList();
+        System.out.println("RemovePaymentServlet initialized.");
     }
 
     @Override
-    protected void doDelete (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Set response content type
-        resp.setContentType("application/json");
-        String username = req.getParameter("username");
-        userList.setCurrentUser(username);
+        response.setContentType("application/json");
+        String username = request.getParameter("username");
+        String paymentid = request.getParameter("paymentid"); // Fix parameter name
 
-        // Reload the latest data
-        userList.loadUsers();
-
-        // Get current user
-        UserEntity currentUser = UserList.getCurrentUser();
-        if (currentUser == null) {
-            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            resp.getWriter().write("{\"error\": \"User not logged in\"}");
+        if (username == null || username.isEmpty()) {
+            response.getWriter().write("{\"error\": \"Username is required\"}");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        // Get the address to remove
-        String payment = req.getParameter("payment");
-        if (payment == null) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().write("{\"error\": \"No payment provided\"}");
+        if (paymentid == null || paymentid.isEmpty()) {
+            response.getWriter().write("{\"error\": \"Payment ID is required\"}");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
 
-        // Remove the address
+        UserEntity user = userList.getUserByUsername(username);
+        if (user == null) {
+            response.getWriter().write("{\"error\": \"User not found\"}");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
 
+        boolean paymentRemoved = userList.removePaymentById(username, paymentid);
+        if (!paymentRemoved) {
+            response.getWriter().write("{\"error\": \"Payment not found\"}");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
 
-        // Save the updated user
-        userList.saveUsers();
-
-        // Write response
-        resp.getWriter().write("{\"success\": \"Payment removed\"}");
+        response.getWriter().write("{\"message\": \"Payment deleted successfully\"}");
+        response.setStatus(HttpServletResponse.SC_OK);
     }
-
 }

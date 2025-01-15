@@ -40,6 +40,7 @@ public class GetAddressServlet extends HttpServlet {
         // Convert addresses to JSON
         Gson gson = new Gson();
         String jsonResponse = gson.toJson(currentUser.getAddresses());
+        System.out.println(jsonResponse);
 
         // Write response
         resp.getWriter().write(jsonResponse);
