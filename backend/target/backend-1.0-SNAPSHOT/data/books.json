@@ -673,6 +673,76 @@
     "soldUnits": 1750,
     "stock": 150,
     "language": "bahasa melayu"
+  },
+  {
+    "id": 41,
+    "title": "Hujan",
+    "isbn": 9786020324784,
+    "image": "/book-41.webp",
+    "author": "Tere Liye",
+    "genre": "Indonesian Literature",
+    "category": "fiction",
+    "description": " Sebuah novel yang menyelami kehidupan seorang budak lelaki yang mengalami kesulitan dan perubahan semasa membesar. Ia meneroka tema keluarga, cinta, dan ketabahan.",
+    "price": 75,
+    "review": 3.9,
+    "sold-units": 700,
+    "language": "bahasa melayu"
+  },
+  {
+    "id": 42,
+    "title": "Laut Bercerita",
+    "isbn": 9786024246945,
+    "image": "/book-42.webp",
+    "author": "Leila S. Chudori",
+    "genre": "Indonesian Literature",
+    "category": "fiction",
+    "description": "Di sebuah senja, di sebuah rumah susun di Jakarta, mahasiswa bernama Biru Laut disergap empat lelaki tak dikenal. Bersama kawan-kawannya, Daniel Tumbuan, Sunu Dyantoro, Alex Perazon, dia dibawa ke sebuah tempat yang tak dikenal. Berbulan-bulan mereka disekap, diinterogasi, dipukul, ditendang, digantung, dan disetrum agar bersedia menjawab satu pertanyaan penting: siapakah yang berdiri di balik gerakan aktivis dan mahasiswa saat itu.",
+    "price": 45,
+    "review": 3.9,
+    "sold-units": 750,
+    "language": "bahasa melayu"
+  },
+  {
+    "id": 43,
+    "title": "Di Tanah Lada",
+    "isbn": 9786020318967,
+    "image": "/book-43.webp",
+    "author": "Ziggy Zezsyazeoviennazabrizkie",
+    "genre": "Contemporary",
+    "category": "fiction",
+    "description": "Namanya Salva. Panggilannya Ava. Namun papanya memanggil dia Saliva atau ludah karena menganggapnya tidak berguna. Ava sekeluarga pindah ke Rusun Nero setelah Kakek Kia meninggal. Kakek Kia, ayahnya Papa, pernah memberi Ava kamus sebagai hadiah ulang tahun yang ketiga. Sejak itu Ava menjadi anak yang pintar berbahasa Indonesia. ",
+    "price": 45,
+    "review": 4.3,
+    "sold-units": 200,
+    "language": "bahasa melayu"
+  },
+  {
+    "id": 44,
+    "title": "Seperti Dendam, Rindu Harus Dibayar Tuntas",
+    "isbn": 9786020303932,
+    "image": "/book-44.webp",
+    "author": "Eka Kurniawan",
+    "genre": "Indonesian Literature",
+    "category": "fiction",
+    "description": "Di puncak rezim yang penuh kekerasan, kisah ini bermula dari satu peristiwa: dua orang polisi memerkosa seorang perempuan gila, dan dua bocah melihatnya melalui lubang di jendela. Dan seekor burung memutuskan untuk tidur panjang. Di tengah kehidupan yang keras dan brutal, si burung tidur merupakan alegori tentang kehidupan yang tenang dan damai, meskipun semua orang berusaha membangunkannya",
+    "price": 65,
+    "review": 3.9,
+    "sold-units": 250,
+    "language": "bahasa melayu"
+  },
+  {
+    "id": 45,
+    "title": "Ronggeng Dukuh Paruk",
+    "isbn": 9786024246945,
+    "image": "/book-45.webp",
+    "author": "Ahmad Tohari",
+    "genre": "Indonesian Literature",
+    "category": "fiction",
+    "description": "Semangat Dukuh Paruk kembali menggeliat sejak Srintil dinobatkan menjadi ronggeng baru, menggantikan ronggeng terakhir yang mati dua belas tahun yang lalu. Bagi pedukuhan yang kecil, miskin, terpencil dan bersahaja itu, ronggeng adalah perlambang. Tanpanya dukuh itu merasakah kehilangan jati diri.",
+    "price": 85,
+    "review": 3.9,
+    "sold-units": 1750,
+    "language": "bahasa melayu"
   }
   
 ]
