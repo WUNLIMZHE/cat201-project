@@ -1,1 +1,228 @@
-[{"books":[{"image":"/src/assets/images/book-42.webp","purchaseUnit":2,"totalPrice":90,"price":45,"id":42,"title":"Laut Bercerita"}],"purchaseID":1,"shippingAddress":"6-6-6, TAMAN PEKAKA","userID":1,"totalAmmount":80},{"books":[{"image":"/src/assets/images/book-42.webp","purchaseUnit":2,"totalPrice":90,"price":45,"id":42,"title":"Laut Bercerita"}],"purchaseID":2,"shippingAddress":"6-6-6, USM","userID":2,"totalAmmount":80},{"books":[{"image":"/src/assets/images/book-7.webp","purchaseUnit":3,"totalPrice":165,"price":55,"cartID":3,"genre":"神话小说","language":"chinese","id":7,"title":"西游记","category":"fiction","stock":340,"userID":1},{"image":"/src/assets/images/book-1.webp","purchaseUnit":3,"totalPrice":135,"price":45,"cartID":4,"genre":"Classic Fiction","language":"english","id":1,"title":"The Great Gatsby","category":"fiction","stock":170,"userID":1},{"image":"/src/assets/images/book-2.webp","purchaseUnit":1,"totalPrice":54,"price":54,"cartID":6,"genre":"Classic Fiction","language":"english","id":2,"title":"To Kill a Mockingbird","category":"fiction","stock":1,"userID":1}],"purchaseID":3,"shippingAddress":"TESTING ADDRESS","userID":1,"totalAmmount":354},{"books":[{"image":"/src/assets/images/book-7.webp","purchaseUnit":3,"totalPrice":165,"price":55,"cartID":3,"genre":"神话小说","language":"chinese","id":7,"title":"西游记","category":"fiction","stock":340,"userID":1},{"image":"/src/assets/images/book-1.webp","purchaseUnit":2,"totalPrice":90,"price":45,"cartID":4,"genre":"Classic Fiction","language":"english","id":1,"title":"The Great Gatsby","category":"fiction","stock":170,"userID":1}],"purchaseID":4,"shippingAddress":"TESTING ADDRESS","userID":1,"totalAmmount":255},{"books":[{"image":"/src/assets/images/book-7.webp","purchaseUnit":3,"totalPrice":165,"price":55,"cartID":3,"genre":"神话小说","language":"chinese","id":7,"title":"西游记","stock":340,"category":"fiction","userID":1},{"image":"/src/assets/images/book-1.webp","purchaseUnit":2,"totalPrice":90,"price":45,"cartID":4,"genre":"Classic Fiction","language":"english","id":1,"title":"The Great Gatsby","stock":170,"category":"fiction","userID":1}],"purchaseID":5,"shippingAddress":"TESTING ADDRESS","userID":1,"totalAmmount":255},{"books":[{"image":"/src/assets/images/book-7.webp","purchaseUnit":3,"totalPrice":165,"price":55,"cartID":3,"genre":"神话小说","language":"chinese","id":7,"title":"西游记","stock":340,"category":"fiction","userID":1},{"image":"/src/assets/images/book-1.webp","purchaseUnit":2,"totalPrice":90,"price":45,"cartID":4,"genre":"Classic Fiction","language":"english","id":1,"title":"The Great Gatsby","stock":170,"category":"fiction","userID":1}],"purchaseID":5,"shippingAddress":"TESTING ADDRESS","userID":1,"totalAmmount":255},{"books":[{"image":"/src/assets/images/book-7.webp","purchaseUnit":3,"totalPrice":165,"price":55,"cartID":3,"genre":"神话小说","language":"chinese","id":7,"category":"fiction","stock":340,"title":"西游记","userID":1},{"image":"/src/assets/images/book-1.webp","purchaseUnit":2,"totalPrice":90,"price":45,"cartID":4,"genre":"Classic Fiction","language":"english","id":1,"category":"fiction","stock":170,"title":"The Great Gatsby","userID":1}],"purchaseID":6,"shippingAddress":"TESTING ADDRESS","userID":1,"totalAmmount":255},{"books":[{"image":"/src/assets/images/book-7.webp","purchaseUnit":10,"totalPrice":550,"price":55,"cartID":3,"genre":"神话小说","language":"chinese","id":7,"category":"fiction","stock":340,"title":"西游记","userID":1},{"image":"/src/assets/images/book-1.webp","purchaseUnit":2,"totalPrice":90,"price":45,"cartID":4,"genre":"Classic Fiction","language":"english","id":1,"category":"fiction","stock":170,"title":"The Great Gatsby","userID":1}],"purchaseID":7,"shippingAddress":"TESTING ADDRESS","userID":1,"totalAmmount":640},{"books":[{"image":"/src/assets/images/book-7.webp","purchaseUnit":10,"totalPrice":550,"price":55,"cartID":3,"genre":"神话小说","language":"chinese","id":7,"category":"fiction","stock":340,"title":"西游记","userID":1},{"image":"/src/assets/images/book-1.webp","purchaseUnit":2,"totalPrice":90,"price":45,"cartID":4,"genre":"Classic Fiction","language":"english","id":1,"category":"fiction","stock":170,"title":"The Great Gatsby","userID":1}],"purchaseID":7,"shippingAddress":"TESTING ADDRESS","userID":1,"totalAmmount":640}]
+[
+  {
+    "books": [
+      {
+        "image": "/src/assets/images/book-42.webp",
+        "purchaseUnit": 2,
+        "totalPrice": 90,
+        "price": 45,
+        "id": 42,
+        "title": "Laut Bercerita"
+      }
+    ],
+    "purchaseID": 1,
+    "shippingAddress": "6-6-6, TAMAN PEKAKA",
+    "userID": 1,
+    "totalAmmount": 80
+  },
+  {
+    "books": [
+      {
+        "image": "/src/assets/images/book-42.webp",
+        "purchaseUnit": 2,
+        "totalPrice": 90,
+        "price": 45,
+        "id": 42,
+        "title": "Laut Bercerita"
+      }
+    ],
+    "purchaseID": 2,
+    "shippingAddress": "6-6-6, USM",
+    "userID": 2,
+    "totalAmmount": 80
+  },
+  {
+    "books": [
+      {
+        "image": "/src/assets/images/book-7.webp",
+        "purchaseUnit": 3,
+        "totalPrice": 165,
+        "price": 55,
+        "cartID": 3,
+        "genre": "神话小说",
+        "language": "chinese",
+        "id": 7,
+        "title": "西游记",
+        "category": "fiction",
+        "stock": 340,
+        "userID": 1
+      },
+      {
+        "image": "/src/assets/images/book-1.webp",
+        "purchaseUnit": 3,
+        "totalPrice": 135,
+        "price": 45,
+        "cartID": 4,
+        "genre": "Classic Fiction",
+        "language": "english",
+        "id": 1,
+        "title": "The Great Gatsby",
+        "category": "fiction",
+        "stock": 170,
+        "userID": 1
+      },
+      {
+        "image": "/src/assets/images/book-2.webp",
+        "purchaseUnit": 1,
+        "totalPrice": 54,
+        "price": 54,
+        "cartID": 6,
+        "genre": "Classic Fiction",
+        "language": "english",
+        "id": 2,
+        "title": "To Kill a Mockingbird",
+        "category": "fiction",
+        "stock": 1,
+        "userID": 1
+      }
+    ],
+    "purchaseID": 3,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmmount": 354
+  },
+  {
+    "books": [
+      {
+        "image": "/src/assets/images/book-7.webp",
+        "purchaseUnit": 3,
+        "totalPrice": 165,
+        "price": 55,
+        "cartID": 3,
+        "genre": "神话小说",
+        "language": "chinese",
+        "id": 7,
+        "title": "西游记",
+        "category": "fiction",
+        "stock": 340,
+        "userID": 1
+      },
+      {
+        "image": "/src/assets/images/book-1.webp",
+        "purchaseUnit": 2,
+        "totalPrice": 90,
+        "price": 45,
+        "cartID": 4,
+        "genre": "Classic Fiction",
+        "language": "english",
+        "id": 1,
+        "title": "The Great Gatsby",
+        "category": "fiction",
+        "stock": 170,
+        "userID": 1
+      }
+    ],
+    "purchaseID": 4,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmmount": 255
+  },
+  {
+    "books": [
+      {
+        "image": "/src/assets/images/book-7.webp",
+        "purchaseUnit": 3,
+        "totalPrice": 165,
+        "price": 55,
+        "cartID": 3,
+        "genre": "神话小说",
+        "language": "chinese",
+        "id": 7,
+        "title": "西游记",
+        "stock": 340,
+        "category": "fiction",
+        "userID": 1
+      },
+      {
+        "image": "/src/assets/images/book-1.webp",
+        "purchaseUnit": 2,
+        "totalPrice": 90,
+        "price": 45,
+        "cartID": 4,
+        "genre": "Classic Fiction",
+        "language": "english",
+        "id": 1,
+        "title": "The Great Gatsby",
+        "stock": 170,
+        "category": "fiction",
+        "userID": 1
+      }
+    ],
+    "purchaseID": 5,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmmount": 255
+  },
+  {
+    "books": [
+      {
+        "image": "/src/assets/images/book-7.webp",
+        "purchaseUnit": 3,
+        "totalPrice": 165,
+        "price": 55,
+        "cartID": 3,
+        "genre": "神话小说",
+        "language": "chinese",
+        "id": 7,
+        "category": "fiction",
+        "stock": 340,
+        "title": "西游记",
+        "userID": 1
+      },
+      {
+        "image": "/src/assets/images/book-1.webp",
+        "purchaseUnit": 2,
+        "totalPrice": 90,
+        "price": 45,
+        "cartID": 4,
+        "genre": "Classic Fiction",
+        "language": "english",
+        "id": 1,
+        "category": "fiction",
+        "stock": 170,
+        "title": "The Great Gatsby",
+        "userID": 1
+      }
+    ],
+    "purchaseID": 6,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmmount": 255
+  },
+  {
+    "books": [
+      {
+        "image": "/src/assets/images/book-7.webp",
+        "purchaseUnit": 10,
+        "totalPrice": 550,
+        "price": 55,
+        "cartID": 3,
+        "genre": "神话小说",
+        "language": "chinese",
+        "id": 7,
+        "category": "fiction",
+        "stock": 340,
+        "title": "西游记",
+        "userID": 1
+      },
+      {
+        "image": "/src/assets/images/book-1.webp",
+        "purchaseUnit": 2,
+        "totalPrice": 90,
+        "price": 45,
+        "cartID": 4,
+        "genre": "Classic Fiction",
+        "language": "english",
+        "id": 1,
+        "category": "fiction",
+        "stock": 170,
+        "title": "The Great Gatsby",
+        "userID": 1
+      }
+    ],
+    "purchaseID": 7,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmmount": 640
+  }
+]
