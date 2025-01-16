@@ -98,10 +98,23 @@ public class CartItemServlet extends HttpServlet {
         for (int i = 0; i < cartItems.length(); i++) {
             JSONObject existingCartItem = cartItems.getJSONObject(i);
             if (existingCartItem.getInt("id") == id) {
-                // Update purchaseUnit and totalPrice of the existing item
+                // Calculate the new purchase unit
                 int existingPurchaseUnit = existingCartItem.getInt("purchaseUnit");
-                existingCartItem.put("purchaseUnit", existingPurchaseUnit + 1);
-                existingCartItem.put("totalPrice", price * (existingPurchaseUnit + 1));
+                int newPurchaseUnit = existingPurchaseUnit + 1;
+
+                // Check if the new purchase unit exceeds the stock
+                if (newPurchaseUnit > stock) {
+                    // Respond with an error message
+                    JSONObject errorResponse = new JSONObject();
+                    errorResponse.put("message", "Insufficient stock. Unable to add more items to the cart.");
+                    response.getWriter().write(errorResponse.toString());
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    return; // Exit the method early
+                }
+
+                // Update purchaseUnit and totalPrice of the existing item
+                existingCartItem.put("purchaseUnit", newPurchaseUnit);
+                existingCartItem.put("totalPrice", price * newPurchaseUnit);
                 bookExists = true;
                 break;
             }

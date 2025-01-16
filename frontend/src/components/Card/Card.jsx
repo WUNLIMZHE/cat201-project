@@ -77,10 +77,21 @@ const Card = ({ onClick, ...props }) => {
         } else {
           // Handle non-OK responses (like 4xx or 5xx)
           const errorMessage = await response.text(); // Retrieve plain text for error message
+
+          let messageToShow = "Something went wrong!";
+          try {
+            const errorJson = JSON.parse(errorMessage); // Parse the JSON response
+            if (errorJson.message) {
+              messageToShow = errorJson.message; // Extract the "message" property
+            }
+          } catch (e) {
+            console.error("Failed to parse error message as JSON:", e);
+          }
+
           Swal.fire({
             icon: "error",
             title: "Failed to add to cart",
-            text: errorMessage || "Something went wrong!",
+            text: messageToShow, // Show the extracted or fallback message
             showCancelButton: false,
             confirmButtonColor: "#d33",
             confirmButtonText: "Ok",
