@@ -222,13 +222,13 @@ const Cart = (props) => {
         <span className="finalPrice">
           Total Price: ${totalPrice.toFixed(2)}
         </span>
+        <button
+          className="bg-green-500 text-white font-bold text-lg py-2 px-12 rounded shadow-md hover:bg-green-600 hover:shadow-lg active:bg-green-700 active:shadow-sm active:translate-y-0.5 transition duration-300"
+          onClick={handlePay}
+        >
+          Pay
+        </button>
       </div>
-      <button
-        className="bg-green-500 text-white font-bold text-lg py-2 px-4 rounded shadow-md hover:bg-green-600 hover:shadow-lg active:bg-green-700 active:shadow-sm active:translate-y-0.5 transition duration-300"
-        onClick={handlePay}
-      >
-        Pay
-      </button>
     </>
   );
 };

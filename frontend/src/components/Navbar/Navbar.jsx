@@ -35,7 +35,7 @@ const Navbar = () => {
     <nav className={`container ${sticky ? "dark-nav" : ""}`}>
       <img src={logo} alt="" className="logo" />
       {!isSmallScreen ? (
-        <ul>
+        <ul >
           <li className="fancy-hover relative">
             <Link to="/">Home</Link>
           </li>
@@ -54,9 +54,8 @@ const Navbar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/cart">
-              <img src={iconCart} alt="" className="w-10 mr-2" />
-              Cart
+            <Link to='/view-my-cart'>
+              <img src={iconCart} alt='' className="iconCart"/>
             </Link>
           </li>
           <li className="hover:scale-110 transition-transform duration-300 ease-in-out">

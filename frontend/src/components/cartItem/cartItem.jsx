@@ -1,5 +1,6 @@
 import Swal from "sweetalert2";
 import React, { useState } from "react";
+import "./cartItem.css"
 import cartList from "../../cartList";
 
 const cartItems = (props) => {
@@ -57,11 +58,16 @@ const cartItems = (props) => {
       <img src={props.image} />
       <div className="right-sidebar">
         <h1 className="title">{props.title}</h1>
-        <p className="info genre">Genre: {props.genre}</p>
-        <p className="info category">Category: {props.category}</p>
-        <p className="info price">Price: {props.totalPrice}</p>
-        <p className="info language">Language: {props.language}</p>
-        <p className="info stock">Stock left: {props.stock}</p>
+        <div className="tag">
+          <p className="info genre">{props.genre}</p>
+          <p className="info category">{props.category}</p>
+          <p className="info language">{props.language}</p>
+        </div>
+
+        <div className="enlarged">
+          <p className="price">Price: RM {props.totalPrice}</p>
+          <p className="stock">Stock left: {props.stock}</p>
+        </div>
         <div className="change-quantity">
           <button className="changeQty addBook" onClick={handleAddBook}>
             +
