@@ -20,6 +20,12 @@ function App() {
         <Route path="/" element={<Navigate to="/testhome" />} />
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setAuthUsername={setAuthUsername} />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/testhome" element={<TestHome username={username} />} />
+        <Route path="/testadmin" element={<TestAdmin />} />
+        <Route path="/product" element={<ProductPage />} />
+        <Route path="/product/:id" element={<CardDetailsPage />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/purchaserecord" element={<PurchaseRecord />} />
       </Routes>
     </Router>
   );
