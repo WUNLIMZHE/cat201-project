@@ -53,23 +53,27 @@ public class CartItemServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8"); // Ensure request encoding is UTF-8
-        response.setContentType("application/json; charset=UTF-8"); // Set response content type
-        response.setCharacterEncoding("UTF-8"); // Ensure response encoding is UTF-8
+        // Set character encoding and content type
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
+        // Ensure `nextCartID` is properly initialized
         if (nextCartID < 1) {
             loadNextCartID(request);
         }
 
-        BufferedReader reader = request.getReader();
+        // Read and parse the JSON request body
         StringBuilder jsonContent = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            jsonContent.append(line);
+        try (BufferedReader reader = request.getReader()) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonContent.append(line);
+            }
         }
-
         JSONObject jsonRequest = new JSONObject(jsonContent.toString());
 
+        // Extract fields from the JSON request
         int userID = jsonRequest.getInt("userID");
         int id = jsonRequest.getInt("id");
         String title = jsonRequest.getString("title");
@@ -78,47 +82,72 @@ public class CartItemServlet extends HttpServlet {
         String category = jsonRequest.getString("category");
         double price = jsonRequest.getDouble("price");
         int purchaseUnit = jsonRequest.getInt("purchaseUnit");
-        double totalPrice = price * purchaseUnit;
         int stock = jsonRequest.getInt("stock");
         String language = jsonRequest.getString("language");
 
-        System.out.println("Book title" + title);
+        double totalPrice = price * purchaseUnit;
 
-        CartItem newCartItem = new CartItem();
-        newCartItem.setCartID(nextCartID++);
-        newCartItem.setUserID(userID);
-        newCartItem.setId(id);
-        newCartItem.setTitle(title);
-        newCartItem.setImage(image);
-        newCartItem.setGenre(genre);
-        newCartItem.setCategory(category);
-        newCartItem.setPrice(price);
-        newCartItem.setPurchaseUnit(purchaseUnit);
-        newCartItem.setTotalPrice(totalPrice);
-        newCartItem.setStock(stock);
-        newCartItem.setLanguage(language);
+        // Log book title for debugging
+        System.out.println("Book title: " + title);
 
+        // Load existing cart items
         JSONArray cartItems = loadAllCartItems(request);
 
-        JSONObject newCartItemJson = new JSONObject();
-        newCartItemJson.put("cartID", newCartItem.getCartID());
-        newCartItemJson.put("userID", newCartItem.getUserID());
-        newCartItemJson.put("id", newCartItem.getId());
-        newCartItemJson.put("title", newCartItem.getTitle());
-        newCartItemJson.put("image", newCartItem.getImage());
-        newCartItemJson.put("genre", newCartItem.getGenre());
-        newCartItemJson.put("category", newCartItem.getCategory());
-        newCartItemJson.put("price", newCartItem.getPrice());
-        newCartItemJson.put("purchaseUnit", newCartItem.getPurchaseUnit());
-        newCartItemJson.put("totalPrice", newCartItem.getTotalPrice());
-        newCartItemJson.put("stock", newCartItem.getStock());
-        newCartItemJson.put("language", newCartItem.getLanguage());
+        // Check if the book with the same ID already exists in the cart
+        boolean bookExists = false;
+        for (int i = 0; i < cartItems.length(); i++) {
+            JSONObject existingCartItem = cartItems.getJSONObject(i);
+            if (existingCartItem.getInt("id") == id) {
+                // Update purchaseUnit and totalPrice of the existing item
+                int existingPurchaseUnit = existingCartItem.getInt("purchaseUnit");
+                existingCartItem.put("purchaseUnit", existingPurchaseUnit + 1);
+                existingCartItem.put("totalPrice", price * (existingPurchaseUnit + 1));
+                bookExists = true;
+                break;
+            }
+        }
 
-        cartItems.put(newCartItemJson);
+        if (!bookExists) {
+            // Create and populate the new CartItem object
+            CartItem newCartItem = new CartItem();
+            newCartItem.setCartID(nextCartID++);
+            newCartItem.setUserID(userID);
+            newCartItem.setId(id);
+            newCartItem.setTitle(title);
+            newCartItem.setImage(image);
+            newCartItem.setGenre(genre);
+            newCartItem.setCategory(category);
+            newCartItem.setPrice(price);
+            newCartItem.setPurchaseUnit(purchaseUnit);
+            newCartItem.setTotalPrice(totalPrice);
+            newCartItem.setStock(stock);
+            newCartItem.setLanguage(language);
 
+            // Convert the new cart item to JSON and add it to the array
+            JSONObject newCartItemJson = new JSONObject();
+            newCartItemJson.put("cartID", newCartItem.getCartID());
+            newCartItemJson.put("userID", newCartItem.getUserID());
+            newCartItemJson.put("id", newCartItem.getId());
+            newCartItemJson.put("title", newCartItem.getTitle());
+            newCartItemJson.put("image", newCartItem.getImage());
+            newCartItemJson.put("genre", newCartItem.getGenre());
+            newCartItemJson.put("category", newCartItem.getCategory());
+            newCartItemJson.put("price", newCartItem.getPrice());
+            newCartItemJson.put("purchaseUnit", newCartItem.getPurchaseUnit());
+            newCartItemJson.put("totalPrice", newCartItem.getTotalPrice());
+            newCartItemJson.put("stock", newCartItem.getStock());
+            newCartItemJson.put("language", newCartItem.getLanguage());
+
+            cartItems.put(newCartItemJson);
+        }
+
+        // Save the updated cart items
         saveCartItems(cartItems, request);
 
-        response.getWriter().write("{\"message\": \"Cart item added successfully!\"}");
+        // Respond with success message
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("message", "Cart item added successfully!");
+        response.getWriter().write(responseJson.toString());
         response.setStatus(HttpServletResponse.SC_OK);
     }
 

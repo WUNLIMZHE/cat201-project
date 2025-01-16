@@ -19,3 +19,11 @@
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:01:20 +0800] "DELETE /api/users/deleteaddress?username=user1&addressid=1 HTTP/1.1" 200 43 http-bio-9000-exec-5 4
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:01:20 +0800] "OPTIONS /api/users/getaddress?username=user1 HTTP/1.1" 200 - http-bio-9000-exec-9 0
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:01:20 +0800] "GET /api/users/getaddress?username=user1 HTTP/1.1" 200 93 http-bio-9000-exec-5 1
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:01:27 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-1 115
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:01:27 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-2 13
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:02:07 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-5 18
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:02:07 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-7 7
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:26:01 +0800] "GET /cart HTTP/1.1" 200 661 http-bio-9000-exec-9 161
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:26:01 +0800] "GET /cart HTTP/1.1" 200 661 http-bio-9000-exec-10 3
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:26:13 +0800] "OPTIONS /cart HTTP/1.1" 200 - http-bio-9000-exec-2 3
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:26:13 +0800] "DELETE /cart HTTP/1.1" 200 46 http-bio-9000-exec-2 43
