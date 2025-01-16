@@ -224,33 +224,28 @@ public class CartItemServlet extends HttpServlet {
     }
 
 @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json; charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
+protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    response.setContentType("application/json; charset=UTF-8");
+    response.setCharacterEncoding("UTF-8");
 
-        // String cartIDParam = request.getParameter("cartID");
-        // if (cartIDParam == null) {
-        //     response.getWriter().write("{\"error\": \"Cart ID is required!\"}");
-        //     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        //     return;
-        // }
+    BufferedReader reader = request.getReader();
+    StringBuilder jsonContent = new StringBuilder();
+    String line;
+    while ((line = reader.readLine()) != null) {
+        jsonContent.append(line);
+    }
 
-        // int cartID = Integer.parseInt(cartIDParam);
+    System.out.println("Received DELETE Request: " + jsonContent.toString());
 
-        BufferedReader reader = request.getReader();
-        StringBuilder jsonContent = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            jsonContent.append(line);
-        }
-        System.out.println("Received PUT Request: " + jsonContent.toString());
+    // Parse the JSON request
+    JSONObject jsonRequest = new JSONObject(jsonContent.toString());
+    JSONArray cartItems = loadAllCartItems(request);
 
-        JSONObject jsonRequest = new JSONObject(jsonContent.toString());
+    boolean itemDeleted = false;
+
+    if (jsonRequest.has("cartID")) {
+        // Scenario 1: Delete a single book by ID
         int cartID = jsonRequest.getInt("cartID");
-
-        JSONArray cartItems = loadAllCartItems(request);
-
-        boolean itemDeleted = false;
         for (int i = 0; i < cartItems.length(); i++) {
             JSONObject item = cartItems.getJSONObject(i);
             if (item.getInt("cartID") == cartID) {
@@ -259,17 +254,35 @@ public class CartItemServlet extends HttpServlet {
                 break;
             }
         }
-
-        if (itemDeleted) {
-            saveCartItems(cartItems, request);
-            response.getWriter().write("{\"message\": \"Cart item deleted successfully!\"}");
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            response.getWriter().write("{\"error\": \"Cart item not found!\"}");
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    } else if (jsonRequest.has("cartIDs")) {
+        // Scenario 2: Delete multiple books by IDs
+        JSONArray cartIDs = jsonRequest.getJSONArray("cartIDs");
+        for (int i = 0; i < cartIDs.length(); i++) {
+            int cartID = cartIDs.getInt(i);
+            for (int j = 0; j < cartItems.length(); j++) {
+                JSONObject item = cartItems.getJSONObject(j);
+                if (item.getInt("cartID") == cartID) {
+                    cartItems.remove(j);
+                    itemDeleted = true;
+                    break; // Remove and move to the next cartID
+                }
+            }
         }
+    } else {
+        response.getWriter().write("{\"error\": \"Invalid request format! Provide 'cartID' or 'cartIDs'.\"}");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return;
     }
 
+    if (itemDeleted) {
+        saveCartItems(cartItems, request);
+        response.getWriter().write("{\"message\": \"Cart item(s) deleted successfully!\"}");
+        response.setStatus(HttpServletResponse.SC_OK);
+    } else {
+        response.getWriter().write("{\"error\": \"Cart item(s) not found!\"}");
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
+}
 
     private void loadNextCartID(HttpServletRequest req) {
         JSONArray cartItems = loadAllCartItems(req);

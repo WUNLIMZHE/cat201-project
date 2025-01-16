@@ -14,30 +14,55 @@ const Cart = (props) => {
   const location = useLocation();
   console.log("Location State:", location.state); // Optional: Use if needed
 
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch("http://localhost:9000/cart");
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+
+      const userCart = data.filter((item) => item.userID === props.userID);
+      let totalPurchaseAmmount = 0;
+      data.map((item) => (totalPurchaseAmmount += item.totalPrice));
+      setTotalPrice(totalPurchaseAmmount);
+      setCart(userCart); // Update cart state
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Fetch cart items from the server
   useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch("http://localhost:9000/cart");
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-
-        const userCart = data.filter((item) => item.userID === props.userID);
-        let totalPurchaseAmmount = 0;
-        data.map((item) => (totalPurchaseAmmount += item.totalPrice));
-        setTotalPrice(totalPurchaseAmmount);
-        setCart(userCart); // Update cart state
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchProducts();
-  }, [props.userID]);
+  }, []);
+
+  // // Fetch cart items from the server
+  // useEffect(() => {
+  //   const fetchProducts = async () => {
+  //     try {
+  //       const response = await fetch("http://localhost:9000/cart");
+  //       if (!response.ok) {
+  //         throw new Error(`HTTP error! Status: ${response.status}`);
+  //       }
+  //       const data = await response.json();
+
+  //       const userCart = data.filter((item) => item.userID === props.userID);
+  //       let totalPurchaseAmmount = 0;
+  //       data.map((item) => (totalPurchaseAmmount += item.totalPrice));
+  //       setTotalPrice(totalPurchaseAmmount);
+  //       setCart(userCart); // Update cart state
+  //     } catch (err) {
+  //       setError(err.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchProducts();
+  // }, [props.userID]);
 
   // Log `cart` whenever it updates
   useEffect(() => {
@@ -146,8 +171,8 @@ const Cart = (props) => {
     try {
       const data = {
         userID: props.userID,
-        cart: cart
-      }
+        cart: cart,
+      };
       const response = await fetch(`http://localhost:9000/purchase-record`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -166,6 +191,7 @@ const Cart = (props) => {
         confirmButtonColor: "#3085d6",
         confirmButtonText: "Ok",
       });
+      await fetchProducts();
     } catch (error) {
       console.error(error.message);
     }

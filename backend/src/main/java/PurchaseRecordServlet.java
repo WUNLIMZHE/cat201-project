@@ -1,6 +1,12 @@
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
+
+import java.net.URL;
+import java.io.OutputStream;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -91,6 +97,7 @@ public class PurchaseRecordServlet extends HttpServlet {
         PurchaseRecord newPurchasedRecord = new PurchaseRecord(nextPurchaseID, userID, 0, "TESTING ADDRESS");
 
         double totalAmount = 0;
+        JSONArray deletedCartIDs = new JSONArray();
 
         // Process each cart item
         for (int i = 0; i < cartItems.length(); i++) {
@@ -119,6 +126,11 @@ public class PurchaseRecordServlet extends HttpServlet {
                 response.setStatus(HttpServletResponse.SC_BAD_REQUEST); // 400 Bad Request
                 response.getWriter().write("{\"message\": \"Sorry, insufficient stock for item: " + title + "\"}");
                 return; // Exit after sending the error response
+            }
+
+            // Send DELETE request for the cart item
+            if (sendDeleteRequest(cartID)) {
+                deletedCartIDs.put(cartID);
             }
 
             //Create CartItem object to be stored in books list
@@ -162,8 +174,16 @@ public class PurchaseRecordServlet extends HttpServlet {
         // Load existing purchased records
         JSONArray purchaseRecord = loadAllpurchaseRecord(request);
 
+        // Convert the new cart item to JSON and add it to the array
+        JSONObject newPurchasedRecordJson = new JSONObject();
+        newPurchasedRecordJson.put("purchaseID", newPurchasedRecord.getPurchaseID());
+        newPurchasedRecordJson.put("userID", newPurchasedRecord.getUserID());
+        newPurchasedRecordJson.put("totalAmmount", newPurchasedRecord.getTotalAmount());
+        newPurchasedRecordJson.put("shippingAddress", newPurchasedRecord.getShippingAddress());
+        newPurchasedRecordJson.put("books", newPurchasedRecord.getBooks());
+
         // Add the new purchased record to the list
-        purchaseRecord.put(newPurchasedRecord);
+        purchaseRecord.put(newPurchasedRecordJson);
 
         // Save updated purchased records to the file
         savepurchaseRecord(purchaseRecord, request);
@@ -206,6 +226,39 @@ public class PurchaseRecordServlet extends HttpServlet {
         // Send the filtered purchaseRecord as a JSON response
         response.getWriter().write(userpurchaseRecord.toString());
         response.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    /**
+     * Sends a DELETE request to the backend to delete a cart item by cartID.
+     *
+     * @param cartID The ID of the cart item to delete.
+     * @return True if the deletion was successful, otherwise false.
+     */
+    private boolean sendDeleteRequest(int cartID) {
+        try {
+            URL url = new URL("http://localhost:9000/cart"); // Replace with actual backend endpoint
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("DELETE");
+            connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
+            connection.setRequestProperty("Accept", "application/json; charset=UTF-8");
+
+            // Send JSON payload with cartID
+            connection.setDoOutput(true);
+            JSONObject payload = new JSONObject();
+            payload.put("cartID", cartID);
+
+            try (OutputStream os = connection.getOutputStream()) {
+                os.write(payload.toString().getBytes(StandardCharsets.UTF_8));
+                os.flush();
+            }
+
+            // Check the response code
+            int responseCode = connection.getResponseCode();
+            return responseCode == HttpServletResponse.SC_OK;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     private String getPurchaseRecordFilePath(HttpServletRequest req) {
