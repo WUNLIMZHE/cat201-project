@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
-import Navbar from "../components/Navbar/Navbar";
-import Brochure from "../components/Brochure/Brochure";
-import Program from "../components/Program/Program";
-import Title from "../components/Title/Title";
-import Gallery from "../components/Gallery/Gallery"
-import About from "../components/About/About";
-import Footer from "../components/Footer/Footer";
+//import Navbar from "../../components/Navbar/Navbar";
+import Brochure from "../..//components/Brochure/Brochure";
+//import Program from ".../../components/Program/Program";
+import Title from "../../components/Title/Title";
+import Gallery from "../../components/Gallery/Gallery"
+import About from "../../components/About/About";
+import Footer from "../../components/Footer/Footer";
 
 export default function Home() {
   const titleRef = useRef(null);
@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Brochure onExploreMore={scrollToTitle} />
       <div className="container">
         <Title
@@ -31,7 +31,7 @@ export default function Home() {
           subTitle="What we have"
           title=" Your gateway to a world of imagination, knowledge, and inspiration, where every book shines like a ray of sunshine."
         />
-        <Program />
+        {/* <Program /> */}
         <About />
         <Title subTitle="Gallery" title="Sunny Papyrus Best Seller" />
         <Gallery/>

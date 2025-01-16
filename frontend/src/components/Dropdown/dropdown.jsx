@@ -22,18 +22,18 @@ export default function Dropdown() {
             </Link>
           </li>
           <li>
-            <Link to="/Food">
-              <span className="fancy-hover relative">Food</span>
+            <Link to="/books">
+              <span className="fancy-hover relative">Search</span>
             </Link>
           </li>
           <li>
-            <Link to="/Tourism">
-              <span className="fancy-hover relative">Tourism</span>
+            <Link to="/Login">
+              <span className="fancy-hover relative">Login</span>
             </Link>
           </li>
           <li>
-            <Link to="/Hotels">
-              <span className="fancy-hover relative">Hotels</span>
+            <Link to="/view-my-cart">
+              <span className="fancy-hover relative">Cart</span>
             </Link>
           </li>
           <li>

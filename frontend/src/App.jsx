@@ -10,11 +10,15 @@ import PurchaseRecord from './pages/PurchaseRecord';
 import Order from './pages/Admin/Order';
 import OrderDetail from './components/OrderDetail'
 import Inventory from './pages/Admin/Inventory';
+import Home from './pages/Home';
+import HomeAdmin from './pages/Admin/Home'
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/admin" element={<HomeAdmin />} />
         <Route path="/order" element={<Order />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
