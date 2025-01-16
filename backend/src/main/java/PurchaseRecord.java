@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class PurchaseRecord {
@@ -13,7 +14,7 @@ public class PurchaseRecord {
     6. Delivered
     7. Cancelled/Failed
     8. Returned/Refunded */
-    private String purchaseStatus;
+    private String purchaseStatus = "Pending";
     private double totalAmount;
     private String shippingAddress;
     private List<CartItem> books; // Using CartItem to store purchased books
@@ -27,6 +28,18 @@ public class PurchaseRecord {
         this.books = books;
     }
 
+    public PurchaseRecord(int purchaseID, int userID, double totalAmount, String shippingAddress) {
+        this.purchaseID = purchaseID;
+        this.userID = userID;
+        this.totalAmount = totalAmount;
+        this.shippingAddress = shippingAddress;
+        this.books = new ArrayList<CartItem>();  // Instantiate with ArrayList
+    }
+
+    public void addBook(CartItem book){
+        books.add(book);
+    }
+    
     // Getters and Setters
     public int getPurchaseID() {
         return purchaseID;

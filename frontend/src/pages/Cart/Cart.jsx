@@ -1,8 +1,9 @@
 import "./Cart.css";
+import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
-import CartItems from "../../components/cartItem/cartItem";
+import CartItems from "../../components/CartItem/CartItem";
 
 const Cart = (props) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -141,6 +142,35 @@ const Cart = (props) => {
     console.log(cart);
   }
 
+  const handlePay = async () => {
+    try {
+      const data = {
+        userID: props.userID,
+        cart: cart
+      }
+      const response = await fetch(`http://localhost:9000/purchase-record`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update book details: ${response.status}`);
+      }
+      console.log("Payment successful!");
+      Swal.fire({
+        icon: "success", // This shows a green tick icon
+        title: "Payment Successful",
+        text: "Thank you for purchasing! Kindly go to purchase history to check for your order status. Have a nice day!",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Ok",
+      });
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
@@ -167,7 +197,10 @@ const Cart = (props) => {
           Total Price: ${totalPrice.toFixed(2)}
         </span>
       </div>
-      <button className="bg-green-500 text-white font-bold text-lg py-2 px-4 rounded shadow-md hover:bg-green-600 hover:shadow-lg active:bg-green-700 active:shadow-sm active:translate-y-0.5 transition duration-300">
+      <button
+        className="bg-green-500 text-white font-bold text-lg py-2 px-4 rounded shadow-md hover:bg-green-600 hover:shadow-lg active:bg-green-700 active:shadow-sm active:translate-y-0.5 transition duration-300"
+        onClick={handlePay}
+      >
         Pay
       </button>
     </>

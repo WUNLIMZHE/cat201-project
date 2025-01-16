@@ -9,7 +9,6 @@
         "id": 42,
         "title": "Laut Bercerita",
         "image": "/src/assets/images/book-42.webp",
-        "author": "Leila S. Chudori",
         "price": 45,
         "purchaseUnit": 2,
         "totalPrice": 90
@@ -26,7 +25,6 @@
         "id": 42,
         "title": "Laut Bercerita",
         "image": "/src/assets/images/book-42.webp",
-        "author": "Leila S. Chudori",
         "price": 45,
         "purchaseUnit": 2,
         "totalPrice": 90
