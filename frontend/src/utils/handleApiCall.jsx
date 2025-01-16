@@ -7,7 +7,7 @@ const handleApiCall = async (
 ) => {
   try {
     const queryString = (method === "GET" || method === "DELETE") && body ? `?${new URLSearchParams(body).toString()}` : "";
-    const response = await fetch("http://localhost:9090/api/" + url + queryString, {
+    const response = await fetch("http://localhost:9000/api/" + url + queryString, {
       method: method,
       headers: {
         "Content-Type": "application/json",
