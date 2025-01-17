@@ -174,7 +174,7 @@ public class PurchaseRecord {
         List<PurchaseRecord> purchaseRecords = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader("backend\\src\\main\\webapp\\data\\purchase.json")) {
+        try (FileReader reader = new FileReader("src/main/webapp/data/purchase.json")) {
             System.out.println("Reading purchase.json file...");
             Object obj = jsonParser.parse(reader);
             JSONArray purchaseList = (JSONArray) obj;

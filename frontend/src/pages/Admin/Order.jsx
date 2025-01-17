@@ -13,38 +13,43 @@ const chunkOrders = (orders, chunkSize) => {
 };
 
 const Order = () => {
-  const [orders, setOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentChunk, setCurrentChunk] = useState(0);
-  const navigate = useNavigate();
+  const [purchaseID, setPurchaseID] = useState("");
+  const [userID, setUserID] = useState("");
+  const [phone, setPhone] = useState("");
+  const [totalAmount, setTotalAmount] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("");
+  const [purchaseStatus, setPurchaseStatus] = useState("");
+  const [username, setUsername] = useState("");
   const [error, setError] = useState("");
+  const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
 
   const fetchOrders = async () => {
-    try {
-      const ordersResponse = await handleApiCall("users/getorder", "GET", {});
-
-      if (!ordersResponse || !ordersResponse.ok) {
-        throw new Error("Failed to fetch data");
+    await handleApiCall(
+      "admin/getorderdetails",
+      "GET",
+      null,
+      async(response) =>{
+        setOrders(response.data);
+      },
+      (error) => {
+        setError(error);
       }
-
-      const orders = await ordersResponse.json();
-      setOrders(orders);
-    } catch (error) {
-      console.error("Error fetching orders: " + error);
-      setError("Error fetching orders: " + error);
-    }
+    )
   };
 
   useEffect(() => {
     fetchOrders();
   }, []); // Add dependency array to ensure fetchOrders is called only once
 
-  const filteredOrders = orders.filter(
+  const filteredOrders = orders ? orders.filter(
     (order) =>
       order.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
       order.phone.includes(searchQuery) ||
       order.purchaseID.toString().includes(searchQuery)
-  );
+  ) : [];
 
   const chunkedOrders = chunkOrders(filteredOrders, 8);
 
@@ -87,7 +92,7 @@ const Order = () => {
                 <tr>
                   <th>Order ID</th>
                   <th>UserID</th>
-                  <th>Phone</th>
+                  <th>Username</th>
                   <th>Total Amount</th>
                   <th>Payment Method</th>
                   <th>Purchase Status</th>
@@ -101,8 +106,8 @@ const Order = () => {
                     className="clickable-row"
                   >
                     <td>{order.purchaseID}</td>
+                    <td>{order.userID}</td>
                     <td>{order.username}</td>
-                    <td>{order.phone}</td>
                     <td>RM {order.totalAmount}</td>
                     <td>{order.paymentMethod}</td>
                     <td>{order.purchaseStatus}</td>
