@@ -13,6 +13,27 @@ public class CartItem {
     private int stock;
     private String language;
 
+    //default constructor
+    public CartItem(){}
+
+    // Constructor to initialize all the fields
+    public CartItem(int cartID, int userID, int id, String title, String image, String genre, 
+                    String category, double price, int purchaseUnit, double totalPrice, 
+                    int stock, String language) {
+        this.cartID = cartID;
+        this.userID = userID;
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.genre = genre;
+        this.category = category;
+        this.price = price;
+        this.purchaseUnit = purchaseUnit;
+        this.totalPrice = totalPrice;
+        this.stock = stock;
+        this.language = language;
+    }
+    
     // Getters and Setters
     public int getCartID() {
         return cartID;

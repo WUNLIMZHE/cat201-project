@@ -1,7 +1,0 @@
-{
-    loginStatus: false,
-    user":{
-        id: 0,
-        name: "Guest"
-    }
-}

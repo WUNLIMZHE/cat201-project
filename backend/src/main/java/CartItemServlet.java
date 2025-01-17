@@ -53,23 +53,27 @@ public class CartItemServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8"); // Ensure request encoding is UTF-8
-        response.setContentType("application/json; charset=UTF-8"); // Set response content type
-        response.setCharacterEncoding("UTF-8"); // Ensure response encoding is UTF-8
+        // Set character encoding and content type
+        request.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json; charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
+        // Ensure `nextCartID` is properly initialized
         if (nextCartID < 1) {
             loadNextCartID(request);
         }
 
-        BufferedReader reader = request.getReader();
+        // Read and parse the JSON request body
         StringBuilder jsonContent = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            jsonContent.append(line);
+        try (BufferedReader reader = request.getReader()) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonContent.append(line);
+            }
         }
-
         JSONObject jsonRequest = new JSONObject(jsonContent.toString());
 
+        // Extract fields from the JSON request
         int userID = jsonRequest.getInt("userID");
         int id = jsonRequest.getInt("id");
         String title = jsonRequest.getString("title");
@@ -78,47 +82,85 @@ public class CartItemServlet extends HttpServlet {
         String category = jsonRequest.getString("category");
         double price = jsonRequest.getDouble("price");
         int purchaseUnit = jsonRequest.getInt("purchaseUnit");
-        double totalPrice = price * purchaseUnit;
         int stock = jsonRequest.getInt("stock");
         String language = jsonRequest.getString("language");
 
-        System.out.println("Book title" + title);
+        double totalPrice = price * purchaseUnit;
 
-        CartItem newCartItem = new CartItem();
-        newCartItem.setCartID(nextCartID++);
-        newCartItem.setUserID(userID);
-        newCartItem.setId(id);
-        newCartItem.setTitle(title);
-        newCartItem.setImage(image);
-        newCartItem.setGenre(genre);
-        newCartItem.setCategory(category);
-        newCartItem.setPrice(price);
-        newCartItem.setPurchaseUnit(purchaseUnit);
-        newCartItem.setTotalPrice(totalPrice);
-        newCartItem.setStock(stock);
-        newCartItem.setLanguage(language);
+        // Log book title for debugging
+        System.out.println("Book title: " + title);
 
+        // Load existing cart items
         JSONArray cartItems = loadAllCartItems(request);
 
-        JSONObject newCartItemJson = new JSONObject();
-        newCartItemJson.put("cartID", newCartItem.getCartID());
-        newCartItemJson.put("userID", newCartItem.getUserID());
-        newCartItemJson.put("id", newCartItem.getId());
-        newCartItemJson.put("title", newCartItem.getTitle());
-        newCartItemJson.put("image", newCartItem.getImage());
-        newCartItemJson.put("genre", newCartItem.getGenre());
-        newCartItemJson.put("category", newCartItem.getCategory());
-        newCartItemJson.put("price", newCartItem.getPrice());
-        newCartItemJson.put("purchaseUnit", newCartItem.getPurchaseUnit());
-        newCartItemJson.put("totalPrice", newCartItem.getTotalPrice());
-        newCartItemJson.put("stock", newCartItem.getStock());
-        newCartItemJson.put("language", newCartItem.getLanguage());
+        // Check if the book with the same ID already exists in the cart
+        boolean bookExists = false;
+        for (int i = 0; i < cartItems.length(); i++) {
+            JSONObject existingCartItem = cartItems.getJSONObject(i);
+            if (existingCartItem.getInt("id") == id) {
+                // Calculate the new purchase unit
+                int existingPurchaseUnit = existingCartItem.getInt("purchaseUnit");
+                int newPurchaseUnit = existingPurchaseUnit + 1;
 
-        cartItems.put(newCartItemJson);
+                // Check if the new purchase unit exceeds the stock
+                if (newPurchaseUnit > stock) {
+                    // Respond with an error message
+                    JSONObject errorResponse = new JSONObject();
+                    errorResponse.put("message", "Insufficient stock. Unable to add more items to the cart.");
+                    response.getWriter().write(errorResponse.toString());
+                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    return; // Exit the method early
+                }
 
+                // Update purchaseUnit and totalPrice of the existing item
+                existingCartItem.put("purchaseUnit", newPurchaseUnit);
+                existingCartItem.put("totalPrice", price * newPurchaseUnit);
+                bookExists = true;
+                break;
+            }
+        }
+
+        if (!bookExists) {
+            // Create and populate the new CartItem object
+            CartItem newCartItem = new CartItem();
+            newCartItem.setCartID(nextCartID++);
+            newCartItem.setUserID(userID);
+            newCartItem.setId(id);
+            newCartItem.setTitle(title);
+            newCartItem.setImage(image);
+            newCartItem.setGenre(genre);
+            newCartItem.setCategory(category);
+            newCartItem.setPrice(price);
+            newCartItem.setPurchaseUnit(purchaseUnit);
+            newCartItem.setTotalPrice(totalPrice);
+            newCartItem.setStock(stock);
+            newCartItem.setLanguage(language);
+
+            // Convert the new cart item to JSON and add it to the array
+            JSONObject newCartItemJson = new JSONObject();
+            newCartItemJson.put("cartID", newCartItem.getCartID());
+            newCartItemJson.put("userID", newCartItem.getUserID());
+            newCartItemJson.put("id", newCartItem.getId());
+            newCartItemJson.put("title", newCartItem.getTitle());
+            newCartItemJson.put("image", newCartItem.getImage());
+            newCartItemJson.put("genre", newCartItem.getGenre());
+            newCartItemJson.put("category", newCartItem.getCategory());
+            newCartItemJson.put("price", newCartItem.getPrice());
+            newCartItemJson.put("purchaseUnit", newCartItem.getPurchaseUnit());
+            newCartItemJson.put("totalPrice", newCartItem.getTotalPrice());
+            newCartItemJson.put("stock", newCartItem.getStock());
+            newCartItemJson.put("language", newCartItem.getLanguage());
+
+            cartItems.put(newCartItemJson);
+        }
+
+        // Save the updated cart items
         saveCartItems(cartItems, request);
 
-        response.getWriter().write("{\"message\": \"Cart item added successfully!\"}");
+        // Respond with success message
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("message", "Cart item added successfully!");
+        response.getWriter().write(responseJson.toString());
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
@@ -182,33 +224,28 @@ public class CartItemServlet extends HttpServlet {
     }
 
 @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json; charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
+protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    response.setContentType("application/json; charset=UTF-8");
+    response.setCharacterEncoding("UTF-8");
 
-        // String cartIDParam = request.getParameter("cartID");
-        // if (cartIDParam == null) {
-        //     response.getWriter().write("{\"error\": \"Cart ID is required!\"}");
-        //     response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        //     return;
-        // }
+    BufferedReader reader = request.getReader();
+    StringBuilder jsonContent = new StringBuilder();
+    String line;
+    while ((line = reader.readLine()) != null) {
+        jsonContent.append(line);
+    }
 
-        // int cartID = Integer.parseInt(cartIDParam);
+    System.out.println("Received DELETE Request: " + jsonContent.toString());
 
-        BufferedReader reader = request.getReader();
-        StringBuilder jsonContent = new StringBuilder();
-        String line;
-        while ((line = reader.readLine()) != null) {
-            jsonContent.append(line);
-        }
-        System.out.println("Received PUT Request: " + jsonContent.toString());
+    // Parse the JSON request
+    JSONObject jsonRequest = new JSONObject(jsonContent.toString());
+    JSONArray cartItems = loadAllCartItems(request);
 
-        JSONObject jsonRequest = new JSONObject(jsonContent.toString());
+    boolean itemDeleted = false;
+
+    if (jsonRequest.has("cartID")) {
+        // Scenario 1: Delete a single book by ID
         int cartID = jsonRequest.getInt("cartID");
-
-        JSONArray cartItems = loadAllCartItems(request);
-
-        boolean itemDeleted = false;
         for (int i = 0; i < cartItems.length(); i++) {
             JSONObject item = cartItems.getJSONObject(i);
             if (item.getInt("cartID") == cartID) {
@@ -217,17 +254,35 @@ public class CartItemServlet extends HttpServlet {
                 break;
             }
         }
-
-        if (itemDeleted) {
-            saveCartItems(cartItems, request);
-            response.getWriter().write("{\"message\": \"Cart item deleted successfully!\"}");
-            response.setStatus(HttpServletResponse.SC_OK);
-        } else {
-            response.getWriter().write("{\"error\": \"Cart item not found!\"}");
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    } else if (jsonRequest.has("cartIDs")) {
+        // Scenario 2: Delete multiple books by IDs
+        JSONArray cartIDs = jsonRequest.getJSONArray("cartIDs");
+        for (int i = 0; i < cartIDs.length(); i++) {
+            int cartID = cartIDs.getInt(i);
+            for (int j = 0; j < cartItems.length(); j++) {
+                JSONObject item = cartItems.getJSONObject(j);
+                if (item.getInt("cartID") == cartID) {
+                    cartItems.remove(j);
+                    itemDeleted = true;
+                    break; // Remove and move to the next cartID
+                }
+            }
         }
+    } else {
+        response.getWriter().write("{\"error\": \"Invalid request format! Provide 'cartID' or 'cartIDs'.\"}");
+        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        return;
     }
 
+    if (itemDeleted) {
+        saveCartItems(cartItems, request);
+        response.getWriter().write("{\"message\": \"Cart item(s) deleted successfully!\"}");
+        response.setStatus(HttpServletResponse.SC_OK);
+    } else {
+        response.getWriter().write("{\"error\": \"Cart item(s) not found!\"}");
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
+}
 
     private void loadNextCartID(HttpServletRequest req) {
         JSONArray cartItems = loadAllCartItems(req);

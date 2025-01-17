@@ -48,9 +48,19 @@ const Navbar = () => {
             <Link to="/view-my-cart">Carts</Link>
           </li>
           <li className="hover:scale-110 transition-transform duration-300 ease-in-out">
-            <a href="https://www.linkedin.com/in/wunlimzhe/" target="_blank" rel="noopener noreferrer">
-              <button className="btn">Contact Us</button>
-            </a>
+            <Link to="/login">
+              <button className="btn">Login</button>
+            </Link>
+          </li>
+          <li>
+            <Link to='/view-my-cart'>
+              <img src={iconCart} alt='' className="iconCart"/>
+            </Link>
+          </li>
+          <li className="hover:scale-110 transition-transform duration-300 ease-in-out">
+            <Link to="/signup">
+              <button className="btn">Sign up</button>
+            </Link>
           </li>
         </ul>
       ) : (

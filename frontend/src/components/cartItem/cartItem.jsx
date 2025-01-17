@@ -1,7 +1,6 @@
 import Swal from "sweetalert2";
 import React, { useState } from "react";
 import "./cartItem.css"
-import cartList from "../../cartList";
 
 const cartItems = (props) => {
   const handleAddBook = () => {

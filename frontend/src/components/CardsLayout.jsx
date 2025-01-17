@@ -42,7 +42,7 @@ const CardsLayout = ({ products }) => {
       console.log("Card found!");
       navigate("/book/details", { state: { card } }); // Ensure the state is passed here
     } else {
-      console.log("Event not found");
+      console.log("Card not found");
     }
   }
 
