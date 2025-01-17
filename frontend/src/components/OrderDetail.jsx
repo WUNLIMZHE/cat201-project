@@ -2,16 +2,16 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./OrderDetail.css"; // Ensure this is imported
-import cancel from "../../public/cancelled.png";
-import complete from "../../public/completed.png";
-import delivered from "../../public/delivered.png";
-import delivering from "../../public/delivering.png";
-import payment from "../../public/payment.png";
-import pending from "../../public/pending.png";
-import returned from "../../public/returned.png";
-import shipping from "../../public/shipping.png";
-import warehouse from "../../public/warehouse.png";
-import back from "../../public/back.webp";
+import cancel from "../assets/images/cancelled.png";
+import complete from "../assets/images/completed.png";
+import delivered from "../assets/images/delivered.png";
+import delivering from "../assets/images/delivering.png";
+import payment from "../assets/images/payment.png";
+import pending from "../assets/images/pending.png";
+import returned from "../assets/images/returned.png";
+import shipping from "../assets/images/shipping.png";
+import warehouse from "../assets/images/warehouse.png";
+import back from "../assets/images/back.webp";
 
 const OrderDetail = () => {
   const { state } = useLocation();

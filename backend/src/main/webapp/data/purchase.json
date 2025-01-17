@@ -2,7 +2,7 @@
   {
     "purchaseID": 1,
     "userID": 1,
-    "totalAmount": 80,
+    "totalAmount": 180,
     "paymentMethod": "Credit Card",
     "shippingAddress": "6-6-6, TAMAN PEKAKA",
     "purchaseStatus": "Pending",
@@ -13,15 +13,15 @@
         "image": "/src/assets/images/book-42.webp",
         "author": "Leila S. Chudori",
         "price": 45,
-        "purchaseUnit": 2,
-        "totalPrice": 90
+        "purchaseUnit": 4,
+        "totalPrice": 180
       }
     ]
   },
   {
     "purchaseID": 2,
     "userID": 2,
-    "totalAmount": 80,
+    "totalAmount": 90,
     "shippingAddress": "6-6-6, USM",
     "paymentMethod": "Credit Card",
     "purchaseStatus": "Shipped",

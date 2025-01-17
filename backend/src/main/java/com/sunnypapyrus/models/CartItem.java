@@ -13,6 +13,7 @@ public class CartItem {
     private double totalPrice;
     private int stock;
     private String language;
+    private String author;
 
     // Getters and Setters
 
@@ -24,6 +25,8 @@ public class CartItem {
     public CartItem(){
         
     }
+
+    
 
 
     public int getCartID() {

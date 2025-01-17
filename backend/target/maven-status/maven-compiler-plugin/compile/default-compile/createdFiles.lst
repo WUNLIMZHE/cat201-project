@@ -1,4 +1,3 @@
 BookServlet.class
-com\sunnypapyrus\Main.class
 com\sunnypapyrus\AppContextListener.class
 MongoDBConnection.class

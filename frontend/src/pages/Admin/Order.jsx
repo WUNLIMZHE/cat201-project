@@ -21,26 +21,14 @@ const Order = () => {
 
   const fetchOrders = async () => {
     try {
-      const ordersResponse = await handleApiCall("admin/getorderdetails", "GET", {});
-      const usersResponse = await handleApiCall("admin/getuserdetails", "GET", {});
+      const ordersResponse = await handleApiCall("users/getorder", "GET", {});
 
-      if (!ordersResponse || !ordersResponse.ok || !usersResponse || !usersResponse.ok) {
+      if (!ordersResponse || !ordersResponse.ok) {
         throw new Error("Failed to fetch data");
       }
 
       const orders = await ordersResponse.json();
-      const users = await usersResponse.json();
-
-      const ordersWithUserDetails = orders.map(order => {
-        const user = users.find(user => user.userID === order.userID);
-        return {
-          ...order,
-          username: user ? user.username : "Unknown",
-          phone: user ? user.phoneNumber : "Unknown"
-        };
-      });
-
-      setOrders(ordersWithUserDetails);
+      setOrders(orders);
     } catch (error) {
       console.error("Error fetching orders: " + error);
       setError("Error fetching orders: " + error);
@@ -98,7 +86,7 @@ const Order = () => {
               <thead>
                 <tr>
                   <th>Order ID</th>
-                  <th>Username</th>
+                  <th>UserID</th>
                   <th>Phone</th>
                   <th>Total Amount</th>
                   <th>Payment Method</th>

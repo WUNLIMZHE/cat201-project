@@ -1,8 +1,9 @@
 package com.sunnypapyrus.api;
 
 import com.google.gson.Gson;
-import com.sunnypapyrus.models.OrderManagement;
 import com.sunnypapyrus.models.PurchaseRecord;
+import com.sunnypapyrus.models.UserEntity;
+import com.sunnypapyrus.models.UserList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,37 +13,25 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/api/admin/getorderdetails")
+@WebServlet("/api/users/getorder")
 public class AdminOrderManagementServlet extends HttpServlet {
-    private OrderManagement orderManagement;
+    private List<PurchaseRecord> purchaseRecords;
+    private UserList userList;
+    private UserEntity user;
 
     @Override
     public void init() throws ServletException {
-        orderManagement = new OrderManagement();
-        System.out.println("AdminOrderManagementServlet initialized.");
+        userList = new UserList(); // Initialize userList
+        System.out.println("Admin Order Management Servlet initialized.");
+        //open purchase.json and read file
+        purchaseRecords = PurchaseRecord.loadPurchaseRecords();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("application/json");
-
-        try {
-            // Reload the latest Purchase records
-            orderManagement.loadPurchaseRecords();
-            List<PurchaseRecord> purchaseRecords = orderManagement.getPurchaseRecords();
-
-            if (purchaseRecords.isEmpty()) {
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                resp.getWriter().write("{\"error\": \"No purchase records found\"}");
-                return;
-            }
-
-            String json = new Gson().toJson(purchaseRecords);
-            resp.getWriter().write(json);
-        } catch (Exception e) {
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            resp.getWriter().write("{\"error\": \"An error occurred while fetching purchase records\"}");
-            e.printStackTrace();
-        }
+        Gson gson = new Gson();
+        String json = gson.toJson(purchaseRecords);
+        resp.getWriter().write(json);
     }
+
 }
