@@ -1,11 +1,24 @@
 import React, { useRef } from "react";
 //import Navbar from "../../components/Navbar/Navbar";
 import Brochure from "../..//components/Brochure/Brochure";
-//import Program from ".../../components/Program/Program";
+import Program from "../../components/Program/Program";
 import Title from "../../components/Title/Title";
 import Gallery from "../../components/Gallery/Gallery"
 import About from "../../components/About/About";
 import Footer from "../../components/Footer/Footer";
+import order_program from "../../assets/book-update.webp";
+import update_program from "../../assets/packing-book.webp";
+import notification_program from "../../assets/notification.webp";
+import update_icon from "../../assets/stack-of-books.png";
+import order_icon from "../../assets/checklist.png";
+import notification_icon from "../../assets/alert.png";
+
+const programsData = [
+  {mainImage: order_program, icon: order_icon, caption: "Order Management",link: "/order",},
+  {mainImage: update_program,icon: update_icon,caption: "Inventory Management",link: "/orders",}, //Replace the link pls
+  {mainImage: notification_program,icon: notification_icon,caption: "Notification",link: "/orders",},
+];
+
 
 export default function Home() {
   const titleRef = useRef(null);
@@ -31,7 +44,7 @@ export default function Home() {
           subTitle="What we have"
           title=" Your gateway to a world of imagination, knowledge, and inspiration, where every book shines like a ray of sunshine."
         />
-        {/* <Program /> */}
+        <Program programs={programsData} />;
         <About />
         <Title subTitle="Gallery" title="Sunny Papyrus Best Seller" />
         <Gallery/>

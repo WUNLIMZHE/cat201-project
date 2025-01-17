@@ -1,47 +1,37 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import "./Program.css";
-import search_program from "../../assets/read-book.webp";
-import cart_program from "../../assets/bookstore-cashier.webp";
-import order_program from "../../assets/receive-book.webp";
-import search_icon from "../../assets/search.png";
-import cart_icon from "../../assets/shopping-cart.png";
-import order_icon from "../../assets/test.png";
 
-const Program = () => {
+const Program = ({ programs }) => {
   return (
     <div className="programs">
       <div className="grid md:grid-cols-2 lg:grid-cols-3 items-center gap-10 mx-10 md:mx-0">
-        <Link className="program" to="/books">
-          <div>
-            <img src={search_program} alt="" />
-            <div className="caption">
-              <img src={search_icon} alt="" />
-              <p>Search</p>
+        {programs.map((program, index) => (
+          <Link key={index} className="program" to={program.link}>
+            <div>
+              <img src={program.mainImage} alt="" />
+              <div className="caption">
+                <img src={program.icon} alt="" />
+                <p>{program.caption}</p>
+              </div>
             </div>
-          </div>
-        </Link>
-        <Link className="program" to="/view-my-cart">
-          <div>
-            <img src={cart_program} alt="" />
-            <div className="caption">
-              <img src={cart_icon} alt="" />
-              <p>Cart</p>
-            </div>
-          </div>
-        </Link>
-        <Link className="program" to="/orders">
-          <div>
-            <img src={order_program} alt="" />
-            <div className="caption">
-              <img src={order_icon} alt="" />
-              <p>Order</p>
-            </div>
-          </div>
-        </Link>
+          </Link>
+        ))}
       </div>
     </div>
   );
+};
+
+Program.propTypes = {
+  programs: PropTypes.arrayOf(
+    PropTypes.shape({
+      mainImage: PropTypes.string.isRequired, // Main image for the program
+      icon: PropTypes.string.isRequired,      // Icon image for the program
+      caption: PropTypes.string.isRequired,   // Caption text
+      link: PropTypes.string.isRequired,      // Link for the program
+    })
+  ).isRequired,
 };
 
 export default Program;
