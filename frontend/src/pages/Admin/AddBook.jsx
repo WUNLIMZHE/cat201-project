@@ -10,9 +10,9 @@ const languageOptions = [
 ];
 
 const categoryOptions = [
-  { key: "a", value: "a", text: "A" },
-  { key: "b", value: "b", text: "B" },
-  { key: "c", value: "c", text: "C" },
+  { key: "fiction", value: "fiction", text: "Fiction" },
+  { key: "historical", value: "historical", text: "Historical" },
+  { key: "non-fiction", value: "non-fiction", text: "Non-fiction" },
 ];
 
 const AddBook = () => {
@@ -255,9 +255,9 @@ const AddBook = () => {
               <option value="" disabled selected>
                 Select Category
               </option>
-              <option value="a">A</option>
-              <option value="b">B</option>
-              <option value="c">C</option>
+              <option value="fiction">Fiction</option>
+              <option value="non-fiction">Non-fiction</option>
+              <option value="historical">Historical</option>
             </select>
           </div>
           <div className="flex flex-col">

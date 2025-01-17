@@ -13,6 +13,7 @@ import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @WebServlet("/books")
@@ -51,28 +52,88 @@ public class BookServlet extends HttpServlet {
         }
         JSONObject jsonRequest = new JSONObject(jsonContent.toString());
 
-        // Handle file upload
-        Part imagePart = req.getPart("image");
-        if (imagePart != null) {
-            // Get the filename from the uploaded file
-            String fileName = "/src/assets/images/" + imagePart.getSubmittedFileName();
-            // Set the target path to the frontend image folder
+        // Extract fields from the JSON request
+        int id = nextBookID;
+        String title = jsonRequest.getString("title");
+        long isbn = jsonRequest.getLong("isbn");
+        String image = jsonRequest.getString("image");
+        String author = jsonRequest.getString("author");
+        String genre = jsonRequest.getString("genre");
+        String category = jsonRequest.getString("category");
+        String description = jsonRequest.getString("description");
+        double price = jsonRequest.getDouble("price");
+        int stock = jsonRequest.getInt("stock");
+        String language = jsonRequest.getString("language");
+
+        // Handle base64-encoded image
+        if (image != null && !image.isEmpty()) {
+            // Remove the data:image/png;base64, part
+            String imageData = image.split(",")[1];
+
+            // Decode the base64 string
+            byte[] decodedImage = Base64.getDecoder().decode(imageData);
+
+            // Set the target path to save the image
+            String fileName = title + "-" + isbn + ".png";  // Example file name
             Path imagePath = Paths.get("frontend", "src", "assets", "images", fileName);
 
-            // Save the file to the target directory
-            imagePart.write(imagePath.toString());
+            // Write the decoded bytes to the file
+            try (FileOutputStream fileOutputStream = new FileOutputStream(imagePath.toFile())) {
+                fileOutputStream.write(decodedImage);
+            } catch (IOException e) {
+                e.printStackTrace();  // Handle the error accordingly
+            }
         }
 
-        // Process the rest of the data
-        Book book = gson.fromJson(req.getReader(), Book.class);
-        List<Book> books = readBooksFromFile(req);
-        book.setId(2);
-        books.add(book);
-        writeBooksToFile(req, books);
+        // Load existing book items
+        JSONArray bookItems = loadAllBookItems(req);
 
-        // Respond with success
-        resp.setStatus(HttpServletResponse.SC_CREATED);
-        resp.getWriter().write("{\"message\": \"Book added successfully\"}");
+        // Check if the book with the same ID already exists in the book list
+        boolean bookExists = false;
+        for (int i = 0; i < bookItems.length(); i++) {
+            JSONObject existingBookItem = bookItems.getJSONObject(i);
+            if (existingBookItem.getInt("id") == id) {
+                // Calculate the new purchase unit
+                int newStock = stock;
+
+                // Update purchaseUnit and totalPrice of the existing item
+                existingBookItem.put("stock", newStock);
+                bookExists = true;
+                break;
+            }
+        }
+
+        if (!bookExists) {
+            // Create and populate the new Book object
+            Book newCartItem = new Book(id, title, isbn, image, author, genre, category, description, price, 0, 0, stock, language);
+
+            // Convert the new cart item to JSON and add it to the array
+            JSONObject newCartItemJson = new JSONObject();
+            newCartItemJson.put("id", newCartItem.getId());
+            newCartItemJson.put("title", newCartItem.getIsbn());
+            newCartItemJson.put("isbn", newCartItem.getIsbn());
+            newCartItemJson.put("image", newCartItem.getImage());
+            newCartItemJson.put("author", newCartItem.getImage());
+            newCartItemJson.put("genre", newCartItem.getGenre());
+            newCartItemJson.put("category", newCartItem.getCategory());
+            newCartItemJson.put("description", newCartItem.getDescription());
+            newCartItemJson.put("price", newCartItem.getPrice());
+            newCartItemJson.put("review", newCartItem.getReview()); //0
+            newCartItemJson.put("soldUnits", newCartItem.getSoldUnits()); //0
+            newCartItemJson.put("stock", newCartItem.getStock());
+            newCartItemJson.put("language", newCartItem.getLanguage());
+
+            bookItems.put(newCartItemJson);
+        }
+
+        // Save the updated book items
+        saveBookItems(bookItems, req);
+
+        // Respond with success message
+        JSONObject responseJson = new JSONObject();
+        responseJson.put("message", "Book added successfully!");
+        resp.getWriter().write(responseJson.toString());
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override
@@ -103,6 +164,17 @@ public class BookServlet extends HttpServlet {
         resp.getWriter().write("{\"message\": \"Book deleted successfully\"}");
     }
 
+    // Save all book items to books.json
+    private void saveBookItems(JSONArray bookItems, HttpServletRequest req) {
+        String filePath = getFilePath(req);
+        try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8"))) {
+            writer.write(bookItems.toString());
+        } catch (IOException e) {
+            System.err.println("Error saving cart items:");
+            e.printStackTrace();
+        }
+    }
+
     private List<Book> readBooksFromFile(HttpServletRequest req) {
         String filePath = getFilePath(req);
         try (Reader reader = new FileReader(filePath)) {
@@ -115,7 +187,7 @@ public class BookServlet extends HttpServlet {
     }
 
     // Load all book items from books.json
-    private JSONArray loadAllCartItems(HttpServletRequest req) {
+    private JSONArray loadAllBookItems(HttpServletRequest req) {
         JSONArray bookItems = new JSONArray();
         try {
             String filePath = getFilePath(req);
@@ -138,7 +210,7 @@ public class BookServlet extends HttpServlet {
     }
 
     private void loadNextBookID(HttpServletRequest req) {
-        JSONArray bookItems = loadAllCartItems(req);
+        JSONArray bookItems = loadAllBookItems(req);
         if (bookItems.length() > 0) {
             JSONObject lastItem = bookItems.getJSONObject(bookItems.length() - 1);
             nextBookID = lastItem.getInt("id") + 1;
