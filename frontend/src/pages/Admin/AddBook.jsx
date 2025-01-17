@@ -24,7 +24,7 @@ const AddBook = () => {
     category: "",
     genre: "",
     price: "",
-    quantity: "",
+    stock: "",
     image: null,
     description: "",
   });
@@ -71,48 +71,101 @@ const AddBook = () => {
       return;
     }
 
-    console.log("Form Submitted", htmlFormData);
-
-    // Create a FormData object to send the image and other form data
-    const formData = new FormData();
-    formData.append("title", htmlFormData.title);
-    formData.append("isbn", htmlFormData.isbn);
-    formData.append("author", htmlFormData.author);
-    formData.append("language", htmlFormData.language);
-    formData.append("category", htmlFormData.category);
-    formData.append("genre", htmlFormData.genre);
-    formData.append("price", htmlFormData.price);
-    formData.append("quantity", htmlFormData.quantity);
-    formData.append("description", htmlFormData.description);
-
-    // If an image is uploaded, append it as well
+    // Convert the image to base64 if it's available
+    let imageBase64 = "";
     if (htmlFormData.image) {
-      formData.append("image", htmlFormData.image);
-    }
+      const reader = new FileReader();
+      reader.onloadend = async function () {
+        imageBase64 = reader.result;
 
-    try {
-      const response = await fetch("http://localhost:9000/books", {
-        method: "POST",
-        body: formData,
-      });
+        // Send form data as JSON
+        const formDataJson = {
+          title: htmlFormData.title,
+          isbn: htmlFormData.isbn,
+          author: htmlFormData.author,
+          language: htmlFormData.language,
+          category: htmlFormData.category,
+          genre: htmlFormData.genre,
+          price: htmlFormData.price,
+          stock: htmlFormData.stock,
+          description: htmlFormData.description,
+          image: imageBase64, // Send the image as a base64 string
+        };
 
-      if (response.ok) {
-        const result = await response.json();
-        console.log(result.message); // Success message
-        Swal.fire({
-          icon: "success", // This shows a green tick icon
-          title: "A new book is added",
-          text: "Thank you for purchasing! Kindly go to purchase history to check for your order status. Have a nice day!",
-          showCancelButton: false,
-          confirmButtonColor: "#3085d6",
-          confirmButtonText: "Ok",
+        console.log("Form Submitted", JSON.stringify(formDataJson));
+
+        try {
+          const response = await fetch("http://localhost:9000/books", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formDataJson), // Send as JSON
+          });
+
+          if (response.ok) {
+            const result = await response.json();
+            console.log(result.message); // Success message
+            Swal.fire({
+              icon: "success",
+              title: "A new book is added",
+              // text: "Thank you for purchasing! Kindly go to purchase history to check for your order status. Have a nice day!",
+              showCancelButton: false,
+              confirmButtonColor: "#3085d6",
+              confirmButtonText: "Ok",
+            });
+          } else {
+            alert("Failed to add book");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          alert("An error occurred while submitting the form");
+        }
+      };
+
+      // Start reading the image as base64
+      reader.readAsDataURL(htmlFormData.image);
+    } else {
+      // If no image, proceed without the image
+      const formDataJson = {
+        title: htmlFormData.title,
+        isbn: htmlFormData.isbn,
+        author: htmlFormData.author,
+        language: htmlFormData.language,
+        category: htmlFormData.category,
+        genre: htmlFormData.genre,
+        price: htmlFormData.price,
+        stock: htmlFormData.stock,
+        description: htmlFormData.description,
+      };
+
+      try {
+        const response = await fetch("http://localhost:9000/books", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formDataJson), // Send as JSON
         });
-      } else {
-        alert("Failed to add book");
+
+        if (response.ok) {
+          const result = await response.json();
+          console.log(result.message); // Success message
+          Swal.fire({
+            icon: "success",
+            title: "A new book is added",
+            text: "Thank you for purchasing! Kindly go to purchase history to check for your order status. Have a nice day!",
+            showCancelButton: false,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Ok",
+          });
+        } else {
+          alert("Failed to add book");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while submitting the form");
       }
-    } catch (error) {
-      console.error("Error:", error);
-      alert("An error occurred while submitting the form");
     }
   };
 
@@ -131,51 +184,54 @@ const AddBook = () => {
         >
           <div className="flex flex-col">
             <label htmlFor="title" className="text-sm font-medium">
-              Title
+              Title <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               id="title"
               name="title"
               placeholder="Enter book title"
-              onChange="handleChange(event)"
+              onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="flex flex-col">
             <label htmlFor="isbn" className="text-sm font-medium">
-              ISBN
+              ISBN <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
               id="isbn"
               name="isbn"
               placeholder="Enter ISBN (without '-')"
-              onChange="handleChange(event)"
+              onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="flex flex-col">
             <label htmlFor="author" className="text-sm font-medium">
-              Author
+              Author <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               id="author"
               name="author"
               placeholder="Enter author name"
-              onChange="handleChange(event)"
+              onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="flex flex-col">
             <label htmlFor="language" className="text-sm font-medium">
-              Language
+              Language <span className="text-red-500">*</span>
             </label>
             <select
               id="language"
               name="language"
-              onChange="handleChange(event)"
+              onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="" disabled selected>
@@ -188,12 +244,12 @@ const AddBook = () => {
           </div>
           <div className="flex flex-col">
             <label htmlFor="category" className="text-sm font-medium">
-              Category
+              Category <span className="text-red-500">*</span>
             </label>
             <select
               id="category"
               name="category"
-              onChange="handleChange(event)"
+              onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="" disabled selected>
@@ -206,46 +262,49 @@ const AddBook = () => {
           </div>
           <div className="flex flex-col">
             <label htmlFor="genre" className="text-sm font-medium">
-              Genre
+              Genre <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               id="genre"
               name="genre"
               placeholder="Enter genre"
-              onChange="handleChange(event)"
+              onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="flex flex-col">
             <label htmlFor="price" className="text-sm font-medium">
-              Price
+              Price <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
               id="price"
               name="price"
               placeholder="Enter price"
-              onChange="handleChange(event)"
+              onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="flex flex-col">
-            <label htmlFor="quantity" className="text-sm font-medium">
-              Quantity
+            <label htmlFor="stock" className="text-sm font-medium">
+              Stock <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
-              id="quantity"
-              name="quantity"
-              placeholder="Enter quantity"
-              onChange="handleChange(event)"
+              id="stock"
+              name="stock"
+              placeholder="Enter stock"
+              onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="flex flex-col">
             <label htmlFor="image" className="text-sm font-medium">
-              Image
+              Image <span className="text-red-500">*</span>
             </label>
             <input
               type="file"
@@ -253,18 +312,20 @@ const AddBook = () => {
               name="image"
               onChange={handleFileChange}
               className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
           <div className="flex flex-col md:col-span-2">
             <label htmlFor="description" className="text-sm font-medium">
-              Description
+              Description <span className="text-red-500">*</span>
             </label>
             <textarea
               id="description"
               name="description"
               placeholder="Enter description"
-              onChange="handleChange(event)"
+              onChange={handleChange}
               className="mt-1 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"
+              required
             ></textarea>
           </div>
           <button
