@@ -55,6 +55,12 @@
             <artifactId>json</artifactId>
             <version>20210307</version> <!-- Use the latest version available -->
         </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <version>9.0.65</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>

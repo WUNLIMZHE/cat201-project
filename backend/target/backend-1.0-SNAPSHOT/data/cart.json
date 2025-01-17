@@ -1,16 +1,1 @@
-[
-  {
-    "cartID": 1,
-    "userID": 1,
-    "id": 1,
-    "title": "The Great Gatsby",
-    "image": "/src/assets/images/book-1.webp",
-    "genre": "Classic Fiction",
-    "category": "fiction",
-    "price": 45,
-    "purchaseUnit": 1,
-    "totalPrice": 45,
-    "stock": 170,
-    "language": "english"
-  }
-]
+[]

@@ -6,6 +6,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.*;
 import java.lang.reflect.Type;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +25,26 @@ public class BookServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // Handle file upload
+        Part imagePart = req.getPart("image");
+        if (imagePart != null) {
+            // Get the filename from the uploaded file
+            String fileName = "/src/assets/images/" + imagePart.getSubmittedFileName();
+            // Set the target path to the frontend image folder
+            Path imagePath = Paths.get("frontend", "src", "assets", "images", fileName);
+
+            // Save the file to the target directory
+            imagePart.write(imagePath.toString());
+        }
+
+        // Process the rest of the data
         Book book = gson.fromJson(req.getReader(), Book.class);
         List<Book> books = readBooksFromFile(req);
         books.add(book);
         writeBooksToFile(req, books);
 
+        // Respond with success
         resp.setStatus(HttpServletResponse.SC_CREATED);
         resp.getWriter().write("{\"message\": \"Book added successfully\"}");
     }

@@ -11,6 +11,7 @@ import OrderDetail from './components/OrderDetail'
 import Inventory from './pages/Admin/Inventory';
 import TestHome from './pages/TestHome';
 import TestAdmin from './pages/TestAdmin';
+import AddBook from "./pages/Admin/AddBook"
 import { useState } from 'react';
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/testhome" element={<TestHome loggedIn={loggedIn} username={username} />} />
         <Route path="/testadmin" element={<TestAdmin />} />
+        <Route path="/admin-add-book" element={<AddBook />} />
       </Routes>
     </Router>
   );
