@@ -3,7 +3,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import './style.css';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import ProductPage from './pages/ProductPage'; // Adjust the path to your component
+import ProductPage from './pages/ProductPage';
 import CardDetailsPage from './pages/CardDetailsPage';
 import Cart from "./pages/Cart/Cart"
 import PurchaseRecord from './pages/PurchaseRecord';

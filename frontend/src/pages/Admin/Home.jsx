@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-//import Navbar from "../../components/Navbar/Navbar";
+import Navbar from "../../components/NavbarAdmin/NavbarAdmin";
 import Brochure from "../..//components/Brochure/Brochure";
 import Program from "../../components/Program/Program";
 import Title from "../../components/Title/Title";
@@ -8,15 +8,16 @@ import About from "../../components/About/About";
 import Footer from "../../components/Footer/Footer";
 import order_program from "../../assets/book-update.webp";
 import update_program from "../../assets/packing-book.webp";
-import notification_program from "../../assets/notification.webp";
+import addbook_program from "../../assets/notification.webp";
 import update_icon from "../../assets/stack-of-books.png";
 import order_icon from "../../assets/checklist.png";
-import notification_icon from "../../assets/alert.png";
+import addbook_icon from "../../assets/addbook.png";
+import FooterContent from "../../components/FooterContent/FooterContent";
 
 const programsData = [
   {mainImage: order_program, icon: order_icon, caption: "Order Management",link: "/order",},
   {mainImage: update_program,icon: update_icon,caption: "Inventory Management",link: "/orders",}, //Replace the link pls
-  {mainImage: notification_program,icon: notification_icon,caption: "Notification",link: "/orders",},
+  {mainImage: addbook_program,icon: addbook_icon,caption: "Add book",link: "/orders",},
 ];
 
 
@@ -36,7 +37,7 @@ export default function Home() {
 
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <Brochure onExploreMore={scrollToTitle} />
       <div className="container">
         <Title
@@ -49,6 +50,7 @@ export default function Home() {
         <Title subTitle="Gallery" title="Sunny Papyrus Best Seller" />
         <Gallery/>
       </div>
+      <FooterContent/>
       <Footer/>
     </>
   );

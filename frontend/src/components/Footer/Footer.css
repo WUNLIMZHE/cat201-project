@@ -6,7 +6,7 @@
 .copyright {
     position: absolute;
     bottom: 0; /* Adjusted to make it stick at the bottom of the .footer */
-    background-color: rgb(1, 49, 41);
+    background-color: rgb(0, 0, 0);
     color: rgb(255, 255, 255);
     text-align: center;
     width: 100%;

@@ -44,17 +44,36 @@ nav {
 }
 
 nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   white-space: nowrap;
 }
 
 nav ul li {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   list-style-type: none;
-  margin: 10px 20px;
+  margin: 0 20px;
   font-size: 20px;
+  padding: 0;
+  height: 60px; 
 }
 
 .dark-nav {
   background: rgb(32, 58, 136);
   transition: 0.5s;
 }
+
+.cart-icon {
+  width: 32px; 
+  height: 32px;
+  object-fit: contain; 
+  cursor: pointer; 
+}
+
+.cart-icon:hover {
+  transform: scale(1.2); 
+  transition: transform 0.2s ease-in-out;
+}
+

@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import "./Navbar.css";
 import logo from "../../assets/books.png";
 import { Link } from "react-router-dom";
+import iconCart from "../../assets/iconCart.png";
 import Dropdown from "../Dropdown/dropdown";
+import Profile from "../Profile/Profile";
 const Navbar = () => {
   const [sticky, setSticky] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -39,18 +41,18 @@ const Navbar = () => {
             <Link to="/">Home</Link>
           </li>
           <li className="fancy-hover relative">
-            <Link to="/books">Search</Link>
+            <Link to="/books">Our Product</Link>
           </li>
           <li className="fancy-hover relative">
-            <Link to="/Login">Login</Link>
-          </li>
-          <li className="fancy-hover relative">
-            <Link to="/view-my-cart">Carts</Link>
+            <Link to="/#">View</Link>
           </li>
           <li className="hover:scale-110 transition-transform duration-300 ease-in-out">
-            <a href="https://www.linkedin.com/in/wunlimzhe/" target="_blank" rel="noopener noreferrer">
-              <button className="btn">Contact Us</button>
-            </a>
+            <Link to="/view-my-cart">
+              <img src={iconCart} alt="Cart" className="cart-icon"/>
+            </Link>
+          </li>
+          <li>
+            <Profile/>
           </li>
         </ul>
       ) : (

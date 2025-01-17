@@ -23,12 +23,7 @@ export default function Dropdown() {
           </li>
           <li>
             <Link to="/books">
-              <span className="fancy-hover relative">Search</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/Login">
-              <span className="fancy-hover relative">Login</span>
+              <span className="fancy-hover relative">Our Product</span>
             </Link>
           </li>
           <li>
@@ -37,14 +32,19 @@ export default function Dropdown() {
             </Link>
           </li>
           <li>
-            <a
-              href="https://www.linkedin.com/in/wunlimzhe/"
-              className="fancy-hover relative"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Contact
-            </a>
+            <Link to="/#">
+              <span className="fancy-hover relative">Order</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/#">
+              <span className="fancy-hover relative">Profile</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="/#">
+              <span className="fancy-hover relative">Sign out</span>
+            </Link>
           </li>
         </ul>
       )}
