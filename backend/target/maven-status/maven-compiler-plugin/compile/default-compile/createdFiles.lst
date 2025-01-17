@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 com\sunnypapyrus\api\CorsFilter.class
-Book.class
 BookServlet.class
 com\sunnypapyrus\Main.class
 com\sunnypapyrus\api\UsersLoginServlet.class
-=======
-BookServlet.class
->>>>>>> ch/order-management
 com\sunnypapyrus\AppContextListener.class
 MongoDBConnection.class

@@ -257,20 +257,22 @@ public class PurchaseRecord {
     public void setUserList(UserList userList) {
         this.userList = userList;
     }
-
     public static List<PurchaseRecord> loadPurchaseRecords() {
         List<PurchaseRecord> purchaseRecords = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader("d:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
             Object obj = jsonParser.parse(reader);
+            if (obj == null) {
+                return purchaseRecords; // Return empty list if JSON is empty
+            }
             JSONArray purchaseList = (JSONArray) obj;
 
             for (Object purchaseObj : purchaseList) {
                 JSONObject purchaseJSON = (JSONObject) purchaseObj;
                 int purchaseID = ((Long) purchaseJSON.get("purchaseID")).intValue();
                 int userID = ((Long) purchaseJSON.get("userID")).intValue();
-                double totalAmount = ((Number) purchaseJSON.get("totalAmount")).doubleValue();
+                double totalAmount = purchaseJSON.get("totalAmount") != null ? ((Number) purchaseJSON.get("totalAmount")).doubleValue() : 0.0;
                 String shippingAddress = (String) purchaseJSON.get("shippingAddress");
                 String paymentMethod = (String) purchaseJSON.get("paymentMethod");
                 String purchaseStatus = (String) purchaseJSON.get("purchaseStatus");
@@ -282,9 +284,10 @@ public class PurchaseRecord {
                     int id = ((Long) bookJSON.get("id")).intValue();
                     String title = (String) bookJSON.get("title");
                     String image = (String) bookJSON.get("image");
-                    double price = ((Number) bookJSON.get("price")).doubleValue();
+                    String author = (String) bookJSON.get("author");
+                    double price = bookJSON.get("price") != null ? ((Number) bookJSON.get("price")).doubleValue() : 0.0;
                     int purchaseUnit = ((Long) bookJSON.get("purchaseUnit")).intValue();
-                    double totalPrice = ((Number) bookJSON.get("totalPrice")).doubleValue();
+                    double totalPrice = bookJSON.get("totalPrice") != null ? ((Number) bookJSON.get("totalPrice")).doubleValue() : 0.0;
 
                     CartItem book = new CartItem(id, purchaseUnit);
                     book.setTitle(title);
@@ -294,8 +297,7 @@ public class PurchaseRecord {
                     books.add(book);
                 }
 
-                PurchaseRecord purchaseRecord = new PurchaseRecord(purchaseID, userID, totalAmount,
-                        shippingAddress, paymentMethod, purchaseStatus, books);
+                PurchaseRecord purchaseRecord = new PurchaseRecord(purchaseID, userID, totalAmount, shippingAddress, paymentMethod, purchaseStatus, books);
                 purchaseRecords.add(purchaseRecord);
             }
         } catch (IOException | ParseException e) {
