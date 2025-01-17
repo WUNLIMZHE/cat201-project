@@ -32,7 +32,7 @@ const Order = () => {
       "GET",
       null,
       async(response) =>{
-        setOrders(response.data);
+        setOrders(response);
       },
       (error) => {
         setError(error);
