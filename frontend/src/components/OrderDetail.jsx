@@ -15,7 +15,7 @@ import warehouse from "../assets/images/warehouse.png";
 import back from "../assets/images/back.webp";
 
 const OrderDetail = () => {
-  console.log("purchaseID: " + useParams().purchaseID);
+  // console.log("purchaseID: " + useParams().purchaseID);
   const { purchaseID } = useParams();
   const navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState(null);
@@ -58,6 +58,21 @@ const OrderDetail = () => {
     });
   };
 
+  const updateQuantity = async (purchaseID, bookId, newQuantity) => {
+    await handleApiCall(
+      `admin/updatequantity`,
+      "POST",
+      { purchaseID, bookId, newQuantity },
+      async (response) => {
+        console.log("PASS: " + bookId)
+        fetchOrderDetails();
+      },
+      (error) => {
+        setError(error);
+      }
+    );
+  };
+
   const upadateOrderStatus = async (purchaseID, purchaseStatus) => {
     if (window.confirm("Are you sure you want to update the order status?")) {
       await handleApiCall(
@@ -80,9 +95,13 @@ const OrderDetail = () => {
     }
   }
 
-  const handleSaveChanges = () => {
-    // console.log("Save Changes: " + orderDetails.purchaseStatus);
-    // console.log("Purchase ID: " + purchaseID);
+  const handleSaveChanges = async () => {
+    for (const book of orderDetails.books) {
+      console.log("book id: " + book.id);
+      console.log("book quantity: " + book.purchaseUnit);
+      // console.log("purchaseID: " + purchaseID);
+      await updateQuantity(purchaseID, book.id, book.purchaseUnit);
+    }
     upadateOrderStatus(purchaseID, orderDetails.purchaseStatus);
   }
 

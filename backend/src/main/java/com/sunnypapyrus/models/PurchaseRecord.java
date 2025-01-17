@@ -56,6 +56,28 @@ public class PurchaseRecord {
         this.phone = user.getUserPhoneByID(String.valueOf(userID));
     }
 
+    public void editCart(int purchaseID, int bookID, int quantity) {
+        List<PurchaseRecord> purchaseRecords = loadPurchaseRecords();
+        boolean updated = false;
+        for (PurchaseRecord purchaseRecord : purchaseRecords) {
+            if (purchaseRecord.getPurchaseID() == purchaseID) {
+                for (CartItem book : purchaseRecord.getBooks()) {
+                    if (book.getId() == bookID) {
+                        book.setPurchaseUnit(quantity);
+                        book.setTotalPrice(book.getPrice() * quantity);
+                        updated = true;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        if (!updated) {
+            throw new IllegalArgumentException("Purchase ID or Book ID not found");
+        }
+        savePurchaseRecords(purchaseRecords);
+    }
+
     public void setPurchaseByID(int purchaseID) {
         List<PurchaseRecord> purchaseRecords = loadPurchaseRecords();
         for (PurchaseRecord purchaseRecord : purchaseRecords) {
