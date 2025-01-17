@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/AdminSidebar/Sidebar";
-import orders from "../../data/orderData";
+import handleApiCall from "../../utils/handleApiCall";
 import "./Order.css";
 
 const chunkOrders = (orders, chunkSize) => {
@@ -13,15 +13,49 @@ const chunkOrders = (orders, chunkSize) => {
 };
 
 const Order = () => {
+  const [orders, setOrders] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [currentChunk, setCurrentChunk] = useState(0);
   const navigate = useNavigate();
+  const [error, setError] = useState("");
+
+  const fetchOrders = async () => {
+    try {
+      const ordersResponse = await handleApiCall("admin/getorderdetails", "GET", {});
+      const usersResponse = await handleApiCall("admin/getuserdetails", "GET", {});
+
+      if (!ordersResponse || !ordersResponse.ok || !usersResponse || !usersResponse.ok) {
+        throw new Error("Failed to fetch data");
+      }
+
+      const orders = await ordersResponse.json();
+      const users = await usersResponse.json();
+
+      const ordersWithUserDetails = orders.map(order => {
+        const user = users.find(user => user.userID === order.userID);
+        return {
+          ...order,
+          username: user ? user.username : "Unknown",
+          phone: user ? user.phoneNumber : "Unknown"
+        };
+      });
+
+      setOrders(ordersWithUserDetails);
+    } catch (error) {
+      console.error("Error fetching orders: " + error);
+      setError("Error fetching orders: " + error);
+    }
+  };
+
+  useEffect(() => {
+    fetchOrders();
+  }, []); // Add dependency array to ensure fetchOrders is called only once
 
   const filteredOrders = orders.filter(
     (order) =>
-      order.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.mobile.includes(searchQuery) ||
-      order.id.toString().includes(searchQuery)
+      order.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      order.phone.includes(searchQuery) ||
+      order.purchaseID.toString().includes(searchQuery)
   );
 
   const chunkedOrders = chunkOrders(filteredOrders, 8);
@@ -46,7 +80,10 @@ const Order = () => {
         ) : (
           <>
             <div className="pagination">
-              <button onClick={() => setCurrentChunk(currentChunk - 1)} disabled={currentChunk === 0}>
+              <button
+                onClick={() => setCurrentChunk(currentChunk - 1)}
+                disabled={currentChunk === 0}
+              >
                 Prev
               </button>
               <button
@@ -61,26 +98,26 @@ const Order = () => {
               <thead>
                 <tr>
                   <th>Order ID</th>
-                  <th>Full Name</th>
-                  <th>Mobile</th>
-                  <th>Total</th>
-                  <th>Payment Type</th>
-                  <th>Status</th>
+                  <th>Username</th>
+                  <th>Phone</th>
+                  <th>Total Amount</th>
+                  <th>Payment Method</th>
+                  <th>Purchase Status</th>
                 </tr>
               </thead>
               <tbody>
                 {chunkedOrders[currentChunk].map((order) => (
                   <tr
-                    key={order.id}
-                    onClick={() => navigate(`/orders/${order.id}`, { state: { order } })}
+                    key={order.purchaseID}
+                    onClick={() => navigate(`/orders/${order.purchaseID}`, { state: { order } })}
                     className="clickable-row"
                   >
-                    <td>{order.id}</td>
-                    <td>{order.fullName}</td>
-                    <td>{order.mobile}</td>
-                    <td>RM {order.total}</td>
-                    <td>{order.paymentType}</td>
-                    <td>{order.status}</td>
+                    <td>{order.purchaseID}</td>
+                    <td>{order.username}</td>
+                    <td>{order.phone}</td>
+                    <td>RM {order.totalAmount}</td>
+                    <td>{order.paymentMethod}</td>
+                    <td>{order.purchaseStatus}</td>
                   </tr>
                 ))}
               </tbody>

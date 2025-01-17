@@ -1,5 +1,6 @@
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.sunnypapyrus.models.Book;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;

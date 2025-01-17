@@ -1,3 +1,4 @@
+package com.sunnypapyrus.models;
 public class CartItem {
 
     private int cartID;
@@ -14,6 +15,17 @@ public class CartItem {
     private String language;
 
     // Getters and Setters
+
+    public CartItem(int id, int purchaseUnit) {
+        this.id = id;
+        this.purchaseUnit = purchaseUnit;
+    }
+
+    public CartItem(){
+        
+    }
+
+
     public int getCartID() {
         return cartID;
     }

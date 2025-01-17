@@ -1,105 +1,36 @@
+/* eslint-disable no-unused-vars */
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./OrderDetail.css"; // Ensure this is imported
-import back from "/back.webp";
-import cancel from "/cancelled.png";
-import complete from "/completed.png";
-import delivered from "/delivered.png";
-import delivering from "/delivering.png";
-import payment from "/payment.png";
-import pending from "/pending.png";
-import returned from "/returned.png";
-import shipping from "/shipping.png";
-import warehouse from "/warehouse.png";
-
-// Load order data from localStorage or fallback to initial orderData
-const getOrderData = () => {
-  const savedOrders = localStorage.getItem("orderData");
-  return savedOrders ? JSON.parse(savedOrders) : [];
-};
+import cancel from "../../public/cancelled.png";
+import complete from "../../public/completed.png";
+import delivered from "../../public/delivered.png";
+import delivering from "../../public/delivering.png";
+import payment from "../../public/payment.png";
+import pending from "../../public/pending.png";
+import returned from "../../public/returned.png";
+import shipping from "../../public/shipping.png";
+import warehouse from "../../public/warehouse.png";
+import back from "../../public/back.webp";
 
 const OrderDetail = () => {
   const { state } = useLocation();
   const { order } = state || {};
   const navigate = useNavigate();
+  const [orderDetails, setOrderDetails] = useState(null);
 
-  // Check if order exists before rendering
-  if (!order) {
-    return <p>Loading...</p>;
+  useEffect(() => {
+    fetch("/api/admin/getorderdetails")
+      .then((response) => response.json())
+      .then((data) => {
+        const orderDetail = data.find((o) => o.purchaseID === order.id);
+        setOrderDetails(orderDetail);
+      });
+  }, [order.id]);
+
+  if (!orderDetails) {
+    return <div>Loading...</div>;
   }
-
-  const [newStatus, setNewStatus] = useState(order.status || "Pending");
-  const [books, setBooks] = useState(order.books); // Maintain state for books with quantities
-
-  const handleStatusChange = (e) => {
-    setNewStatus(e.target.value);
-  };
-
-  const handleSave = () => {
-    // Load existing orders from localStorage
-    const orders = getOrderData();
-
-    // Update the status of the current order
-    const updatedOrders = orders.map((o) => {
-      if (o.id === order.id) {
-        return { ...o, status: newStatus, books }; // Save the updated books as well
-      }
-      return o;
-    });
-
-    // Save the updated orders back to localStorage
-    localStorage.setItem("orderData", JSON.stringify(updatedOrders));
-
-    // Navigate back to the orders page
-    navigate("/order", { state: { updatedOrders } });
-  };
-
-  const getStatusImage = (status) => {
-    switch (status) {
-      case "Cancelled":
-        return cancel;
-      case "Completed":
-        return complete;
-      case "Delivered":
-        return delivered;
-      case "Delivering":
-        return delivering;
-      case "Payment Pending":
-        return payment;
-      case "Pending":
-        return pending;
-      case "Returned":
-        return returned;
-      case "Shipping":
-        return shipping;
-      case "In Warehouse":
-        return warehouse;
-      default:
-        return pending;
-    }
-  };
-
-  // Handle change in book quantity
-  const handleQuantityChange = (bookId, newQuantity) => {
-    if (newQuantity < 1) return; // Prevent negative or zero quantity
-
-    const updatedBooks = books.map((book) =>
-      book.bookId === bookId ? { ...book, quantity: newQuantity } : book
-    );
-
-    setBooks(updatedBooks); // Update the state with the new book quantities
-  };
-
-  // Calculate total price for the order and apply discount if available
-  const calculateTotalPrice = () => {
-    let total = books.reduce((acc, book) => acc + book.pricePerUnit * book.quantity, 0);
-
-    if (order.discount) {
-      total -= total * (order.discount / 100); // Apply discount percentage
-    }
-
-    return total.toFixed(2); // Return the total price with two decimal places
-  };
 
   return (
     <div className="order-detail-container">
@@ -114,19 +45,18 @@ const OrderDetail = () => {
       <div className="order-detail-wrapper">
         {/* Order Details */}
         <div className="order-detail-section">
-          <img src={getStatusImage(newStatus)} alt="Order Status" className="status-image" />
           <div className="order-detail-content">
-            <p><strong>Purchase ID:</strong> {order.id}</p>
-            <p><strong>Full Name:</strong> {order.fullName}</p>
-            <p><strong>Mobile:</strong> {order.mobile}</p>
-            <p><strong>Total:</strong> RM {calculateTotalPrice()}</p>
-            <p><strong>Payment Type:</strong> {order.paymentType}</p>
+            <p><strong>Purchase ID:</strong> {orderDetails.purchaseID}</p>
+            <p><strong>Full Name:</strong> {orderDetails.fullName}</p>
+            <p><strong>Mobile:</strong> {orderDetails.mobile}</p>
+            <p><strong>Total:</strong> RM {orderDetails.totalAmount}</p>
+            <p><strong>Payment Type:</strong> {orderDetails.paymentType}</p>
             <div className="status-container">
               <label htmlFor="status"><strong>Order Status:</strong></label>
               <select
                 id="status"
-                value={newStatus}
-                onChange={handleStatusChange}
+                value={orderDetails.purchaseStatus}
+                onChange={(e) => setOrderDetails({ ...orderDetails, purchaseStatus: e.target.value })}
                 className="status-select"
               >
                 <option value="Pending">Pending</option>
@@ -142,10 +72,10 @@ const OrderDetail = () => {
             </div>
 
             {/* Discount section */}
-            {order.discount && (
-              <p><strong>Discount Applied:</strong> {order.discount}%</p>
+            {orderDetails.discount && (
+              <p><strong>Discount Applied:</strong> {orderDetails.discount}%</p>
             )}
-            <button className="back-button" onClick={handleSave}>Save Changes</button>
+            <button className="back-button" >Save Changes</button>
           </div>
         </div>
 
@@ -162,21 +92,20 @@ const OrderDetail = () => {
               </tr>
             </thead>
             <tbody>
-              {books.map((book) => (
-                <tr key={book.bookId}>
-                  <td>{book.bookId}</td>
-                  <td>{book.bookName}</td>
-                  <td>RM {book.pricePerUnit}</td>
+              {orderDetails.books.map((book) => (
+                <tr key={book.id}>
+                  <td>{book.id}</td>
+                  <td>{book.title}</td>
+                  <td>RM {book.price}</td>
                   <td>
                     <input
                       type="number"
-                      value={book.quantity}
-                      onChange={(e) => handleQuantityChange(book.bookId, parseInt(e.target.value))}
+                      value={book.purchaseUnit}
                       min="1"
                       className="quantity-input"
                     />
                   </td>
-                  <td>RM {book.pricePerUnit * book.quantity}</td>
+                  <td>RM {book.totalPrice}</td>
                 </tr>
               ))}
             </tbody>

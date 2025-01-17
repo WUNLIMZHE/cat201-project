@@ -23,7 +23,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #c9edff;
+    background-color: #000000;
   }
   
   table th,
@@ -34,7 +34,7 @@
   }
   
   table th {
-    background-color: #f1f1f1;
+    background-color: #2b00c9;
     font-weight: bold;
   }
 

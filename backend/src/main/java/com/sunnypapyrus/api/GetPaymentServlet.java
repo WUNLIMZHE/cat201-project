@@ -17,6 +17,7 @@ public class GetPaymentServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+        System.out.println("GetPaymentServlet initialized.");
         userList = new UserList();
     }
 

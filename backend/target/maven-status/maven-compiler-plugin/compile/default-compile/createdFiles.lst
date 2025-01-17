@@ -1,14 +1,4 @@
-<<<<<<< HEAD
-com\sunnypapyrus\api\UsersLoginServlet.class
-com\sunnypapyrus\api\CorsFilter.class
-com\sunnypapyrus\models\UserSignup.class
-=======
-BookDAO.class
-com\sunnypapyrus\api\UsersLoginServlet.class
-com\sunnypapyrus\api\CorsFilter.class
->>>>>>> 6e0e82d5e2ef933abb8071294ce0eba51543f7b7
-Book.class
-com\sunnypapyrus\AppContextListener.class
 BookServlet.class
 com\sunnypapyrus\Main.class
+com\sunnypapyrus\AppContextListener.class
 MongoDBConnection.class

@@ -2,8 +2,10 @@
   {
     "purchaseID": 1,
     "userID": 1,
-    "totalAmmount": 80,
+    "totalAmount": 80,
+    "paymentMethod": "Credit Card",
     "shippingAddress": "6-6-6, TAMAN PEKAKA",
+    "purchaseStatus": "Pending",
     "books": [
       {
         "id": 42,
@@ -19,8 +21,10 @@
   {
     "purchaseID": 2,
     "userID": 2,
-    "totalAmmount": 80,
+    "totalAmount": 80,
     "shippingAddress": "6-6-6, USM",
+    "paymentMethod": "Credit Card",
+    "purchaseStatus": "Shipped",
     "books": [
       {
         "id": 42,
