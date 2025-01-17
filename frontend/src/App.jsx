@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './style.css';
+import Home from "./pages/Home"
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import ProductPage from './pages/ProductPage'; // Adjust the path to your component
@@ -21,7 +22,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/admin" element={<HomeAdmin />} />
+        {/* <Route path="/admin" element={<HomeAdmin />} /> */}
         <Route path="/order" element={<Order />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

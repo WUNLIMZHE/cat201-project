@@ -51,9 +51,11 @@ const PurchaseRecord = ({ userID }) => {
     <>
       <Navbar/>
       <div className="purchaseRecord title">Past Purchases</div>
-      {purchaseList.map((purchase) => (
-        <Purchase key={purchase.purchaseID} {...purchase} />
-      ))}
+      <div className="purchase-list">
+        {purchaseList.map((purchase) => (
+          <Purchase key={purchase.purchaseID} {...purchase} />
+        ))}
+      </div>
     </>
   );
 };

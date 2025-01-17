@@ -3,6 +3,7 @@ import "./Navbar.css";
 import logo from "../../assets/books.png";
 import { Link } from "react-router-dom";
 import Dropdown from "../Dropdown/dropdown";
+import iconCart from "../../assets/iconCart.png"
 const Navbar = () => {
   const [sticky, setSticky] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -43,9 +44,6 @@ const Navbar = () => {
           </li>
           <li className="fancy-hover relative">
             <Link to="/Login">Login</Link>
-          </li>
-          <li className="fancy-hover relative">
-            <Link to="/view-my-cart">Carts</Link>
           </li>
           <li className="hover:scale-110 transition-transform duration-300 ease-in-out">
             <Link to="/login">
