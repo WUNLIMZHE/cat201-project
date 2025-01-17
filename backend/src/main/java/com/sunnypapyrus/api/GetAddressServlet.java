@@ -17,6 +17,7 @@ public class GetAddressServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
+        System.out.println("GetAddressServlet initialized.");
         userList = new UserList();
     }
 

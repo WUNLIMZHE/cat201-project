@@ -160,6 +160,42 @@ public class UserEntity {
         return null;
     }
 
+    public String getUsernameByID(String userID){
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader(
+                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
+            Object obj = parser.parse(reader);
+            JSONArray usersArray = (JSONArray) obj;
+            for (Object user : usersArray) {
+                JSONObject userDetails = (JSONObject) user;
+                if (userDetails.get("userid").equals(userID)) {
+                    return (String) userDetails.get("username");
+                }
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public String getUserPhoneByID (String userID) {
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader(
+                "d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
+            Object obj = parser.parse(reader);
+            JSONArray usersArray = (JSONArray) obj;
+            for (Object user : usersArray) {
+                JSONObject userDetails = (JSONObject) user;
+                if (userDetails.get("userid").equals(userID)) {
+                    return (String) userDetails.get("phoneNumber");
+                }
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @SuppressWarnings("unchecked")
     private void saveUserData() {
         JSONParser parser = new JSONParser();

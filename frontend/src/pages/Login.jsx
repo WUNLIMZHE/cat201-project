@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import handleApiCall from '../utils/handleApiCall';
-import '../style.css';
+import './Login.css';
 
 function Login({setLoggedIn, setAuthUsername}) {
   const [username, setUsername] = useState('');

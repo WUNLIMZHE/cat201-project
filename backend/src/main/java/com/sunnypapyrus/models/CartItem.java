@@ -1,3 +1,4 @@
+package com.sunnypapyrus.models;
 public class CartItem {
 
     private int cartID;
@@ -12,6 +13,7 @@ public class CartItem {
     private double totalPrice;
     private int stock;
     private String language;
+    private String author;
 
     //default constructor
     public CartItem(){}
@@ -35,6 +37,16 @@ public class CartItem {
     }
     
     // Getters and Setters
+
+    public CartItem(int id, int purchaseUnit) {
+        this.id = id;
+        this.purchaseUnit = purchaseUnit;
+    }
+
+
+    
+
+
     public int getCartID() {
         return cartID;
     }

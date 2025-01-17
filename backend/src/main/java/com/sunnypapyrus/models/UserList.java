@@ -296,4 +296,15 @@ public class UserList {
         return false;
     }
 
+    public UserEntity getUserbyUserId(String userid) {
+        for (UserEntity user : users) {
+            if (user.getuserid().equals(userid)) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    
+
 }

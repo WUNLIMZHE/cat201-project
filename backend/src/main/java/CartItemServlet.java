@@ -4,6 +4,8 @@ import java.io.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.sunnypapyrus.models.CartItem;
+
 import javax.servlet.annotation.WebServlet;
 @WebServlet("/cart")
 public class CartItemServlet extends HttpServlet {
