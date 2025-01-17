@@ -10,6 +10,7 @@ D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\RemoveAddressS
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\RemovePaymentServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UpdateQuantityServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UpdateStatusServlet.java
+D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UpdateTotalPriceServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UserPaymentServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UsersAddressServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\UserSignUpServlet.java

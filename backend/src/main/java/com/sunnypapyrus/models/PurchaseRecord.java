@@ -113,6 +113,24 @@ public class PurchaseRecord {
         savePurchaseRecords(purchaseRecords);
     }
 
+    public void editTotalAmount(int purchaseID, double totalAmount) {
+        List<PurchaseRecord> purchaseRecords = loadPurchaseRecords();
+        boolean updated = false;
+        for (PurchaseRecord purchaseRecord : purchaseRecords) {
+            if (purchaseRecord.getPurchaseID() == purchaseID) {
+                purchaseRecord.setTotalAmount(totalAmount);
+                updated = true;
+                break;
+            }
+        }
+        if (!updated) {
+            throw new IllegalArgumentException("Purchase ID not found");
+        }
+        savePurchaseRecords(purchaseRecords);
+    }
+
+
+
     // // Constructor
     // public PurchaseRecord(int purchaseID, int userID, double totalAmount, String
     // shippingAddress, String purchaseStatus, List<CartItem> books) {

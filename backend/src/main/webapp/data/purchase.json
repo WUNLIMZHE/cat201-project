@@ -1,1 +1,78 @@
-[{"user":{"payments":[],"addresses":[]},"purchaseID":1,"userID":1,"purchaseStatus":"Pending","totalAmount":300.0,"shippingAddress":"6-6-6, TAMAN PEKAKA","paymentMethod":"Credit Card","username":"chewhong","phone":"111111","books":[{"cartID":0,"userID":0,"id":42,"title":"Laut Bercerita","image":"/src/assets/images/book-42.webp","price":45.0,"purchaseUnit":7,"totalPrice":315.0,"stock":0},{"cartID":0,"userID":0,"id":43,"title":"Bumi Manusia","image":"/src/assets/images/book-43.webp","price":25.0,"purchaseUnit":5,"totalPrice":125.0,"stock":0},{"cartID":0,"userID":0,"id":44,"title":"Perahu Kertas","image":"/src/assets/images/book-44.webp","price":15.0,"purchaseUnit":4,"totalPrice":60.0,"stock":0}]},{"user":{"payments":[],"addresses":[]},"purchaseID":2,"userID":2,"purchaseStatus":"Pending","totalAmount":90.0,"shippingAddress":"6-6-6, USM","paymentMethod":"Credit Card","username":"hongchew","phone":"222222","books":[{"cartID":0,"userID":0,"id":42,"title":"Laut Bercerita","image":"/src/assets/images/book-42.webp","price":45.0,"purchaseUnit":2,"totalPrice":90.0,"stock":0}]}]
+[
+    {
+        "user": {
+            "payments": [],
+            "addresses": []
+        },
+        "purchaseID": 1,
+        "userID": 1,
+        "purchaseStatus": "Delivering",
+        "totalAmount": 575.0,
+        "shippingAddress": "6-6-6, TAMAN PEKAKA",
+        "paymentMethod": "Credit Card",
+        "username": "chewhong",
+        "phone": "111111",
+        "books": [
+            {
+                "cartID": 0,
+                "userID": 0,
+                "id": 42,
+                "title": "Laut Bercerita",
+                "image": "/src/assets/images/book-42.webp",
+                "price": 45.0,
+                "purchaseUnit": 11,
+                "totalPrice": 495.0,
+                "stock": 0
+            },
+            {
+                "cartID": 0,
+                "userID": 0,
+                "id": 43,
+                "title": "Bumi Manusia",
+                "image": "/src/assets/images/book-43.webp",
+                "price": 25.0,
+                "purchaseUnit": 2,
+                "totalPrice": 50.0,
+                "stock": 0
+            },
+            {
+                "cartID": 0,
+                "userID": 0,
+                "id": 44,
+                "title": "Perahu Kertas",
+                "image": "/src/assets/images/book-44.webp",
+                "price": 15.0,
+                "purchaseUnit": 2,
+                "totalPrice": 30.0,
+                "stock": 0
+            }
+        ]
+    },
+    {
+        "user": {
+            "payments": [],
+            "addresses": []
+        },
+        "purchaseID": 2,
+        "userID": 2,
+        "purchaseStatus": "Pending",
+        "totalAmount": 90.0,
+        "shippingAddress": "6-6-6, USM",
+        "paymentMethod": "Credit Card",
+        "username": "hongchew",
+        "phone": "222222",
+        "books": [
+            {
+                "cartID": 0,
+                "userID": 0,
+                "id": 42,
+                "title": "Laut Bercerita",
+                "image": "/src/assets/images/book-42.webp",
+                "price": 45.0,
+                "purchaseUnit": 2,
+                "totalPrice": 90.0,
+                "stock": 0
+            }
+        ]
+    }
+]

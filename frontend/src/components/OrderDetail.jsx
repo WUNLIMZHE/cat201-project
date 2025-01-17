@@ -74,7 +74,6 @@ const OrderDetail = () => {
   };
 
   const upadateOrderStatus = async (purchaseID, purchaseStatus) => {
-    if (window.confirm("Are you sure you want to update the order status?")) {
       await handleApiCall(
         `admin/update`,
         "POST",
@@ -92,8 +91,22 @@ const OrderDetail = () => {
         
         { "Content-Type": "application/json" }
       );
-    }
   }
+  
+  const updateTotalAmount = async (purchaseID, totalAmount) => {
+    await handleApiCall(
+      `admin/updatetotal`,
+      "POST",
+      { purchaseID, totalAmount },
+      async (response) => {
+        console.log("PASS: " + purchaseID)
+        fetchOrderDetails();
+      },
+      (error) => {
+        setError(error);
+      }
+    );
+  };
 
   const handleSaveChanges = async () => {
     for (const book of orderDetails.books) {
@@ -103,6 +116,7 @@ const OrderDetail = () => {
       await updateQuantity(purchaseID, book.id, book.purchaseUnit);
     }
     upadateOrderStatus(purchaseID, orderDetails.purchaseStatus);
+    updateTotalAmount(purchaseID, orderDetails.totalAmount);
   }
 
   const statusImages = {
