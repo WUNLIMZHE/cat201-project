@@ -1,102 +1,85 @@
 /* Container for the order detail */
 .order-detail-container {
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f4f8; /* Light blue background */
 }
 
 /* Header container for the back button and title */
 .header-container {
-  display: flex; /* Use flexbox to arrange items horizontally */
-  align-items: center; /* Vertically align button and heading */
-  justify-content: space-between; /* Push items to opposite sides */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
 }
 
 /* Header style */
 .order-detail-container h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-top: 20px;
-  color: #333;
+  color: #2c3e50; /* Dark blue color for the heading */
 }
 
 /* Order detail section */
 .order-detail-section {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background-color: #ffffff;
+  border: 1px solid #dfe6e9; /* Light grey border */
+  border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
-  display: flex; /* Use flexbox */
-  flex-direction: column; /* Stack content vertically */
+  display: flex;
+  flex-direction: column;
 }
 
 /* Each detail item styling */
 .order-detail-section p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   margin: 10px 0;
-  color: #555;
+  color: #34495e; /* Dark grey text color */
 }
 
 /* Labels for each detail item */
 .order-detail-section p strong {
   font-weight: bold;
-  color: #333;
+  color: #2c3e50; /* Dark blue color for labels */
 }
 
 /* Button to go back or perform actions */
 .back-button {
   display: flex;
+  align-items: center;
   padding: 10px 20px;
   font-size: 1rem;
-  background-color: #007bff;
+  background-color: #3498db; /* Blue background color */
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
-  margin-top: 20px;
   transition: background-color 0.3s;
 }
 
 /* Hover effect for the button */
 .back-button:hover {
-  background-color: #0056b3;
-}
-
-.back-button {
-  display: flex; /* Use flexbox to place items side by side */
-  align-items: center; /* Align items vertically at the center */
-  padding: 10px 20px;
-  font-size: 1rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex; /* Ensure the button is inline */
-  transition: background-color 0.3s;
+  background-color: #2980b9; /* Darker blue on hover */
 }
 
 .back-button img {
-  width: 20px; /* Adjust the width of the image */
-  height: 20px; /* Adjust the height of the image */
-  margin-right: 10px; /* Adds space between the image and text */
-}
-
-.back-button:hover {
-  background-color: #0056b3;
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
 }
 
 .status-container {
   margin-top: 15px;
+  color:#2c3e50;
 }
 
 .status-select {
   padding: 5px;
   font-size: 1rem;
-  color:aliceblue;
+  color: #a3b6c9; /* Dark blue text color */
   margin-left: 10px;
 }
 
@@ -108,18 +91,18 @@
 
 /* Flexbox container for the order details and book table */
 .order-detail-wrapper {
-  display: flex; /* Use flexbox to arrange content side by side */
-  justify-content: space-between; /* Space out the content evenly */
-  gap: 20px; /* Add gap between the two sections */
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 /* Adjust the width of order-detail-section and book-details */
 .order-detail-section {
-  width: 30%; /* Take up more space for order details */
+  width: 30%;
 }
 
 .book-details {
-  width: 70%; /* Ensure the table takes up 40% of the width */
+  width: 70%;
 }
 
 .book-details table {
@@ -131,18 +114,18 @@
 .book-details th, .book-details td {
   padding: 12px;
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #dfe6e9;
 }
 
 .book-details th {
-  background-color: #f4f4f4;
+  background-color: #ecf0f1; /* Light grey background for headers */
   font-size: 1rem;
   font-weight: bold;
 }
 
 .book-details td {
   font-size: 1rem;
-  color: #555;
+  color: #34495e; /* Dark grey text color */
 }
 
 /* Styling for quantity input to match the table */
@@ -150,15 +133,15 @@
   width: 60px;
   padding: 5px;
   text-align: center;
-  border: 1px solid #ddd; /* Same as the table's border */
-  background-color: #fff; /* Match the background color of the table */
+  border: 1px solid #dfe6e9;
+  background-color: #ffffff;
   font-size: 16px;
   border-radius: 4px; /* Optional: rounded corners */
 }
 
 /* Hover effect for quantity input */
 .quantity-input:hover {
-  background-color: #f0f0f0; /* Light grey on hover */
+  background-color: #ecf0f1; /* Light grey on hover */
   cursor: pointer;
 }
 

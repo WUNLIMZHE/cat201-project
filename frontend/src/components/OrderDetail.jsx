@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-import { useLocation, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import handleApiCall from '../utils/handleApiCall';
 import "./OrderDetail.css"; // Ensure this is imported
 import cancel from "../assets/images/cancelled.png";
 import complete from "../assets/images/completed.png";
@@ -14,19 +15,92 @@ import warehouse from "../assets/images/warehouse.png";
 import back from "../assets/images/back.webp";
 
 const OrderDetail = () => {
-  const { state } = useLocation();
-  const { order } = state || {};
+  console.log("purchaseID: " + useParams().purchaseID);
+  const { purchaseID } = useParams();
   const navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState(null);
+  const [error, setError] = useState("");
+
+  const fetchOrderDetails = async () => {
+    await handleApiCall(
+      `admin/getdetails`,
+      "GET",
+      { purchaseID },
+      async (response) => {
+        setOrderDetails(response);
+      },
+      (error) => {
+        setError(error);
+      }
+    );
+
+  };
 
   useEffect(() => {
-    fetch("/api/admin/getorderdetails")
-      .then((response) => response.json())
-      .then((data) => {
-        const orderDetail = data.find((o) => o.purchaseID === order.id);
-        setOrderDetails(orderDetail);
+
+    if (purchaseID) {
+      fetchOrderDetails();
+    } else {
+      setError("Purchase ID is missing");
+    }
+  }, [purchaseID]);
+
+  const handleQuantityChange = (bookId, newQuantity) => {
+    setOrderDetails((prevDetails) => {
+      const updatedBooks = prevDetails.books.map((book) => {
+        if (book.id === bookId) {
+          return { ...book, purchaseUnit: newQuantity, totalPrice: book.price * newQuantity };
+        }
+        return book;
       });
-  }, [order.id]);
+      const newTotalAmount = updatedBooks.reduce((total, book) => total + book.totalPrice, 0);
+      return { ...prevDetails, books: updatedBooks, totalAmount: newTotalAmount };
+    });
+  };
+
+  const upadateOrderStatus = async (purchaseID, purchaseStatus) => {
+    if (window.confirm("Are you sure you want to update the order status?")) {
+      await handleApiCall(
+        `admin/update`,
+        "POST",
+        { purchaseID, purchaseStatus },
+        async (response) => {
+          console.log("PASS: " + purchaseID)
+          navigate("/order");
+          if (response.message === "Order status updated successfully") {
+            alert("Order status updated successfully");
+          }
+        },
+        (error) => {
+          setError(error);
+        },
+        
+        { "Content-Type": "application/json" }
+      );
+    }
+  }
+
+  const handleSaveChanges = () => {
+    // console.log("Save Changes: " + orderDetails.purchaseStatus);
+    // console.log("Purchase ID: " + purchaseID);
+    upadateOrderStatus(purchaseID, orderDetails.purchaseStatus);
+  }
+
+  const statusImages = {
+    "Pending": pending,
+    "Shipping": shipping,
+    "Delivered": delivered,
+    "Cancelled": cancel,
+    "Returned": returned,
+    "In Warehouse": warehouse,
+    "Delivering": delivering,
+    "Payment Pending": payment,
+    "Completed": complete
+  };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   if (!orderDetails) {
     return <div>Loading...</div>;
@@ -45,10 +119,15 @@ const OrderDetail = () => {
       <div className="order-detail-wrapper">
         {/* Order Details */}
         <div className="order-detail-section">
+          <img
+            src={statusImages[orderDetails.purchaseStatus]}
+            alt={orderDetails.purchaseStatus}
+            className="status-image align-middle"
+          />
           <div className="order-detail-content">
             <p><strong>Purchase ID:</strong> {orderDetails.purchaseID}</p>
-            <p><strong>Full Name:</strong> {orderDetails.fullName}</p>
-            <p><strong>Mobile:</strong> {orderDetails.mobile}</p>
+            <p><strong>Full Name:</strong> {orderDetails.username}</p>
+            <p><strong>Mobile:</strong> {orderDetails.phone}</p>
             <p><strong>Total:</strong> RM {orderDetails.totalAmount}</p>
             <p><strong>Payment Type:</strong> {orderDetails.paymentType}</p>
             <div className="status-container">
@@ -70,12 +149,11 @@ const OrderDetail = () => {
                 <option value="Completed">Completed</option>
               </select>
             </div>
-
             {/* Discount section */}
             {orderDetails.discount && (
               <p><strong>Discount Applied:</strong> {orderDetails.discount}%</p>
             )}
-            <button className="back-button" >Save Changes</button>
+            <button className="back-button" onClick={handleSaveChanges}>Save Changes</button>
           </div>
         </div>
 
@@ -101,8 +179,9 @@ const OrderDetail = () => {
                     <input
                       type="number"
                       value={book.purchaseUnit}
-                      min="1"
+                      min="0"
                       className="quantity-input"
+                      onChange={(e) => handleQuantityChange(book.id, parseInt(e.target.value, 10))}
                     />
                   </td>
                   <td>RM {book.totalPrice}</td>

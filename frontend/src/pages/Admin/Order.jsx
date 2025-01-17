@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/AdminSidebar/Sidebar";
@@ -15,17 +16,15 @@ const chunkOrders = (orders, chunkSize) => {
 const Order = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentChunk, setCurrentChunk] = useState(0);
-  const [purchaseID, setPurchaseID] = useState("");
-  const [userID, setUserID] = useState("");
-  const [phone, setPhone] = useState("");
-  const [totalAmount, setTotalAmount] = useState("");
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [purchaseStatus, setPurchaseStatus] = useState("");
-  const [username, setUsername] = useState("");
   const [error, setError] = useState("");
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
-
+  
+  useEffect(() => {
+    fetchOrders();
+    setSearchQuery(""); // Reset searchQuery every time the component is rendered
+  }, []); // Add dependency array to ensure fetchOrders is called only once
+  
   const fetchOrders = async () => {
     await handleApiCall(
       "admin/getorderdetails",
@@ -40,9 +39,12 @@ const Order = () => {
     )
   };
 
-  useEffect(() => {
-    fetchOrders();
-  }, []); // Add dependency array to ensure fetchOrders is called only once
+  const resetState = () => {
+    setSearchQuery("");
+    setCurrentChunk(0);
+    setError("");
+    setOrders([]);
+  };
 
   const filteredOrders = orders ? orders.filter(
     (order) =>
@@ -74,13 +76,19 @@ const Order = () => {
           <>
             <div className="pagination">
               <button
-                onClick={() => setCurrentChunk(currentChunk - 1)}
+                onClick={() => {
+                  setCurrentChunk(currentChunk - 1);
+                  resetState();
+                }}
                 disabled={currentChunk === 0}
               >
                 Prev
               </button>
               <button
-                onClick={() => setCurrentChunk(currentChunk + 1)}
+                onClick={() => {
+                  setCurrentChunk(currentChunk + 1);
+                  resetState();
+                }}
                 disabled={currentChunk === chunkedOrders.length - 1}
               >
                 Next
@@ -101,8 +109,12 @@ const Order = () => {
               <tbody>
                 {chunkedOrders[currentChunk].map((order) => (
                   <tr
-                    key={order.purchaseID}
-                    onClick={() => navigate(`/orders/${order.purchaseID}`, { state: { order } })}
+                    key={`${order.purchaseID}-${order.userID}`}
+                    onClick={() => {
+                      console.log("row selected " + order.purchaseID);
+                      navigate(`/order/${order.purchaseID}`, { state: { purchaseID: order.purchaseID } });
+                      resetState();
+                    }}
                     className="clickable-row"
                   >
                     <td>{order.purchaseID}</td>

@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import com.google.gson.Gson;
 
 public class PurchaseRecord {
     private UserList userList;
@@ -35,6 +36,11 @@ public class PurchaseRecord {
     private String phone;
     private List<CartItem> books; // Using CartItem to store purchased books
 
+
+    public PurchaseRecord() {
+        this.books = new ArrayList<>();
+    }
+
     // Constructor
     public PurchaseRecord(int purchaseID, int userID, double totalAmount,
             String shippingAddress, String paymentMethod, String purchaseStatus, List<CartItem> books) {
@@ -48,6 +54,41 @@ public class PurchaseRecord {
         this.user = new UserEntity(); // Initialize user object
         this.username = user.getUsernameByID(String.valueOf(userID));
         this.phone = user.getUserPhoneByID(String.valueOf(userID));
+    }
+
+    public void setPurchaseByID(int purchaseID) {
+        List<PurchaseRecord> purchaseRecords = loadPurchaseRecords();
+        for (PurchaseRecord purchaseRecord : purchaseRecords) {
+            if (purchaseRecord.getPurchaseID() == purchaseID) {
+                this.purchaseID = purchaseRecord.getPurchaseID();
+                this.userID = purchaseRecord.getUserID();
+                this.totalAmount = purchaseRecord.getTotalAmount();
+                this.shippingAddress = purchaseRecord.getShippingAddress();
+                this.purchaseStatus = purchaseRecord.getPurchaseStatus();
+                this.books = purchaseRecord.getBooks();
+                this.paymentMethod = purchaseRecord.getPaymentMethod();
+                this.user = purchaseRecord.getUser();
+                this.username = purchaseRecord.getUsername();
+                this.phone = purchaseRecord.getPhone();
+                break;
+            }
+        }
+    }
+
+    public void updatePurchaseStatus(int purchaseID, String purchaseStatus) {
+        List<PurchaseRecord> purchaseRecords = loadPurchaseRecords();
+        boolean updated = false;
+        for (PurchaseRecord purchaseRecord : purchaseRecords) {
+            if (purchaseRecord.getPurchaseID() == purchaseID) {
+                purchaseRecord.setPurchaseStatus(purchaseStatus);
+                updated = true;
+                break;
+            }
+        }
+        if (!updated) {
+            throw new IllegalArgumentException("Purchase ID not found");
+        }
+        savePurchaseRecords(purchaseRecords);
     }
 
     // // Constructor
@@ -174,7 +215,7 @@ public class PurchaseRecord {
         List<PurchaseRecord> purchaseRecords = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
 
-        try (FileReader reader = new FileReader("src/main/webapp/data/purchase.json")) {
+        try (FileReader reader = new FileReader("d:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
             Object obj = jsonParser.parse(reader);
             JSONArray purchaseList = (JSONArray) obj;
 
@@ -215,5 +256,14 @@ public class PurchaseRecord {
         }
 
         return purchaseRecords;
+    }
+
+    public static void savePurchaseRecords(List<PurchaseRecord> purchaseRecords) {
+        Gson gson = new Gson();
+        try (FileWriter file = new FileWriter("d:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
+            file.write(gson.toJson(purchaseRecords));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
