@@ -47,13 +47,20 @@ const PurchaseRecord = ({ userID }) => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
+  const book_from_latest = purchaseList.toReversed();
+  let index = 0;
+  const incrIndex = () => {
+      index+=1;
+      return index;
+  }
+
   return (
     <>
       <Navbar/>
       <div className="purchaseRecord title">Past Purchases</div>
       <div className="purchase-list">
-        {purchaseList.map((purchase) => (
-          <Purchase key={purchase.purchaseID} {...purchase} />
+        {book_from_latest.map((purchase) => (
+          <Purchase key={purchase.purchaseID} index={incrIndex()} {...purchase} />
         ))}
       </div>
     </>

@@ -2,19 +2,20 @@ import React from 'react'
 import BookItem from "./BookItem/BookItem"
 import "./Purchase.css"
 
-const Purchase = ({books, purchaseID, shippingAddress, totalAmmount}) => {
-  let index = 0;
+const Purchase = ({index, books, purchaseID, shippingAddress, totalAmmount}) => {
+  let indexBook = 0;
   const incrIndex = () => {
-      index+=1;
-      return index;
+      indexBook+=1;
+      return indexBook;
   }
   return (
     <div className='purchase'>
       <div className="heading">
         <div className="upper">
-          <p className="purchaseId">{purchaseID}</p>
+          <p className="index">{index}</p>
           <p className="total">Total: RM {totalAmmount}</p>
         </div>
+        <p className="purchaseId">ID: {purchaseID}</p>
         <p className="shipping">Delivered to: {shippingAddress}</p>
       </div>
       <ul className='book-list'>

@@ -9,6 +9,10 @@
     border-radius: 1rem;
 }
 
+.book img{
+    width: 100%;
+}
+
 .info{
     /* display: flex;
     flex-direction: column;
