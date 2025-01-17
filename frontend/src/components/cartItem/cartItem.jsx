@@ -54,7 +54,7 @@ const cartItems = (props) => {
   };
 
   return (
-    <div className="Item">
+    <div className="cartItem">
       <img src={props.image} />
       <div className="right-sidebar">
         <h1 className="title">{props.title}</h1>

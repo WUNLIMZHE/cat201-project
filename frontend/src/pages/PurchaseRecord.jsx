@@ -1,6 +1,9 @@
 // import React from 'react'
 import { useState, useEffect } from "react";
 import Purchase from "./Purchase";
+import "./PurchaseRecord.css";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar/Navbar";
 
 const PurchaseRecord = ({ userID }) => {
   const [purchaseList, setpurchaseList] = useState([]); // To store list of books in the purchaseList
@@ -46,7 +49,8 @@ const PurchaseRecord = ({ userID }) => {
 
   return (
     <>
-      <div>PurchaseRecord</div>
+      <Navbar/>
+      <div className="purchaseRecord title">Past Purchases</div>
       {purchaseList.map((purchase) => (
         <Purchase key={purchase.purchaseID} {...purchase} />
       ))}

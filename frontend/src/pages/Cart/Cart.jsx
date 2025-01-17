@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import CartItems from "../../components/cartItem/cartItem";
+import { Link } from "react-router-dom";
 
 const Cart = (props) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -150,7 +151,7 @@ const Cart = (props) => {
       <button className="return mt-10">
         &#8592; I want to continue shopping
       </button>
-      <h1 className="title">My Cart</h1>
+      <h1 className="cartTitle">My Cart</h1>
       <div className="items">
         {console.log(cart)}
         {cart.map((book) => (
@@ -167,7 +168,7 @@ const Cart = (props) => {
           Total Price: ${totalPrice.toFixed(2)}
         </span>
         <button className="bg-green-500 text-white font-bold text-lg py-2 px-12 rounded shadow-md hover:bg-green-600 hover:shadow-lg active:bg-green-700 active:shadow-sm active:translate-y-0.5 transition duration-300">
-          Pay
+          <Link to="/purchase-record">Pay</Link>
         </button>
       </div>
     </>

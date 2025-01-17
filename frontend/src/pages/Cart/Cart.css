@@ -1,6 +1,8 @@
-.title{
+.cartTitle{
     margin: 2rem 0 0 20%;
     font-size: 3rem;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
 }
 
 .items{
@@ -31,4 +33,18 @@
     color: white;
     background-color: orange;
     font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 850px){
+    .checkout{
+        display: flex;
+        justify-content: left;
+        margin-left: 10%;
+        width: 80%;
+        flex-direction: column;
+    }
+
+    .checkout .finalPrice{
+        font-size: 1.2rem;
+    }
 }
