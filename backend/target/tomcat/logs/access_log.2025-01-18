@@ -171,3 +171,7 @@
 0:0:0:0:0:0:0:1 - - [18/Jan/2025:16:45:30 +0800] "GET /cart HTTP/1.1" 200 2 http-bio-9000-exec-2 2
 0:0:0:0:0:0:0:1 - - [18/Jan/2025:16:47:11 +0800] "GET /purchase-record?userID=1 HTTP/1.1" 200 5229 http-bio-9000-exec-7 10
 0:0:0:0:0:0:0:1 - - [18/Jan/2025:16:47:11 +0800] "GET /purchase-record?userID=1 HTTP/1.1" 200 5229 http-bio-9000-exec-7 4
+0:0:0:0:0:0:0:1 - - [18/Jan/2025:17:00:04 +0800] "GET /purchase-record?userID=1 HTTP/1.1" 200 5229 http-bio-9000-exec-1 73
+0:0:0:0:0:0:0:1 - - [18/Jan/2025:17:00:04 +0800] "GET /purchase-record?userID=1 HTTP/1.1" 200 5229 http-bio-9000-exec-3 23
+0:0:0:0:0:0:0:1 - - [18/Jan/2025:17:00:06 +0800] "GET /books HTTP/1.1" 200 23068 http-bio-9000-exec-5 49
+0:0:0:0:0:0:0:1 - - [18/Jan/2025:17:00:06 +0800] "GET /books HTTP/1.1" 200 23068 http-bio-9000-exec-6 8
