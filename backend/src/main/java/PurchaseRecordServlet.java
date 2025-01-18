@@ -3,9 +3,9 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.net.URL;
-import java.io.OutputStream;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -93,8 +93,12 @@ public class PurchaseRecordServlet extends HttpServlet {
         }
         System.out.println("Next purchase ID" + nextPurchaseID);
 
+        
+        // Get the current date and time
+        LocalDateTime purchaseDate = LocalDateTime.now();
+
         //create a new purchase record
-        PurchaseRecord newPurchasedRecord = new PurchaseRecord(nextPurchaseID, userID, 0, "TESTING ADDRESS");
+        PurchaseRecord newPurchasedRecord = new PurchaseRecord(nextPurchaseID, userID, 0, "TESTING ADDRESS", purchaseDate);
 
         double totalAmount = 0;
         JSONArray deletedCartIDs = new JSONArray();
@@ -142,11 +146,12 @@ public class PurchaseRecordServlet extends HttpServlet {
         newPurchasedRecord.setTotalAmount(totalAmount); // set the total ammount of a single purchase
 
         // Convert newPurchasedRecord to JSONObject
-        JSONObject purchaseRecordJson = new JSONObject();
-        purchaseRecordJson.put("purchaseID", newPurchasedRecord.getPurchaseID());
-        purchaseRecordJson.put("userID", newPurchasedRecord.getUserID());
-        purchaseRecordJson.put("totalAmount", newPurchasedRecord.getTotalAmount());
-        purchaseRecordJson.put("shippingAddress", newPurchasedRecord.getShippingAddress());
+        // JSONObject purchaseRecordJson = new JSONObject();
+        // purchaseRecordJson.put("purchaseID", newPurchasedRecord.getPurchaseID());
+        // purchaseRecordJson.put("userID", newPurchasedRecord.getUserID());
+        // purchaseRecordJson.put("totalAmount", newPurchasedRecord.getTotalAmount());
+        // purchaseRecordJson.put("shippingAddress", newPurchasedRecord.getShippingAddress());
+        // purchaseRecordJson.put("purchaseStatus", newPurchasedRecord.getPurchaseStatus());
 
         // Create an array for books
         JSONArray booksArray = new JSONArray();
@@ -161,7 +166,7 @@ public class PurchaseRecordServlet extends HttpServlet {
             booksArray.put(bookJson);
         }
 
-        purchaseRecordJson.put("books", booksArray);
+        // purchaseRecordJson.put("books", booksArray);
 
         // Write the JSONObject to the purchase.json file
         // File purchaseFile = new File("purchase.json");
@@ -180,6 +185,8 @@ public class PurchaseRecordServlet extends HttpServlet {
         newPurchasedRecordJson.put("userID", newPurchasedRecord.getUserID());
         newPurchasedRecordJson.put("totalAmmount", newPurchasedRecord.getTotalAmount());
         newPurchasedRecordJson.put("shippingAddress", newPurchasedRecord.getShippingAddress());
+        newPurchasedRecordJson.put("purchaseStatus", newPurchasedRecord.getPurchaseStatus());
+        newPurchasedRecordJson.put("purchaseDate", newPurchasedRecord.getFormattedPurchaseDate());
         newPurchasedRecordJson.put("books", newPurchasedRecord.getBooks());
 
         // Add the new purchased record to the list

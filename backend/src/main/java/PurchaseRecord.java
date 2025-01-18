@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class PurchaseRecord {
     private int purchaseID;
@@ -18,26 +20,43 @@ public class PurchaseRecord {
     private double totalAmount;
     private String shippingAddress;
     private List<CartItem> books; // Using CartItem to store purchased books
+    private LocalDateTime purchaseDate; // Store the purchase date and time
 
     // Constructor
-    public PurchaseRecord(int purchaseID, int userID, double totalAmount, String shippingAddress, List<CartItem> books) {
+    public PurchaseRecord(int purchaseID, int userID, double totalAmount, String shippingAddress, List<CartItem> books, LocalDateTime purchaseDate) {
         this.purchaseID = purchaseID;
         this.userID = userID;
         this.totalAmount = totalAmount;
         this.shippingAddress = shippingAddress;
         this.books = books;
+        this.purchaseDate = purchaseDate;
     }
 
-    public PurchaseRecord(int purchaseID, int userID, double totalAmount, String shippingAddress) {
+    public PurchaseRecord(int purchaseID, int userID, double totalAmount, String shippingAddress, LocalDateTime purchaseDate) {
         this.purchaseID = purchaseID;
         this.userID = userID;
         this.totalAmount = totalAmount;
         this.shippingAddress = shippingAddress;
         this.books = new ArrayList<CartItem>();  // Instantiate with ArrayList
+        this.purchaseDate = purchaseDate;
     }
 
     public void addBook(CartItem book){
         books.add(book);
+    }
+
+    public LocalDateTime getPurchaseDate() {
+        return purchaseDate;
+    }
+
+    public void setPurchaseDate(LocalDateTime purchaseDate) {
+        this.purchaseDate = purchaseDate;
+    }
+
+    // Get formatted purchase date
+    public String getFormattedPurchaseDate() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm a");
+        return purchaseDate.format(formatter);
     }
     
     // Getters and Setters

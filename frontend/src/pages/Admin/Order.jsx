@@ -45,7 +45,7 @@ const Order = () => {
           <div className="no-results">No orders found.</div>
         ) : (
           <>
-            <div className="pagination">
+            <div className="pagination mb-5">
               <button onClick={() => setCurrentChunk(currentChunk - 1)} disabled={currentChunk === 0}>
                 Prev
               </button>

@@ -1,7 +1,32 @@
+<<<<<<< HEAD
 com\sunnypapyrus\api\CorsFilter.class
 Book.class
 BookServlet.class
 com\sunnypapyrus\Main.class
 com\sunnypapyrus\api\UsersLoginServlet.class
 com\sunnypapyrus\AppContextListener.class
+=======
+com\sunnypapyrus\api\UserPaymentServlet.class
+com\sunnypapyrus\api\GetAddressServlet.class
+com\sunnypapyrus\models\Payment.class
+PurchaseRecord.class
+com\sunnypapyrus\models\UserEntity.class
+com\sunnypapyrus\api\UsersLoginServlet.class
+com\sunnypapyrus\models\UserList.class
+com\sunnypapyrus\api\UserSignUpServlet.class
+com\sunnypapyrus\api\CorsFilter.class
+Book.class
+com\sunnypapyrus\AppContextListener.class
+BookServlet$1.class
+CartItemServlet.class
+com\sunnypapyrus\api\UsersAddressServlet.class
+BookServlet.class
+com\sunnypapyrus\Main.class
+com\sunnypapyrus\api\GetPaymentServlet.class
+com\sunnypapyrus\models\Address.class
+com\sunnypapyrus\api\RemoveAddressServlet.class
+>>>>>>> fe64aff8fe348a797621ba92d2eca2ba3cc62ad6
 MongoDBConnection.class
+PurchaseRecordServlet.class
+CartItem.class
+com\sunnypapyrus\api\RemovePaymentServlet.class
