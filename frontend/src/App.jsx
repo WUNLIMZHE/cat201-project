@@ -10,6 +10,7 @@ import PurchaseRecord from './pages/PurchaseRecord';
 import Order from './pages/Admin/Order';
 import OrderDetail from './components/OrderDetail'
 import Inventory from './pages/Admin/Inventory';
+import Stock from './pages/Admin/Stock';
 import TestHome from './pages/TestHome';
 import TestAdmin from './pages/TestAdmin';
 import AddBook from "./pages/Admin/AddBook"
@@ -33,6 +34,7 @@ function App() {
         <Route path="/purchase-record" element={<PurchaseRecord userID={1}/>} />
         <Route path="/orders/:id" element={<OrderDetail />} />
         <Route path="/inventory" element={<Inventory />} />
+        <Route path="/stock" element={<Stock />} />
         <Route path="/" element={<Navigate to="/testhome" />} />
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setAuthUsername={setAuthUsername} />} />
         <Route path="/signup" element={<Signup />} />

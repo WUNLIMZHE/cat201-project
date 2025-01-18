@@ -137,17 +137,21 @@ public class BookServlet extends HttpServlet {
             newCartItemJson.put("language", newCartItem.getLanguage());
 
             bookItems.put(newCartItemJson);
+            // increase ID by 1
+            nextBookID++;
         }
 
         // Save the updated book items
         saveBookItems(bookItems, req);
 
-        // increase ID by 1
-        nextBookID++;
-
         // Respond with success message
         JSONObject responseJson = new JSONObject();
-        responseJson.put("message", "Book added successfully!");
+        if (bookExists){
+            responseJson.put("message", "Stock modified successfully!");
+        } else {
+            responseJson.put("message", "Book added successfully!");
+        }
+        
         resp.getWriter().write(responseJson.toString());
         resp.setStatus(HttpServletResponse.SC_OK);
     }
@@ -193,6 +197,7 @@ public class BookServlet extends HttpServlet {
                 if (book.getId() == cartBookId) {
                     // Decrease the stock
                     int newStock = book.getStock() - purchaseUnit;
+                    int newSoldUnit = book.getSoldUnits() + purchaseUnit;
 
                     // Ensure stock doesn't go negative
                     if (newStock < 0) {
@@ -202,6 +207,7 @@ public class BookServlet extends HttpServlet {
                     }
 
                     book.setStock(newStock);
+                    book.setSoldUnits(newSoldUnit);
                     break;
                 }
             }
@@ -216,14 +222,99 @@ public class BookServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String id = req.getParameter("id");
+        // Read the JSON input from the request body
+        StringBuilder sb = new StringBuilder();
+        String line;
+        try (BufferedReader reader = req.getReader()) {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        }
 
+        // Parse the JSON to extract the book ID
+        JSONObject json = new JSONObject(sb.toString());
+        int id = json.getInt("id"); // Extract the ID from the JSON payload
+
+        // Read the books and remove the specified book
         List<Book> books = readBooksFromFile(req);
-        books.removeIf(book -> String.valueOf(book.getId()).equals(id));
-        writeBooksToFile(req, books);
+        boolean bookRemoved = books.removeIf(book -> book.getId() == id);
 
-        resp.getWriter().write("{\"message\": \"Book deleted successfully\"}");
+        if (bookRemoved) {
+            // Delete the associated image if it exists
+            String fileName = "book-" + id + ".webp";  // Image file name based on ID
+            String projectDir = System.getProperty("user.dir"); // Get the current working directory
+            Path imagePath = Paths.get(projectDir, "..", "frontend", "src", "assets", "images", fileName);
+
+            // Delete the image file if it exists
+            try {
+                File imageFile = imagePath.toFile();
+                if (imageFile.exists()) {
+                    boolean deleted = imageFile.delete();
+                    if (!deleted) {
+                        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                        resp.getWriter().write("{\"message\": \"Failed to delete the image\"}");
+                        return;
+                    }
+                }
+            } catch (Exception e) {
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                resp.getWriter().write("{\"message\": \"Error deleting the image file\"}");
+                return;
+            }
+
+            // Write the updated book list back to storage
+            writeBooksToFile(req, books);
+
+            // Respond with a success message
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.getWriter().write("{\"message\": \"Book and image deleted successfully\"}");
+        } else {
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            resp.getWriter().write("{\"message\": \"Book not found\"}");
+        }
     }
+
+    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        // Read the JSON input from the request body
+        StringBuilder sb = new StringBuilder();
+        String line;
+        try (BufferedReader reader = req.getReader()) {
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        }
+    
+        // Parse the JSON to extract the book ID and new stock value
+        JSONObject json = new JSONObject(sb.toString());
+        int id = json.getInt("id"); // Extract the ID from the JSON payload
+        int newStock = json.getInt("stock"); // Extract the stock from the JSON payload
+    
+        // Read the list of books
+        List<Book> books = readBooksFromFile(req);
+    
+        // Find the book with the given ID and update its stock
+        boolean bookUpdated = false;
+        for (Book book : books) {
+            if (book.getId() == id) {
+                book.setStock(newStock); // Update the stock value
+                bookUpdated = true;
+                break;
+            }
+        }
+    
+        if (bookUpdated) {
+            // Write the updated book list back to storage
+            writeBooksToFile(req, books);
+    
+            // Respond with a success message
+            resp.setStatus(HttpServletResponse.SC_OK);
+            resp.getWriter().write("{\"message\": \"Book stock updated successfully\"}");
+        } else {
+            // If the book is not found, respond with an error message
+            resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            resp.getWriter().write("{\"message\": \"Book not found\"}");
+        }
+    }    
 
     // Save all book items to books.json
     private void saveBookItems(JSONArray bookItems, HttpServletRequest req) {
@@ -312,7 +403,11 @@ public class BookServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("Access-Control-Allow-Credentials", "true");
 
-        // Continue with the original method
-        super.service(request, response);
+        if ("PATCH".equalsIgnoreCase(request.getMethod())) {
+            doPatch(request, response); // Call a custom doPatch method
+        } else {
+            super.service(request, response); // Handle other HTTP methods normally
+        }
     }
+
 }

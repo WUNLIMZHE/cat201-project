@@ -257,8 +257,8 @@ const Cart = (props) => {
           Total Price: ${totalPrice.toFixed(2)}
         </span>
         <button
-          className="bg-green-500 text-white font-bold text-lg py-2 px-12 rounded shadow-md hover:bg-green-600 hover:shadow-lg active:bg-green-700 active:shadow-sm active:translate-y-0.5 transition duration-300"
-          onClick={handlePay}
+          className="bg-green-500 text-white font-bold text-lg py-2 px-12 rounded shadow-md hover:bg-green-600 hover:shadow-lg active:bg-green-700 active:shadow-sm active:translate-y-0.5 transition duration-300 hover:cursor-pointer"
+          onClick={handlePay} disabled={totalPrice === 0} // Disable button when totalPrice is 0
         >
           <Link to="/purchase-record">Pay</Link>
         </button>

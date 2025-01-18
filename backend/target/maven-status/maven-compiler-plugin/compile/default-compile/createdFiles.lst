@@ -2,10 +2,8 @@ PurchaseRecord.class
 com\sunnypapyrus\api\UserSignUpServlet.class
 com\sunnypapyrus\api\CorsFilter.class
 Book.class
-BookServlet$1.class
 CartItemServlet.class
 com\sunnypapyrus\api\UsersAddressServlet.class
-BookServlet.class
 com\sunnypapyrus\Main.class
 com\sunnypapyrus\api\GetPaymentServlet.class
 com\sunnypapyrus\models\Address.class
@@ -21,3 +19,4 @@ com\sunnypapyrus\models\UserList.class
 com\sunnypapyrus\AppContextListener.class
 com\sunnypapyrus\api\RemoveAddressServlet.class
 MongoDBConnection.class
+BookServlet$2.class

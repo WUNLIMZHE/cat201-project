@@ -55,7 +55,7 @@ const cartItems = (props) => {
   return (
     <div className="cartItem">
       <img src={props.image} className=" max-h-[300px] lg:max-w-fit"/>
-      <div className="right-sidebar">
+      <div className="right-sidebar md:ml-10">
         <h1 className="title">{props.title}</h1>
         <div className="tag">
           <p className="info genre">{props.genre}</p>
