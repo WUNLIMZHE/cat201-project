@@ -6,9 +6,9 @@ import img4 from "/src/assets/images/book-2.webp";
 import img5 from "/src/assets/images/book-45.webp";
 import img6 from "/src/assets/images/book-12.webp";
 import img7 from "/src/assets/images/book-42.webp";
-import img8 from "/src/assets/images/book-47.webp";
+import img8 from "/src/assets/images/book-40.webp";
 import img9 from "/src/assets/images/book-37.webp";
-import img0 from "/src/assets/images/book-46.webp";
+import img0 from "/src/assets/images/book-44.webp";
 export default function Gallery() {
   return (
     <div className="flex justify-center min-h-screen bg-gray-100 px-6">
