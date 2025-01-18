@@ -1,4 +1,5 @@
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import javax.servlet.*;
@@ -8,6 +9,14 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import javax.servlet.annotation.WebServlet;
 
 @WebServlet("/books")
 public class BookServlet extends HttpServlet {
@@ -34,20 +43,65 @@ public class BookServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String id = req.getParameter("id");
-        Book updatedBook = gson.fromJson(req.getReader(), Book.class);
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        // Set character encoding
+        req.setCharacterEncoding("UTF-8");
+        resp.setContentType("application/json; charset=UTF-8");
 
-        List<Book> books = readBooksFromFile(req);
-        for (int i = 0; i < books.size(); i++) {
-            if (String.valueOf(books.get(i).getId()).equals(id)) {
-                books.set(i, updatedBook);
-                break;
+        // Read and parse the JSON request body
+        StringBuilder jsonContent = new StringBuilder();
+        try (BufferedReader reader = req.getReader()) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonContent.append(line);
             }
         }
+
+        // Convert JSON content to string
+        String jsonString = jsonContent.toString();
+
+        // Parse the JSON object to extract the "cart" array
+        JSONObject rootObject = new JSONObject(jsonString); // Using org.json.JSONObject
+        JSONArray cartArray = rootObject.getJSONArray("cart");
+
+        // Convert the "cart" JSONArray to a JSON string
+        String cartArrayString = cartArray.toString();
+
+        // Convert the "cart" JSON string to a list of CartItem objects using Gson
+        Type cartItemListType = new TypeToken<List<CartItem>>() {}.getType();
+        List<CartItem> cartItems = gson.fromJson(cartArrayString, cartItemListType);
+
+        // Read the books from storage (e.g., file or database)
+        List<Book> books = readBooksFromFile(req);
+
+        // Update the stock for each book in the cart
+        for (CartItem cartItem : cartItems) {
+            int cartBookId = cartItem.getId();
+            int purchaseUnit = cartItem.getPurchaseUnit();
+
+            for (Book book : books) {
+                if (book.getId() == cartBookId) {
+                    // Decrease the stock
+                    int newStock = book.getStock() - purchaseUnit;
+
+                    // Ensure stock doesn't go negative
+                    if (newStock < 0) {
+                        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                        resp.getWriter().write("{\"error\": \"Insufficient stock for book ID: " + cartBookId + "\"}");
+                        return;
+                    }
+
+                    book.setStock(newStock);
+                    break;
+                }
+            }
+        }
+
+        // Write the updated books back to storage
         writeBooksToFile(req, books);
 
-        resp.getWriter().write("{\"message\": \"Book updated successfully\"}");
+        // Respond with a success message
+        resp.getWriter().write("{\"message\": \"Stock updated successfully\"}");
     }
 
     @Override
@@ -85,5 +139,26 @@ public class BookServlet extends HttpServlet {
         // System.out.println("REQ" + req);
         // Resolve the relative path to an absolute path based on the servlet context
         return getServletContext().getRealPath(RELATIVE_FILE_PATH);
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173"); // Replace with the actual origin
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    @Override
+    protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Add CORS headers to all responses
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:5173"); // Replace with the actual origin
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+
+        // Continue with the original method
+        super.service(request, response);
     }
 }

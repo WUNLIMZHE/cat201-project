@@ -172,8 +172,9 @@ const Cart = (props) => {
       const data = {
         cart: cart,
       };
+      console.log(JSON.stringify(data));
       const response = await fetch(`http://localhost:9000/books`, {
-        method: "DELETE",
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
