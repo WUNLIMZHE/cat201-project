@@ -1,19 +1,10 @@
 [
     {
-        "firstName": "user",
-        "lastName": "user",
+        "firstName": "user1FirstName",
+        "lastName": "user1LastName",
         "password": "123456",
-        "addresses": [
-            {
-                "zipcode": "ffa",
-                "country": "ffa",
-                "city": "ffa",
-                "street": "ffa",
-                "state": "ffa",
-                "addressid": "1"
-            }
-        ],
-        "phoneNumber": "111111",
+        "addresses": [],
+        "phoneNumber": "0123456789",
         "role": "user",
         "payments": [],
         "userid": "1",
@@ -21,15 +12,27 @@
         "username": "user1"
     },
     {
-        "firstName": "user",
-        "lastName": "user",
+        "firstName": "admin",
+        "lastName": "admin",
         "password": "123456",
         "addresses": [],
-        "phoneNumber": "222222",
-        "role": "user",
+        "phoneNumber": "123456",
+        "role": "admin",
         "payments": [],
         "userid": "2",
-        "email": "user2@gmail.com",
-        "username": "user2"
+        "email": "admin@gmail.com",
+        "username": "admin"
+    },
+    {
+        "firstName": "qwe",
+        "lastName": "qwe",
+        "password": "qwe",
+        "addresses": [],
+        "phoneNumber": "123",
+        "role": "user",
+        "payments": [],
+        "userid": "3",
+        "email": "123@gmail.com",
+        "username": "qwe"
     }
 ]

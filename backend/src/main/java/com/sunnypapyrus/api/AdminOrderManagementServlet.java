@@ -1,6 +1,8 @@
 package com.sunnypapyrus.api;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSerializer;
 import com.sunnypapyrus.models.PurchaseRecord;
 
 import javax.servlet.ServletException;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +32,14 @@ public class AdminOrderManagementServlet extends HttpServlet {
         try {
             purchaseRecords = new ArrayList<>();
             purchaseRecords = PurchaseRecord.loadPurchaseRecords();
-            Gson gson = new Gson();
+
+            // Create a custom Gson instance
+            Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (src, typeOfSrc, context) -> {
+                    return context.serialize(src.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                })
+                .create();
+
             String json = gson.toJson(purchaseRecords);
             resp.getWriter().write(json);
         } catch (Exception e) {

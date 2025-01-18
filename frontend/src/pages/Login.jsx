@@ -22,9 +22,9 @@ function Login({setLoggedIn, setAuthUsername}) {
           setLoggedIn(true);
           localStorage.setItem("userLoginStatus", true); // Store login status in local storage
           if (result.userRole === 'admin') {
-            navigate('/testadmin');
+            navigate('/order');
           } else {
-            navigate('/userprofile');
+            navigate('/');
           }
         } else {
           setError("Invalid username or password");

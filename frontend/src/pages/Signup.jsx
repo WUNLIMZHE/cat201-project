@@ -22,7 +22,7 @@ function Signup() {
       async (result) => {
         if (result.signupStatus) {
           localStorage.setItem("userLoginStatus", true); // Store login status in local storage
-          navigate('/testhome');
+          navigate('/');
         } else {
           setError("Error signing up: " + result.message);
         }

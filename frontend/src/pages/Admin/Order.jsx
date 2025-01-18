@@ -13,7 +13,7 @@ const chunkOrders = (orders, chunkSize) => {
   return result;
 };
 
-const Order = () => {
+const Order = ({setPurchaseID}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentChunk, setCurrentChunk] = useState(0);
   const [error, setError] = useState("");
@@ -93,10 +93,10 @@ const Order = () => {
               <thead>
                 <tr>
                   <th>Order ID</th>
+                  <th>PurchaseDate</th>
                   <th>UserID</th>
                   <th>Username</th>
                   <th>Total Amount</th>
-                  <th>Payment Method</th>
                   <th>Purchase Status</th>
                 </tr>
               </thead>
@@ -106,16 +106,17 @@ const Order = () => {
                     key={`${order.purchaseID}-${order.userID}`}
                     onClick={() => {
                       console.log("row selected " + order.purchaseID);
+                      setPurchaseID(order.purchaseID);
                       navigate(`/order/${order.purchaseID}`, { state: { purchaseID: order.purchaseID } });
                       resetState();
                     }}
                     className="clickable-row"
                   >
                     <td>{order.purchaseID}</td>
+                    <td>{order.purchaseDate}</td>
                     <td>{order.userID}</td>
                     <td>{order.username}</td>
                     <td>RM {order.totalAmount}</td>
-                    <td>{order.paymentMethod}</td>
                     <td>{order.purchaseStatus}</td>
                   </tr>
                 ))}

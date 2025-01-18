@@ -48,9 +48,6 @@ public class UpdateQuantityServlet extends HttpServlet {
             int y = Integer.parseInt(bookID);
             int z = Integer.parseInt(quantity);
             purchaseRecord.editCart(x, y, z);
-            // purchaseRecord.setPurchaseByID(Integer.parseInt(purchaseID));
-            // purchaseRecord.updateQuantity(Integer.parseInt(purchaseID),
-            // Integer.parseInt(bookID), Integer.parseInt(quantity));
             response.getWriter().write(gson.toJson("Quantity updated successfully"));
 
         } catch (NumberFormatException e) {

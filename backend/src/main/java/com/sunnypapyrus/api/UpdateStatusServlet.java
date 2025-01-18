@@ -38,12 +38,14 @@ public class UpdateStatusServlet extends HttpServlet {
 
         try {
             // Parse JSON request body
-            Gson gson = new Gson();
             JsonObject jsonObject = gson.fromJson(sb.toString(), JsonObject.class);
-            String purchaseID = jsonObject.get("purchaseID").getAsString();
+            int purchaseID = jsonObject.get("purchaseID").getAsInt();
             String purchaseStatus = jsonObject.get("purchaseStatus").getAsString();
-            purchaseRecord.setPurchaseByID(Integer.parseInt(purchaseID));
-            purchaseRecord.updatePurchaseStatus(Integer.parseInt(purchaseID), purchaseStatus);
+            
+            // Update purchase status
+            purchaseRecord.setPurchaseByID(purchaseID);
+            purchaseRecord.updatePurchaseStatus(purchaseID, purchaseStatus);
+            
             response.getWriter().write(gson.toJson("Order status updated successfully"));
 
         } catch (NumberFormatException e) {

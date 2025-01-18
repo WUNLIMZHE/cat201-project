@@ -1,6 +1,8 @@
 package com.sunnypapyrus.api;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSerializer;
 import com.sunnypapyrus.models.PurchaseRecord;
 
 import javax.servlet.ServletException;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +28,7 @@ public class GetOrderDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
+        System.out.println("purchaseID in Servlet: " + req.getParameter("purchaseID"));
 
         String purchaseID = req.getParameter("purchaseID");
         if (purchaseID == null) {
@@ -43,7 +48,13 @@ public class GetOrderDetailServlet extends HttpServlet {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 resp.getWriter().write("{\"error\": \"Order not found\"}");
             } else {
-                Gson gson = new Gson();
+                // Create a custom Gson instance
+                Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (src, typeOfSrc, context) -> {
+                        return context.serialize(src.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+                    })
+                    .create();
+
                 String json = gson.toJson(orderDetail);
                 resp.getWriter().write(json);
             }
