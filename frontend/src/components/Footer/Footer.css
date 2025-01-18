@@ -1,0 +1,17 @@
+.footer {
+    position: relative;
+    font-size: 1.2rem;
+}
+
+.copyright {
+    position: absolute;
+    bottom: 0; /* Adjusted to make it stick at the bottom of the .footer */
+    background-color: rgb(1, 49, 41);
+    color: rgb(255, 255, 255);
+    text-align: center;
+    width: 100%;
+    height: 3.25rem;
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+}

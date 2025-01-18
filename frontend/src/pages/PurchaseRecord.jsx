@@ -1,6 +1,9 @@
 // import React from 'react'
 import { useState, useEffect } from "react";
 import Purchase from "./Purchase";
+import "./PurchaseRecord.css";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar/Navbar";
 
 const PurchaseRecord = ({ userID }) => {
   const [purchaseList, setpurchaseList] = useState([]); // To store list of books in the purchaseList
@@ -44,12 +47,22 @@ const PurchaseRecord = ({ userID }) => {
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
 
+  const book_from_latest = purchaseList.toReversed();
+  let index = 0;
+  const incrIndex = () => {
+      index+=1;
+      return index;
+  }
+
   return (
     <>
-      <div>PurchaseRecord</div>
-      {purchaseList.map((purchase) => (
-        <Purchase key={purchase.purchaseID} {...purchase} />
-      ))}
+      <Navbar/>
+      <div className="purchaseRecord title">Past Purchases</div>
+      <div className="purchase-list">
+        {book_from_latest.map((purchase) => (
+          <Purchase key={purchase.purchaseID} index={incrIndex()} {...purchase} />
+        ))}
+      </div>
     </>
   );
 };

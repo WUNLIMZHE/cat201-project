@@ -1,0 +1,23 @@
+.purchaseRecord.title{
+    margin: 8rem 0 0 20%;
+    text-align: left;
+    font-size: 3rem;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    text-transform: none;
+    font-weight: normal;
+    margin-bottom: 2rem;
+}
+
+.purchase-list{
+    margin-left: 18vw;
+    padding: 1rem;
+    background-color: black;
+    width: 60vw;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    border-radius: 1rem;
+    color: white;
+}
+

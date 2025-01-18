@@ -1,7 +1,6 @@
 import Swal from "sweetalert2";
 import React, { useState } from "react";
 import "./cartItem.css"
-import cartList from "../../cartList";
 
 const cartItems = (props) => {
   const handleAddBook = () => {
@@ -54,7 +53,7 @@ const cartItems = (props) => {
   };
 
   return (
-    <div className="Item">
+    <div className="cartItem">
       <img src={props.image} />
       <div className="right-sidebar">
         <h1 className="title">{props.title}</h1>
