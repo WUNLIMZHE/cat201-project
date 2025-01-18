@@ -123,7 +123,7 @@ public class BookServlet extends HttpServlet {
             // Convert the new cart item to JSON and add it to the array
             JSONObject newCartItemJson = new JSONObject();
             newCartItemJson.put("id", newCartItem.getId());
-            newCartItemJson.put("title", newCartItem.getIsbn());
+            newCartItemJson.put("title", newCartItem.getTitle());
             newCartItemJson.put("isbn", newCartItem.getIsbn());
             newCartItemJson.put("image", newCartItem.getImage());
             newCartItemJson.put("author", newCartItem.getAuthor());
