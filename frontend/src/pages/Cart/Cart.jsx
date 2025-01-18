@@ -167,6 +167,26 @@ const Cart = (props) => {
     console.log(cart);
   }
 
+  const deductBook = async() => {
+    try {
+      const data = {
+        cart: cart,
+      };
+      const response = await fetch(`http://localhost:9000/books`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to remove book from stock: ${response.status}`);
+      }
+      console.log("Books deducted from stock");
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   const handlePay = async () => {
     try {
       const data = {
@@ -192,6 +212,9 @@ const Cart = (props) => {
         confirmButtonText: "Ok",
       });
       await fetchProducts();
+
+      //deduct book from stock after successful purchase
+      deductBook();
     } catch (error) {
       console.error(error.message);
     }

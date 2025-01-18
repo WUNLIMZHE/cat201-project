@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "image": "/src/assets/images/book-2.webp",
+    "purchaseUnit": 1,
+    "totalPrice": 54,
+    "price": 54,
+    "cartID": 1,
+    "genre": "Classic Fiction",
+    "language": "english",
+    "id": 2,
+    "title": "To Kill a Mockingbird",
+    "category": "fiction",
+    "stock": 1,
+    "userID": 1
+  }
+]
