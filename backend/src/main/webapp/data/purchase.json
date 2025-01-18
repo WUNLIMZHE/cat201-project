@@ -224,5 +224,151 @@
     "shippingAddress": "TESTING ADDRESS",
     "userID": 1,
     "totalAmmount": 640
+  },
+  {
+    "books": [],
+    "purchaseID": 8,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmmount": 0
+  },
+  {
+    "books": [],
+    "purchaseID": 8,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmmount": 0
+  },
+  {
+    "books": [
+      {
+        "image": "/src/assets/images/book-2.webp",
+        "purchaseUnit": 1,
+        "totalPrice": 54,
+        "price": 54,
+        "cartID": 1,
+        "genre": "Classic Fiction",
+        "language": "english",
+        "id": 2,
+        "title": "To Kill a Mockingbird",
+        "stock": 1,
+        "category": "fiction",
+        "userID": 1
+      }
+    ],
+    "purchaseID": 8,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmmount": 54
+  },
+  {
+    "books": [
+      {
+        "image": "/src/assets/images/book-4.webp",
+        "purchaseUnit": 1,
+        "totalPrice": 48,
+        "price": 48,
+        "cartID": 10,
+        "genre": "现代文学",
+        "language": "chinese",
+        "id": 4,
+        "title": "活着",
+        "stock": 323,
+        "category": "fiction",
+        "userID": 1
+      },
+      {
+        "image": "/src/assets/images/book-11.webp",
+        "purchaseUnit": 1,
+        "totalPrice": 60,
+        "price": 60,
+        "cartID": 11,
+        "genre": "戏剧文学",
+        "language": "chinese",
+        "id": 11,
+        "title": "茶馆",
+        "stock": 8,
+        "category": "fiction",
+        "userID": 1
+      },
+      {
+        "image": "/src/assets/images/book-17.webp",
+        "purchaseUnit": 1,
+        "totalPrice": 52,
+        "price": 52,
+        "cartID": 12,
+        "genre": "家庭伦理",
+        "language": "chinese",
+        "id": 17,
+        "title": "家",
+        "stock": 345,
+        "category": "fiction",
+        "userID": 1
+      },
+      {
+        "image": "/src/assets/images/book-15.webp",
+        "purchaseUnit": 1,
+        "totalPrice": 90,
+        "price": 90,
+        "cartID": 13,
+        "genre": "历史小说",
+        "language": "chinese",
+        "id": 15,
+        "title": "京华烟云",
+        "stock": 42,
+        "category": "historical",
+        "userID": 1
+      }
+    ],
+    "purchaseID": 8,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmmount": 250
+  },
+  {
+    "books": [
+      {
+        "purchaseUnit": 1,
+        "image": "/src/assets/images/book-2.webp",
+        "totalPrice": 54,
+        "price": 54,
+        "cartID": 1,
+        "genre": "Classic Fiction",
+        "language": "english",
+        "id": 2,
+        "title": "To Kill a Mockingbird",
+        "stock": 1,
+        "category": "fiction",
+        "userID": 1
+      }
+    ],
+    "purchaseID": 9,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmmount": 54
+  },
+  {
+    "purchaseDate": "18-01-2025 04:45 pm",
+    "books": [
+      {
+        "image": "/src/assets/images/book-13.webp",
+        "purchaseUnit": 1,
+        "totalPrice": 35,
+        "price": 35,
+        "cartID": 1,
+        "genre": "小说",
+        "language": "chinese",
+        "id": 13,
+        "title": "狂人日记",
+        "stock": 3,
+        "category": "fiction",
+        "userID": 1
+      }
+    ],
+    "purchaseID": 10,
+    "shippingAddress": "TESTING ADDRESS",
+    "purchaseStatus": "Pending",
+    "userID": 1,
+    "totalAmmount": 35
   }
 ]
