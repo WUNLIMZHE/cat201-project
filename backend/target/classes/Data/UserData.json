@@ -1,1 +1,35 @@
-[{"firstName":"user","lastName":"user","password":"123456","addresses":[],"phoneNumber":"111111","role":"user","payments":[],"userid":"1","email":"user1@gmail.com","username":"user1"},{"firstName":"user","lastName":"user","password":"123456","addresses":[],"phoneNumber":"222222","role":"user","payments":[],"userid":"2","email":"user2@gmail.com","username":"user2"}]
+[
+    {
+        "firstName": "user",
+        "lastName": "user",
+        "password": "123456",
+        "addresses": [
+            {
+                "zipcode": "ffa",
+                "country": "ffa",
+                "city": "ffa",
+                "street": "ffa",
+                "state": "ffa",
+                "addressid": "1"
+            }
+        ],
+        "phoneNumber": "111111",
+        "role": "user",
+        "payments": [],
+        "userid": "1",
+        "email": "user1@gmail.com",
+        "username": "user1"
+    },
+    {
+        "firstName": "user",
+        "lastName": "user",
+        "password": "123456",
+        "addresses": [],
+        "phoneNumber": "222222",
+        "role": "user",
+        "payments": [],
+        "userid": "2",
+        "email": "user2@gmail.com",
+        "username": "user2"
+    }
+]

@@ -30,6 +30,10 @@ const UserProfile = ({ loggedIn, username }) => {
     const [selectedPayment, setSelectedPayment] = useState(null);
     const [showAddressOptions, setShowAddressOptions] = useState(false);
     const [showPaymentOptions, setShowPaymentOptions] = useState(false);
+    const [showResetPasswordForm, setShowResetPasswordForm] = useState(false);
+    const [password, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
     useEffect(() => {
         if (!loggedIn) {
@@ -159,6 +163,37 @@ const UserProfile = ({ loggedIn, username }) => {
         fetchPayments(); // Fetch updated payments
     };
 
+    const handleResetPasswordClick = () => {
+        setShowResetPasswordForm(!showResetPasswordForm);
+    };
+
+    const resetpassword = async (username, currentPassword, newPassword) => {
+        await handleApiCall(
+            "users/resetpassword",
+            "POST",
+            { username, password, newPassword },
+            (result) => {
+                alert(result.message);
+                setShowResetPasswordForm(false);
+            },
+            (error) => {
+                console.error("Error resetting password: " + error);
+                setError("Error resetting password: " + error);
+            }
+        );
+    };
+
+    const handlePasswordReset = async () => {
+        if (newPassword !== confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+        await resetpassword(username, password, newPassword);
+        setCurrentPassword('');
+        setNewPassword('');
+        setConfirmPassword('');
+    };
+
     return (
         <div className="container">
             <div className="main-body">
@@ -211,9 +246,58 @@ const UserProfile = ({ loggedIn, username }) => {
                                 <hr />
                                 <div className="row">
                                     <div className="col-sm-12">
-                                        <a className="btn-info bg-blue-500 text-white px-4 py-2 rounded">Reset Password</a>
+                                        <button className="btn-info bg-blue-500 text-white px-4 py-2 rounded" onClick={handleResetPasswordClick}>
+                                            Reset Password
+                                        </button>
                                     </div>
                                 </div>
+                                {showResetPasswordForm && (
+                                    <div className="row mt-4">
+                                        <div className="col-sm-12">
+                                            <div className="card bg-white shadow-md rounded-lg p-4">
+                                                <div className="mb-4">
+                                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="currentPassword">
+                                                        Current Password
+                                                    </label>
+                                                    <input
+                                                        type="password"
+                                                        id="currentPassword"
+                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                                                        value={password}
+                                                        onChange={(e) => setCurrentPassword(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="mb-4">
+                                                    <label className="block text-white text-sm font-bold mb-2" htmlFor="newPassword">
+                                                        New Password
+                                                    </label>
+                                                    <input
+                                                        type="password"
+                                                        id="newPassword"
+                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                                                        value={newPassword}
+                                                        onChange={(e) => setNewPassword(e.target.value)}
+                                                    />
+                                                </div>
+                                                <div className="mb-4">
+                                                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="confirmPassword">
+                                                        Confirm New Password
+                                                    </label>
+                                                    <input
+                                                        type="password"
+                                                        id="confirmPassword"
+                                                        className="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                                                        value={confirmPassword}
+                                                        onChange={(e) => setConfirmPassword(e.target.value)}
+                                                    />
+                                                </div>
+                                                <button className="btn-info bg-blue-500 text-white px-4 py-2 rounded" onClick={handlePasswordReset}>
+                                                    Submit
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="flex flex-wrap -mx-2">

@@ -170,6 +170,17 @@ public class UserList {
         return true;
     }
 
+    public boolean resetPassword(String username, String password, String newPassword) {
+        for (UserEntity user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                user.setPassword(newPassword);
+                saveUsers();
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String getlatestuserid() {
         int latestuserid = 0;
         for (UserEntity user : users) {
