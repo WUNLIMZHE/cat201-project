@@ -24,7 +24,7 @@ function Login({setLoggedIn, setAuthUsername}) {
           if (result.userRole === 'admin') {
             navigate('/testadmin');
           } else {
-            navigate('/testhome');
+            navigate('/userprofile');
           }
         } else {
           setError("Invalid username or password");
@@ -103,12 +103,6 @@ function Login({setLoggedIn, setAuthUsername}) {
                   d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               {error}</div>}
-
-            <div className="text-right pt-8 pb-31 link link-hover">
-              <a href="#">
-                Forgot password?
-              </a>
-            </div>
 
             <div className="container-login100-form-btn">
               <div className="wrap-login100-form-btn">

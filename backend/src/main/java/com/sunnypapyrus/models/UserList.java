@@ -260,9 +260,8 @@ public class UserList {
         UserEntity user = getUserByUsername(username);
         if (user != null) {
             Payment newPayment = new Payment(getlatestpaymentid(), cardholderName, cardNumber, expiryDate,
-                    cardType, cvv);
+            cardType, cvv);
             user.addPayment(newPayment);
-            currentUser.addPayment(newPayment);
             saveUsers();
             loadUsers(); // Reload the latest data
             return true;

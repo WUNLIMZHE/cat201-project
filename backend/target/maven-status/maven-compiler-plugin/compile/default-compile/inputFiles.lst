@@ -4,6 +4,7 @@ D:\CAT Project\Paperme\backend\src\main\java\CartItemServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\AdminOrderManagementServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\CorsFilter.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\GetAddressServlet.java
+D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\GetCurrentUserDetailsServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\GetOrderDetailServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\GetPaymentServlet.java
 D:\CAT Project\Paperme\backend\src\main\java\com\sunnypapyrus\api\RemoveAddressServlet.java

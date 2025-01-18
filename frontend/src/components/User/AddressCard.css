@@ -1,0 +1,84 @@
+.address-card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.address-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.address-card-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.address-card-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.address-card-error {
+    color: red;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.address-card-field {
+    margin-bottom: 15px;
+}
+
+.address-card-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.address-card-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.address-card-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.address-card-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.address-card-button:hover {
+    background-color: #0056b3;
+}
+
+.address-card-back {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.address-card-back-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.address-card-back-link:hover {
+    text-decoration: underline;
+}

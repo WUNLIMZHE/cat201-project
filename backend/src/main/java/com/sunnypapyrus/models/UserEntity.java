@@ -160,6 +160,17 @@ public class UserEntity {
         return null;
     }
 
+    public UserEntity getDetails(){
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUsername(this.username);
+        userEntity.setFirstName(this.firstName);
+        userEntity.setLastName(this.lastName);
+        userEntity.setPhoneNumber(this.phoneNumber);
+        userEntity.setEmail(this.email);
+        userEntity.setRole(this.role);
+        return userEntity;
+    }
+
     public String getUsernameByID(String userID){
         JSONParser parser = new JSONParser();
         try (FileReader reader = new FileReader(

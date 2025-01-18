@@ -21,6 +21,7 @@ public class RemovePaymentServlet extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        userList.loadUsers();
         // Set response content type
         response.setContentType("application/json");
         String username = request.getParameter("username");
