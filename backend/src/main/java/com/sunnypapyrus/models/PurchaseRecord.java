@@ -180,6 +180,14 @@ public class PurchaseRecord {
         return purchaseID;
     }
 
+    public String setUsername(String username) {
+        return this.username = username;
+    }
+
+    public String setPhone(String phone) {
+        return this.phone = phone;
+    }
+
     public String getUsername() {
         return username;
     }
