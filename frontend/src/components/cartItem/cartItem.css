@@ -1,4 +1,4 @@
-.Item{
+.cartItem{
     display: grid;
     width: 60%;
     border-radius: 2rem;
@@ -9,9 +9,10 @@
     font-size: 1rem;
     margin: 1rem 0;
     color: white;
+    font-family: 'Times New Roman', Times, serif;
 }
 
-img{
+.cartItem img{
     height: auto;
     width: auto;
     text-align: center;
@@ -32,8 +33,10 @@ img{
     border-radius: 2rem;
 }
 
-.title{
-    font-size: 2.5em;
+.cartItem .title{
+    font-size: 2rem;
+    text-align: left;
+    color: white;
 }
 
 .info{
@@ -90,3 +93,10 @@ img{
 .changeQty.removeBook{
     background-color: red;
 }
+
+@media only screen and (max-width: 850px) {
+    .cartItem{
+        grid-template-columns: 1fr;
+        width: 80%;
+    }
+  }

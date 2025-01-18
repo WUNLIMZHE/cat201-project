@@ -74,14 +74,8 @@ const Order = () => {
           <div className="no-results">No orders found.</div>
         ) : (
           <>
-            <div className="pagination">
-              <button
-                onClick={() => {
-                  setCurrentChunk(currentChunk - 1);
-                  resetState();
-                }}
-                disabled={currentChunk === 0}
-              >
+            <div className="pagination mb-5">
+              <button onClick={() => setCurrentChunk(currentChunk - 1)} disabled={currentChunk === 0}>
                 Prev
               </button>
               <button

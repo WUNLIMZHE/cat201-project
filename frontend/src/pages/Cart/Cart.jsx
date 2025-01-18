@@ -3,7 +3,9 @@ import Swal from "sweetalert2";
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
-import CartItems from "../../components/CartItem/CartItem";
+import CartItems from "../../components/cartItem/cartItem";
+import emptyBox from "../../assets/emptyBox.png";
+import { Link } from "react-router-dom";
 
 const Cart = (props) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -167,6 +169,27 @@ const Cart = (props) => {
     console.log(cart);
   }
 
+  const deductBook = async() => {
+    try {
+      const data = {
+        cart: cart,
+      };
+      console.log(JSON.stringify(data));
+      const response = await fetch(`http://localhost:9000/books`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to remove book from stock: ${response.status}`);
+      }
+      console.log("Books deducted from stock");
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+
   const handlePay = async () => {
     try {
       const data = {
@@ -192,6 +215,9 @@ const Cart = (props) => {
         confirmButtonText: "Ok",
       });
       await fetchProducts();
+
+      //deduct book from stock after successful purchase
+      deductBook();
     } catch (error) {
       console.error(error.message);
     }
@@ -199,6 +225,7 @@ const Cart = (props) => {
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
+  const isEmpty = cart===undefined || cart.length===0;
 
   return (
     <>
@@ -206,17 +233,24 @@ const Cart = (props) => {
       <button className="return mt-10">
         &#8592; I want to continue shopping
       </button>
-      <h1 className="title">My Cart</h1>
+      <h1 className="cartTitle">My Cart</h1>
       <div className="items">
         {console.log(cart)}
-        {cart.map((book) => (
-          <CartItems
-            key={book.id} // Add unique key
-            {...book}
-            // updateFinalPrice={updateTotalPrice}
-            changeBookQty={changeBookQty}
-          />
-        ))}
+        {!isEmpty ? 
+          (cart.map((book) => (
+            <CartItems
+              key={book.id} // Add unique key
+              {...book}
+              // updateFinalPrice={updateTotalPrice}
+              changeBookQty={changeBookQty}
+            />
+          ))) : (
+            <div className="emptyCart">
+              <Link to="/books"><img className="NoItems" src={emptyBox} alt="Nothing in cart!"/></Link>
+              <p>The cart seems to be empty. Go fill it up with some books!</p>
+            </div>
+          )
+        }
       </div>
       <div className="checkout">
         <span className="finalPrice">
@@ -226,7 +260,7 @@ const Cart = (props) => {
           className="bg-green-500 text-white font-bold text-lg py-2 px-12 rounded shadow-md hover:bg-green-600 hover:shadow-lg active:bg-green-700 active:shadow-sm active:translate-y-0.5 transition duration-300"
           onClick={handlePay}
         >
-          Pay
+          <Link to="/purchase-record">Pay</Link>
         </button>
       </div>
     </>
