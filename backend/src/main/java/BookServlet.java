@@ -74,8 +74,9 @@ public class BookServlet extends HttpServlet {
             byte[] decodedImage = Base64.getDecoder().decode(imageData);
 
             // Set the target path to save the image
-            String fileName = title + "-" + isbn + ".png";  // Example file name
-            Path imagePath = Paths.get("frontend", "src", "assets", "images", fileName);
+            String fileName = "book-" + id + ".webp";  // Example file name
+            String projectDir = System.getProperty("user.dir"); // Get the current working directory
+            Path imagePath = Paths.get(projectDir, "..", "frontend", "src", "assets", "images", fileName);
 
             // Write the decoded bytes to the file
             try (FileOutputStream fileOutputStream = new FileOutputStream(imagePath.toFile())) {
@@ -84,6 +85,8 @@ public class BookServlet extends HttpServlet {
                 e.printStackTrace();  // Handle the error accordingly
             }
         }
+        image = "/src/assets/images/book-" + id + ".webp";
+        System.out.println(image);
 
         // Load existing book items
         JSONArray bookItems = loadAllBookItems(req);
@@ -103,6 +106,7 @@ public class BookServlet extends HttpServlet {
             }
         }
 
+        System.out.println("image before constructor" + image);
         if (!bookExists) {
             // Create and populate the new Book object
             Book newCartItem = new Book(id, title, isbn, image, author, genre, category, description, price, 0, 0, stock, language);
@@ -113,7 +117,7 @@ public class BookServlet extends HttpServlet {
             newCartItemJson.put("title", newCartItem.getIsbn());
             newCartItemJson.put("isbn", newCartItem.getIsbn());
             newCartItemJson.put("image", newCartItem.getImage());
-            newCartItemJson.put("author", newCartItem.getImage());
+            newCartItemJson.put("author", newCartItem.getAuthor());
             newCartItemJson.put("genre", newCartItem.getGenre());
             newCartItemJson.put("category", newCartItem.getCategory());
             newCartItemJson.put("description", newCartItem.getDescription());
@@ -128,6 +132,9 @@ public class BookServlet extends HttpServlet {
 
         // Save the updated book items
         saveBookItems(bookItems, req);
+
+        // increase ID by 1
+        nextBookID++;
 
         // Respond with success message
         JSONObject responseJson = new JSONObject();
