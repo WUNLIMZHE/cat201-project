@@ -33,7 +33,6 @@ const OrderDetail = () => {
         setError(error);
       }
     );
-
   };
 
   useEffect(() => {
@@ -73,7 +72,7 @@ const OrderDetail = () => {
     );
   };
 
-  const upadateOrderStatus = async (purchaseID, purchaseStatus) => {
+  const updateOrderStatus = async (purchaseID, purchaseStatus) => {
       await handleApiCall(
         `admin/update`,
         "POST",
@@ -115,7 +114,7 @@ const OrderDetail = () => {
       // console.log("purchaseID: " + purchaseID);
       await updateQuantity(purchaseID, book.id, book.purchaseUnit);
     }
-    upadateOrderStatus(purchaseID, orderDetails.purchaseStatus);
+    updateOrderStatus(purchaseID, orderDetails.purchaseStatus);
     updateTotalAmount(purchaseID, orderDetails.totalAmount);
   }
 

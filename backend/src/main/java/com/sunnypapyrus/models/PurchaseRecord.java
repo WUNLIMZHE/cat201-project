@@ -11,6 +11,12 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+import java.lang.reflect.Type;
 
 public class PurchaseRecord {
     private UserList userList;
@@ -31,7 +37,7 @@ public class PurchaseRecord {
     private String purchaseStatus;
     private double totalAmount;
     private String shippingAddress;
-    private String paymentMethod;
+    //private String paymentMethod;
     private String username;
     private String phone;
     private List<CartItem> books; // Using CartItem to store purchased books
@@ -40,16 +46,32 @@ public class PurchaseRecord {
         this.books = new ArrayList<>();
     }
 
+    // // Constructor
+    // public PurchaseRecord(int purchaseID, int userID, double totalAmount,
+    // String shippingAddress, String paymentMethod, String purchaseStatus,
+    // List<CartItem> books) {
+    // this.purchaseID = purchaseID;
+    // this.userID = userID;
+    // this.totalAmount = totalAmount;
+    // this.shippingAddress = shippingAddress;
+    // this.purchaseStatus = purchaseStatus;
+    // this.books = books;
+    // this.paymentMethod = paymentMethod;
+    // this.user = new UserEntity(); // Initialize user object
+    // this.username = user.getUsernameByID(String.valueOf(userID));
+    // this.phone = user.getUserPhoneByID(String.valueOf(userID));
+    // }
+
     // Constructor
     public PurchaseRecord(int purchaseID, int userID, double totalAmount,
-            String shippingAddress, String paymentMethod, String purchaseStatus, List<CartItem> books) {
+            String shippingAddress, String purchaseStatus, List<CartItem> books) {
         this.purchaseID = purchaseID;
         this.userID = userID;
         this.totalAmount = totalAmount;
         this.shippingAddress = shippingAddress;
         this.purchaseStatus = purchaseStatus;
         this.books = books;
-        this.paymentMethod = paymentMethod;
+        // this.paymentMethod = paymentMethod;
         this.user = new UserEntity(); // Initialize user object
         this.username = user.getUsernameByID(String.valueOf(userID));
         this.phone = user.getUserPhoneByID(String.valueOf(userID));
@@ -60,6 +82,7 @@ public class PurchaseRecord {
         this.userID = userID;
         this.totalAmount = totalAmount;
         this.shippingAddress = shippingAddress;
+        this.purchaseStatus = "Pending";
         this.books = new ArrayList<CartItem>(); // Instantiate with ArrayList
     }
 
@@ -99,7 +122,7 @@ public class PurchaseRecord {
                 this.shippingAddress = purchaseRecord.getShippingAddress();
                 this.purchaseStatus = purchaseRecord.getPurchaseStatus();
                 this.books = purchaseRecord.getBooks();
-                this.paymentMethod = purchaseRecord.getPaymentMethod();
+                //this.paymentMethod = purchaseRecord.getPaymentMethod();
                 this.user = purchaseRecord.getUser();
                 this.username = purchaseRecord.getUsername();
                 this.phone = purchaseRecord.getPhone();
@@ -165,9 +188,9 @@ public class PurchaseRecord {
         return phone;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
+    // public String getPaymentMethod() {
+    //     return paymentMethod;
+    // }
 
     public void setPurchaseID(int purchaseID) {
         this.purchaseID = purchaseID;
@@ -175,10 +198,6 @@ public class PurchaseRecord {
 
     public int getUserID() {
         return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public String getPurchaseStatus() {
@@ -213,9 +232,9 @@ public class PurchaseRecord {
         this.books = books;
     }
 
-    public void setpaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
+    // public void setpaymentMethod(String paymentMethod) {
+    //     this.paymentMethod = paymentMethod;
+    // }
 
     public UserList getUserList() {
         return userList;
@@ -226,56 +245,47 @@ public class PurchaseRecord {
     }
 
     // Method to display purchase record details
-    public void displayPurchaseRecord() {
-        System.out.println("Purchase ID: " + purchaseID);
-        System.out.println("User ID: " + userID);
-        System.out.println("Purchase Status: " + purchaseStatus);
-        System.out.println("Total Amount: $" + totalAmount);
-        System.out.println("Shipping Address: " + shippingAddress);
-        System.out.println("Purchase Method: " + paymentMethod);
-        System.out.println("Books Purchased:");
-        for (CartItem book : books) {
-            System.out.println("  - Cart ID: " + book.getCartID());
-            System.out.println("    User ID: " + book.getUserID());
-            System.out.println("    Book ID: " + book.getId());
-            System.out.println("    Title: " + book.getTitle());
-            System.out.println("    Image: " + book.getImage());
-            System.out.println("    Genre: " + book.getGenre());
-            System.out.println("    Category: " + book.getCategory());
-            System.out.println("    Price: $" + book.getPrice());
-            System.out.println("    Units Purchased: " + book.getPurchaseUnit());
-            System.out.println("    Total Price: $" + book.getTotalPrice());
-            System.out.println("    Stock: " + book.getStock());
-            System.out.println("    Language: " + book.getLanguage());
-        }
-    }
+    // public void displayPurchaseRecord() {
+    //     System.out.println("Purchase ID: " + purchaseID);
+    //     System.out.println("User ID: " + userID);
+    //     System.out.println("Purchase Status: " + purchaseStatus);
+    //     System.out.println("Total Amount: $" + totalAmount);
+    //     System.out.println("Shipping Address: " + shippingAddress);
+    //     System.out.println("Purchase Method: " + paymentMethod);
+    //     System.out.println("Books Purchased:");
+    //     for (CartItem book : books) {
+    //         System.out.println("  - Cart ID: " + book.getCartID());
+    //         System.out.println("    User ID: " + book.getUserID());
+    //         System.out.println("    Book ID: " + book.getId());
+    //         System.out.println("    Title: " + book.getTitle());
+    //         System.out.println("    Image: " + book.getImage());
+    //         System.out.println("    Genre: " + book.getGenre());
+    //         System.out.println("    Category: " + book.getCategory());
+    //         System.out.println("    Price: $" + book.getPrice());
+    //         System.out.println("    Units Purchased: " + book.getPurchaseUnit());
+    //         System.out.println("    Total Price: $" + book.getTotalPrice());
+    //         System.out.println("    Stock: " + book.getStock());
+    //         System.out.println("    Language: " + book.getLanguage());
+    //     }
+    // }
 
-    public void setUser() {
-        this.user = userList.getUserbyUserId(String.valueOf(userID));
-    }
-
-    public void setUserList(UserList userList) {
-        this.userList = userList;
-    }
     public static List<PurchaseRecord> loadPurchaseRecords() {
         List<PurchaseRecord> purchaseRecords = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
 
         try (FileReader reader = new FileReader("d:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
             Object obj = jsonParser.parse(reader);
-            if (obj == null) {
-                return purchaseRecords; // Return empty list if JSON is empty
-            }
             JSONArray purchaseList = (JSONArray) obj;
 
             for (Object purchaseObj : purchaseList) {
                 JSONObject purchaseJSON = (JSONObject) purchaseObj;
                 int purchaseID = ((Long) purchaseJSON.get("purchaseID")).intValue();
                 int userID = ((Long) purchaseJSON.get("userID")).intValue();
-                double totalAmount = purchaseJSON.get("totalAmount") != null ? ((Number) purchaseJSON.get("totalAmount")).doubleValue() : 0.0;
+                double totalAmount = ((Number) purchaseJSON.get("totalAmount")).doubleValue();
                 String shippingAddress = (String) purchaseJSON.get("shippingAddress");
-                String paymentMethod = (String) purchaseJSON.get("paymentMethod");
                 String purchaseStatus = (String) purchaseJSON.get("purchaseStatus");
+                String username = (String) purchaseJSON.get("username");
+                String phone = (String) purchaseJSON.get("phone");
 
                 JSONArray booksJSON = (JSONArray) purchaseJSON.get("books");
                 List<CartItem> books = new ArrayList<>();
@@ -284,10 +294,9 @@ public class PurchaseRecord {
                     int id = ((Long) bookJSON.get("id")).intValue();
                     String title = (String) bookJSON.get("title");
                     String image = (String) bookJSON.get("image");
-                    String author = (String) bookJSON.get("author");
-                    double price = bookJSON.get("price") != null ? ((Number) bookJSON.get("price")).doubleValue() : 0.0;
+                    double price = ((Number) bookJSON.get("price")).doubleValue();
                     int purchaseUnit = ((Long) bookJSON.get("purchaseUnit")).intValue();
-                    double totalPrice = bookJSON.get("totalPrice") != null ? ((Number) bookJSON.get("totalPrice")).doubleValue() : 0.0;
+                    double totalPrice = ((Number) bookJSON.get("totalPrice")).doubleValue();
 
                     CartItem book = new CartItem(id, purchaseUnit);
                     book.setTitle(title);
@@ -297,7 +306,10 @@ public class PurchaseRecord {
                     books.add(book);
                 }
 
-                PurchaseRecord purchaseRecord = new PurchaseRecord(purchaseID, userID, totalAmount, shippingAddress, paymentMethod, purchaseStatus, books);
+                PurchaseRecord purchaseRecord = new PurchaseRecord(purchaseID, userID, totalAmount,
+                        shippingAddress, purchaseStatus, books);
+                purchaseRecord.setUsername(username);
+                purchaseRecord.setPhone(phone);
                 purchaseRecords.add(purchaseRecord);
             }
         } catch (IOException | ParseException e) {
@@ -308,11 +320,27 @@ public class PurchaseRecord {
     }
 
     public static void savePurchaseRecords(List<PurchaseRecord> purchaseRecords) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(PurchaseRecord.class, new PurchaseRecordSerializer())
+                .setPrettyPrinting()
+                .create();
         try (FileWriter file = new FileWriter("d:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
             file.write(gson.toJson(purchaseRecords));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static class PurchaseRecordSerializer implements JsonSerializer<PurchaseRecord> {
+        @Override
+        public JsonElement serialize(PurchaseRecord purchaseRecord, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("books", context.serialize(purchaseRecord.getBooks()));
+            jsonObject.addProperty("purchaseID", purchaseRecord.getPurchaseID());
+            jsonObject.addProperty("shippingAddress", purchaseRecord.getShippingAddress());
+            jsonObject.addProperty("userID", purchaseRecord.getUserID());
+            jsonObject.addProperty("totalAmount", purchaseRecord.getTotalAmount());
+            return jsonObject;
         }
     }
 }
