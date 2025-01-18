@@ -170,6 +170,17 @@ public class UserList {
         return true;
     }
 
+    public boolean resetPassword(String username, String password, String newPassword) {
+        for (UserEntity user : users) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                user.setPassword(newPassword);
+                saveUsers();
+                return true;
+            }
+        }
+        return false;
+    }
+
     public String getlatestuserid() {
         int latestuserid = 0;
         for (UserEntity user : users) {
@@ -260,9 +271,8 @@ public class UserList {
         UserEntity user = getUserByUsername(username);
         if (user != null) {
             Payment newPayment = new Payment(getlatestpaymentid(), cardholderName, cardNumber, expiryDate,
-                    cardType, cvv);
+            cardType, cvv);
             user.addPayment(newPayment);
-            currentUser.addPayment(newPayment);
             saveUsers();
             loadUsers(); // Reload the latest data
             return true;

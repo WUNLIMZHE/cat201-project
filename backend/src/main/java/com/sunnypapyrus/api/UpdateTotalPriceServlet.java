@@ -17,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
+@SuppressWarnings("unused")
 @WebServlet("/api/admin/updatetotal")
 public class UpdateTotalPriceServlet extends HttpServlet {
     private PurchaseRecord purchaseRecord = new PurchaseRecord();

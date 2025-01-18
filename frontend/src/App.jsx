@@ -10,14 +10,18 @@ import PurchaseRecord from './pages/PurchaseRecord';
 import Order from './pages/Admin/Order';
 import OrderDetail from './components/OrderDetail';
 import Inventory from './pages/Admin/Inventory';
-import TestHome from './pages/TestHome';
+import EditProfile from './pages/EditProfile';
 import TestAdmin from './pages/TestAdmin';
 import AddBook from "./pages/Admin/AddBook"
+import UserProfile from './pages/UserProfile';
+import PaymentCard from './components/User/PaymentCard';
+import AddressCard from './components/User/AddressCard';
+ 
 import { useState } from 'react';
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [username, setAuthUsername] = useState("");
+  const [loggedIn, setLoggedIn] = useState(true);
+  const [username, setAuthUsername] = useState("user1");
 
   return (
     <Router>
@@ -36,7 +40,10 @@ function App() {
         <Route path="/" element={<Navigate to="/testhome" />} />
         <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setAuthUsername={setAuthUsername} />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/testhome" element={<TestHome loggedIn={loggedIn} username={username} />} />
+        <Route path="/editprofile" element={<EditProfile loggedIn={loggedIn} username={username} />} />
+        <Route path="/userprofile" element={<UserProfile loggedIn={loggedIn} username={username}/>} />
+        <Route path="/editpayment" element={<PaymentCard loggedIn={loggedIn} username={username} />} />
+        <Route path="/editaddress" element={<AddressCard loggedIn={loggedIn} username={username} />} />
         <Route path="/testadmin" element={<TestAdmin />} />
         <Route path="/admin-add-book" element={<AddBook />} />
 
@@ -47,6 +54,7 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/purchaserecord" element={<PurchaseRecord />} />
         <Route path="/product/:id" element={<CardDetailsPage />} />
+        <Route path="/userprofile" element={<UserProfile />} />
         
         {/* Admin */}
         <Route path="/order" element={<Order />} />

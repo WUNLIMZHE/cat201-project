@@ -2,6 +2,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.sunnypapyrus.models.Book;
+import com.sunnypapyrus.models.CartItem;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 
 import javax.servlet.annotation.WebServlet;
 
+@SuppressWarnings("unused")
 @WebServlet("/books")
 public class BookServlet extends HttpServlet {
     private static int nextBookID;

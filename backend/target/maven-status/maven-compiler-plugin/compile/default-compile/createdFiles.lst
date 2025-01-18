@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 PurchaseRecord.class
 com\sunnypapyrus\api\UserSignUpServlet.class
@@ -9,6 +10,9 @@ Book.class
 BookServlet$1.class
 CartItemServlet.class
 com\sunnypapyrus\api\UsersAddressServlet.class
+=======
+com\sunnypapyrus\api\CorsFilter.class
+>>>>>>> ch/userprofile
 BookServlet.class
 com\sunnypapyrus\Main.class
 com\sunnypapyrus\api\GetPaymentServlet.class
@@ -22,12 +26,15 @@ com\sunnypapyrus\models\Payment.class
 com\sunnypapyrus\models\UserEntity.class
 com\sunnypapyrus\api\UsersLoginServlet.class
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 BookServlet.class
 >>>>>>> ch/order-management
 =======
 com\sunnypapyrus\models\UserList.class
 >>>>>>> ca791c70e1b0df958443708917ecfef84796a615
+=======
+>>>>>>> ch/userprofile
 com\sunnypapyrus\AppContextListener.class
 com\sunnypapyrus\api\RemoveAddressServlet.class
 MongoDBConnection.class

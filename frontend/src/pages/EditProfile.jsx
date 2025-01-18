@@ -5,8 +5,9 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import handleApiCall from '../utils/handleApiCall';
 import './Login.css';
+import './EditProfile.css';
 
-function TestHome({ loggedIn, username }) {
+function EditProfile({ loggedIn, username }) {
     const [street, setStreet] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
@@ -182,14 +183,8 @@ function TestHome({ loggedIn, username }) {
     return loggedIn ? (
         <div className="container">
             <h1>Welcome, {username}!</h1>
-            <p>This is your homepage.</p>
-            <p>
-                <Link to="/login">Login</Link>
-            </p>
-            <p>
-                <Link to="/signup">Signup</Link>
-            </p>
             <button onClick={handleLogout} className="btn btn-danger">Log Out</button>
+            
             <h2>Address Details</h2>
             <form onSubmit={handleSubmit}>
                 <div className="form-group">
@@ -223,7 +218,7 @@ function TestHome({ loggedIn, username }) {
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor="zipcode">zipcode</label>
+                    <label htmlFor="zipcode">Zipcode</label>
                     <input
                         type="text"
                         id="zipcode"
@@ -245,6 +240,7 @@ function TestHome({ loggedIn, username }) {
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
             {error && <div className="text-red-500 mt-4">{error}</div>}
+            
             <h2>Your Addresses</h2>
             <ul>
                 {addresses.map((address, index) => (
@@ -255,7 +251,6 @@ function TestHome({ loggedIn, username }) {
                             value={address.addressid}
                             onChange={async () => {
                                 setSelectedAddress(address.addressid);
-                                //console.log(selectedAddress)
                             }}
                         />
                         {address.street}, {address.city}, {address.state}, {address.zipcode}, {address.country}
@@ -263,6 +258,7 @@ function TestHome({ loggedIn, username }) {
                 ))}
             </ul>
             <button onClick={() => deleteAddress(selectedAddress)} className="btn btn-danger">Delete</button>
+            
             <h2>Payment Details</h2>
             <form onSubmit={handlePaymentSubmit}>
                 <div className="form-group">
@@ -318,6 +314,7 @@ function TestHome({ loggedIn, username }) {
                 <button type="submit" className="btn btn-primary">Submit</button>
             </form>
             {error && <div className="text-red-500 mt-4">{error}</div>}
+            
             <h2>Your Payments</h2>
             <ul>
                 {payments.map((payment, index) => (
@@ -328,7 +325,6 @@ function TestHome({ loggedIn, username }) {
                             value={payment.paymentid}
                             onChange={async () => {
                                 setSelectedPayment(payment.paymentid);
-                                //console.log(selectedAddress)
                             }}
                         />
                         <p>Payment Method: {payment.paymentMethod}</p>
@@ -339,12 +335,12 @@ function TestHome({ loggedIn, username }) {
                         <p>CVV: {payment.cvv}</p>
                     </li>
                 ))}
-                <button onClick={() => deletePayment(selectedPayment)} className="btn btn-danger">Delete</button>
             </ul>
+            <button onClick={() => deletePayment(selectedPayment)} className="btn btn-danger">Delete</button>
         </div>
     ) : (
         <p>Loading...</p>
     );
 }
 
-export default TestHome;
+export default EditProfile;
