@@ -13,20 +13,21 @@ import order_program from "../assets/receive-book.webp";
 import search_icon from "../assets/search.png";
 import cart_icon from "../assets/shopping-cart.png";
 import order_icon from "../assets/test.png";
+import NavbarAdmin from "../components/NavbarAdmin/NavbarAdmin";
 
 const programsData = [
   {mainImage: search_program, icon: search_icon, caption: "Search", link: "/books",},
   {mainImage: cart_program, icon: cart_icon, caption: "Cart",link: "/view-my-cart",},
-  {mainImage: order_program,icon: order_icon,caption: "Order",link: "/orders",},
+  {mainImage: order_program,icon: order_icon,caption: "Order",link: "/purchase-record",},
 ];
 
-export default function Home() {
+export default function Home({userID, role}) {
   const titleRef = useRef(null);
 
   const scrollToTitle = () => {
     if (titleRef.current) {
       const rect = titleRef.current.getBoundingClientRect();
-      const scrollPosition = window.scrollY + rect.top - 100; // Subtract 20px from the calculated scroll position
+      const scrollPosition = window.scrollY + rect.top - 120; // Subtract 20px from the calculated scroll position
       window.scrollTo({
         top: scrollPosition,
         behavior: "smooth",
@@ -36,7 +37,7 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
+      {localStorage.getItem("role") === 'user' ? <Navbar userID={userID} role={role}/> : <NavbarAdmin userID={userID} />}
       <Brochure onExploreMore={scrollToTitle} />
       <div>
         <Title

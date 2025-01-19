@@ -5,6 +5,9 @@ import PaymentCard from '../components/User/PaymentCard';
 import AddressCard from '../components/User/AddressCard';
 import x from '../assets/x.svg';
 import './UserProfile.css';
+import Footer from '../components/Footer/Footer';
+import FooterContent from '../components/FooterContent/FooterContent';
+import Navbar from '../components/Navbar/Navbar';
 
 const UserProfile = ({ loggedIn, username }) => {
     const [fname, setFname] = useState("FirstName");
@@ -195,13 +198,15 @@ const UserProfile = ({ loggedIn, username }) => {
     };
 
     return (
+        <>
+        <Navbar/>
         <div className="container">
             <div className="main-body">
                 {/* /Breadcrumb */}
                 <div className="profile-header">
                     <h2>Welcome, {username}</h2>
                 </div>
-                <div className="flex flex-wrap -mx-2">
+                <div className="flex flex-wrap -mx-2 profile-detail">
                     <div className="w-full md:w-1/3 px-2 mb-4">
                         <div className="card">
                             <div className="card-body">
@@ -402,6 +407,9 @@ const UserProfile = ({ loggedIn, username }) => {
                 </div>
             </div>
         </div >
+        <FooterContent />
+        <Footer />
+        </>
     );
 };
 

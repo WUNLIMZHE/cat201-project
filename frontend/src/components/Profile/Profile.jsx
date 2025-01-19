@@ -1,5 +1,6 @@
 import { useState } from "react";
 import profile from "../../assets/profile.png";
+import { Link } from "react-router-dom";
 import "./Profile.css";
 
 export default function Profile() {
@@ -14,43 +15,35 @@ export default function Profile() {
     <>
       <button
         type="button"
-        className="flex items-center justify-center text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+        className="flex items-center justify-center text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 profile-button"
         id="user-menu-button"
-        aria-expanded={isDropdownOpen}
-        data-dropdown-toggle="user-dropdown"
-        data-dropdown-placement="bottom"
-        onClick={handleDropdown}
+        // aria-expanded={isDropdownOpen}
+        // data-dropdown-toggle="user-dropdown"
+        // data-dropdown-placement="bottom"
+        // onClick={handleDropdown}
       >
         <span className="sr-only">Open user menu</span>
         <img
-          className="w-10 h-10 rounded-full object-cover"
+          className="w-11 h-11 rounded-full object-cover"
           src={profile}
           alt="user photo"
         />
       </button>
-      {isDropdownOpen && (
-        <ul
-          className="menu py-2"
-          aria-labelledby="user-menu-button"
-        >
+
+      {/* {isDropdownOpen && (
+        <ul className="menu py-2" aria-labelledby="user-menu-button">
           <li>
-            <a
-              href="#"
-              className="fancy-hover relative"
-            >
+            <a href="#" className="fancy-hover relative">
               Profile
             </a>
           </li>
           <li>
-            <a
-              href="#"
-              className="fancy-hover relative"
-            >
+            <a href="#" className="fancy-hover relative">
               Sign out
             </a>
           </li>
         </ul>
-      )}
+      )} */}
     </>
   );
 }

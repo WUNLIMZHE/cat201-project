@@ -7,6 +7,8 @@ import CartItems from "../../components/cartItem/cartItem";
 import emptyBox from "../../assets/emptyBox.png";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types"; // Import PropTypes
+import FooterContent from "../../components/FooterContent/FooterContent";
+import Footer from "../../components/Footer/Footer";
 
 const Cart = (props) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -25,7 +27,7 @@ const Cart = (props) => {
       }
       const data = await response.json();
 
-      const userCart = data.filter((item) => item.userID === props.userID);
+      const userCart = data.filter((item) => item.userID === Number(localStorage.getItem("userID")));
       let totalPurchaseAmmount = 0;
       data.map((item) => (totalPurchaseAmmount += item.totalPrice));
       setTotalPrice(totalPurchaseAmmount);
@@ -194,8 +196,9 @@ const Cart = (props) => {
   const handlePay = async () => {
     try {
       const data = {
-        userID: props.userID,
+        userID: localStorage.getItem("userID"),
         cart: cart,
+        address: localStorage.getItem("address")
       };
       const response = await fetch(`http://localhost:9000/purchase-record`, {
         method: "POST",
@@ -264,6 +267,8 @@ const Cart = (props) => {
           <Link to="/purchase-record">Pay</Link>
         </button>
       </div>
+      <FooterContent/>
+      <Footer/>
     </>
   );
 };

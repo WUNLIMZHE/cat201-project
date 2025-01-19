@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import handleApiCall from '../utils/handleApiCall';
 import './Login.css';
 
-function Login({setLoggedIn, setAuthUsername}) {
+function Login({setLoggedIn, setAuthUsername, handleSuccessfulLogin}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -21,10 +21,16 @@ function Login({setLoggedIn, setAuthUsername}) {
           setAuthUsername(username);
           setLoggedIn(true);
           localStorage.setItem("userLoginStatus", true); // Store login status in local storage
+          const userId = result.user.userid; // Get the user ID from the response
+          const userRole = result.userRole;  // Get the user role from the response
+          const address = result.address;
+          // Pass both userId and userRole to handleSuccessfulLogin
+          handleSuccessfulLogin(userId, userRole, address);
           if (result.userRole === 'admin') {
-            navigate('/testadmin');
+            handleSuccessfulLogin();
+            navigate('/order');
           } else {
-            navigate('/userprofile');
+            navigate('/');
           }
         } else {
           setError("Invalid username or password");

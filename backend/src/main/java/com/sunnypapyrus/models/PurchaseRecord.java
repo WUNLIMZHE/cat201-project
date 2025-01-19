@@ -1,4 +1,5 @@
 package com.sunnypapyrus.models;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDateTime;
@@ -41,6 +42,7 @@ public class PurchaseRecord {
     private String purchaseStatus = "Pending";
     private double totalAmount;
     private String shippingAddress;
+    private String date;
     private List<CartItem> books; // Using CartItem to store purchased books
     private LocalDateTime purchaseDate; // Store the purchase date and time
 
@@ -61,17 +63,26 @@ public class PurchaseRecord {
     }
 
     public PurchaseRecord(int purchaseID, int userID, double totalAmount,
-            String shippingAddress, String purchaseStatus, List<CartItem> books) {
+            String shippingAddress, LocalDateTime purchaseDate, String purchaseStatus, List<CartItem> books) {
         this.purchaseID = purchaseID;
         this.userID = userID;
         this.totalAmount = totalAmount;
         this.shippingAddress = shippingAddress;
         this.purchaseStatus = purchaseStatus;
+        this.purchaseDate = purchaseDate;
         this.books = books;
         // this.paymentMethod = paymentMethod;
         this.user = new UserEntity(); // Initialize user object
         this.username = user.getUsernameByID(String.valueOf(userID));
         this.phone = user.getUserPhoneByID(String.valueOf(userID));
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     public PurchaseRecord(int purchaseID, int userID, double totalAmount,
@@ -115,6 +126,7 @@ public class PurchaseRecord {
     public void editCart(int purchaseID, int bookID, int quantity) {
         List<PurchaseRecord> purchaseRecords = loadPurchaseRecords();
         boolean updated = false;
+        double newtotalAmount = 0;
         for (PurchaseRecord purchaseRecord : purchaseRecords) {
             if (purchaseRecord.getPurchaseID() == purchaseID) {
                 for (CartItem book : purchaseRecord.getBooks()) {
@@ -128,6 +140,16 @@ public class PurchaseRecord {
                 break;
             }
         }
+        for (PurchaseRecord purchaseRecord : purchaseRecords) {
+            if (purchaseRecord.getPurchaseID() == purchaseID) {
+                for (CartItem book : purchaseRecord.getBooks()) {
+                    newtotalAmount += book.getTotalPrice();
+                }
+                purchaseRecord.setTotalAmount(newtotalAmount);
+                break;
+            }
+        }
+        setTotalAmount(newtotalAmount);
         if (!updated) {
             throw new IllegalArgumentException("Purchase ID or Book ID not found");
         }
@@ -201,15 +223,19 @@ public class PurchaseRecord {
     public String setPhone(String phone) {
         return this.phone = phone;
     }
+
     public void setUserID(int userID) {
         this.userID = userID;
     }
+
     public void setPurchaseStatus(String purchaseStatus) {
         this.purchaseStatus = purchaseStatus;
     }
+
     public void setTotalAmount(double totalAmount) {
         this.totalAmount = totalAmount;
     }
+
     public void setShippingAddress(String shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
@@ -222,7 +248,6 @@ public class PurchaseRecord {
         return userID;
     }
 
-    
     public String getUsername() {
         return username;
     }
@@ -235,11 +260,9 @@ public class PurchaseRecord {
         return purchaseStatus;
     }
 
-
     public double getTotalAmount() {
         return totalAmount;
     }
-
 
     public String getShippingAddress() {
         return shippingAddress;
@@ -280,47 +303,63 @@ public class PurchaseRecord {
             System.out.println(" Language: " + book.getLanguage());
         }
     }
+
     public static List<PurchaseRecord> loadPurchaseRecords() {
         List<PurchaseRecord> purchaseRecords = new ArrayList<>();
         JSONParser jsonParser = new JSONParser();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm a");
 
-        try (FileReader reader = new FileReader("d:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
+        try (FileReader reader = new FileReader("D:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
             Object obj = jsonParser.parse(reader);
+            if (obj == null) {
+                return purchaseRecords; // Return empty list if file is empty
+            }
             JSONArray purchaseList = (JSONArray) obj;
 
             for (Object purchaseObj : purchaseList) {
                 JSONObject purchaseJSON = (JSONObject) purchaseObj;
+
                 int purchaseID = ((Long) purchaseJSON.get("purchaseID")).intValue();
                 int userID = ((Long) purchaseJSON.get("userID")).intValue();
                 double totalAmount = ((Number) purchaseJSON.get("totalAmount")).doubleValue();
                 String shippingAddress = (String) purchaseJSON.get("shippingAddress");
                 String purchaseStatus = (String) purchaseJSON.get("purchaseStatus");
-                String username = (String) purchaseJSON.get("username");
-                String phone = (String) purchaseJSON.get("phone");
-
+                String purchaseDateStr = (String) purchaseJSON.get("purchaseDate");
+                LocalDateTime purchaseDate = purchaseDateStr != null ? LocalDateTime.parse(purchaseDateStr, formatter) : null;
                 JSONArray booksJSON = (JSONArray) purchaseJSON.get("books");
+
                 List<CartItem> books = new ArrayList<>();
                 for (Object bookObj : booksJSON) {
                     JSONObject bookJSON = (JSONObject) bookObj;
+
                     int id = ((Long) bookJSON.get("id")).intValue();
                     String title = (String) bookJSON.get("title");
                     String image = (String) bookJSON.get("image");
                     double price = ((Number) bookJSON.get("price")).doubleValue();
                     int purchaseUnit = ((Long) bookJSON.get("purchaseUnit")).intValue();
                     double totalPrice = ((Number) bookJSON.get("totalPrice")).doubleValue();
+                    int cartID = ((Long) bookJSON.get("cartID")).intValue();
+                    String genre = (String) bookJSON.get("genre");
+                    String category = (String) bookJSON.get("category");
+                    String language = (String) bookJSON.get("language");
+                    int stock = ((Long) bookJSON.get("stock")).intValue();
+                    int bookUserID = ((Long) bookJSON.get("userID")).intValue();
 
                     CartItem book = new CartItem(id, purchaseUnit);
                     book.setTitle(title);
                     book.setImage(image);
+                    book.setGenre(genre);
+                    book.setCategory(category);
                     book.setPrice(price);
+                    book.setUserID(bookUserID);
+                    book.setCartID(cartID);
                     book.setTotalPrice(totalPrice);
+                    book.setStock(stock);
+                    book.setLanguage(language);
                     books.add(book);
                 }
 
-                PurchaseRecord purchaseRecord = new PurchaseRecord(purchaseID, userID, totalAmount,
-                        shippingAddress, purchaseStatus, books);
-                purchaseRecord.setUsername(username);
-                purchaseRecord.setPhone(phone);
+                PurchaseRecord purchaseRecord = new PurchaseRecord(purchaseID, userID, totalAmount, shippingAddress, purchaseDate, purchaseStatus, books);
                 purchaseRecords.add(purchaseRecord);
             }
         } catch (IOException | ParseException e) {
@@ -333,10 +372,13 @@ public class PurchaseRecord {
     public static void savePurchaseRecords(List<PurchaseRecord> purchaseRecords) {
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(PurchaseRecord.class, new PurchaseRecordSerializer())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
                 .setPrettyPrinting()
                 .create();
-        try (FileWriter file = new FileWriter("d:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
-            file.write(gson.toJson(purchaseRecords));
+        try (FileWriter file = new FileWriter("D:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
+            String json = gson.toJson(purchaseRecords);
+            file.write(json);
+            file.flush(); // Ensure all data is written to the file
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -351,7 +393,19 @@ public class PurchaseRecord {
             jsonObject.addProperty("shippingAddress", purchaseRecord.getShippingAddress());
             jsonObject.addProperty("userID", purchaseRecord.getUserID());
             jsonObject.addProperty("totalAmount", purchaseRecord.getTotalAmount());
+            jsonObject.addProperty("purchaseStatus", purchaseRecord.getPurchaseStatus());
+            jsonObject.addProperty("purchaseDate",
+                    purchaseRecord.getPurchaseDate() != null
+                            ? purchaseRecord.getPurchaseDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm a"))
+                            : null);
             return jsonObject;
+        }
+    }
+
+    private static class LocalDateTimeSerializer implements JsonSerializer<LocalDateTime> {
+        @Override
+        public JsonElement serialize(LocalDateTime localDateTime, Type typeOfSrc, JsonSerializationContext context) {
+            return context.serialize(localDateTime.format(DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm a")));
         }
     }
 }

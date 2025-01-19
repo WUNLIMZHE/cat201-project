@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import down_arrow from "../../assets/down-arrow.png";
 import "./dropdown.css";
 
-export default function Dropdown() {
+export default function Dropdown({ userID, loggedIn }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // Toggle the dropdown menu when the button is clicked
   const handleDropdown = () => {
@@ -26,26 +26,36 @@ export default function Dropdown() {
               <span className="fancy-hover relative">Our Product</span>
             </Link>
           </li>
+          {loggedIn && (
+          <li>
+            <Link to="/purchase-record">
+              <span className="fancy-hover relative">My Purchase</span>
+            </Link>
+          </li>)}
+          {loggedIn && (
           <li>
             <Link to="/view-my-cart">
               <span className="fancy-hover relative">Cart</span>
             </Link>
-          </li>
+          </li>)}
+          {loggedIn && (
           <li>
-            <Link to="/#">
-              <span className="fancy-hover relative">Order</span>
-            </Link>
-          </li>
-          <li>
-            <Link to="/#">
+            <Link to="/userprofile">
               <span className="fancy-hover relative">Profile</span>
             </Link>
-          </li>
+          </li>)}
+          {!loggedIn && (
           <li>
-            <Link to="/#">
-              <span className="fancy-hover relative">Sign out</span>
+            <Link to="/login">
+              <span className="fancy-hover relative">Login</span>
             </Link>
-          </li>
+          </li>)}
+          {loggedIn && (
+          <li>
+            <Link to="/logout">
+              <span className="fancy-hover relative">Logout</span>
+            </Link>
+          </li>)}
         </ul>
       )}
     </>

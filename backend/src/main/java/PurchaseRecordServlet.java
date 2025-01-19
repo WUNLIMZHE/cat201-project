@@ -92,6 +92,7 @@ public class PurchaseRecordServlet extends HttpServlet {
 
         // Extract userID and cart from the request
         int userID = jsonRequest.getInt("userID");
+        String address = jsonRequest.getString("address");
         JSONArray cartItems = jsonRequest.getJSONArray("cart");
 
         // Ensure `nextCartID` is properly initialized
@@ -105,7 +106,7 @@ public class PurchaseRecordServlet extends HttpServlet {
         LocalDateTime purchaseDate = LocalDateTime.now();
 
         //create a new purchase record
-        PurchaseRecord newPurchasedRecord = new PurchaseRecord(nextPurchaseID, userID, 0, "TESTING ADDRESS", purchaseDate);
+        PurchaseRecord newPurchasedRecord = new PurchaseRecord(nextPurchaseID, userID, 0, address, purchaseDate);
 
         double totalAmount = 0;
         JSONArray deletedCartIDs = new JSONArray();

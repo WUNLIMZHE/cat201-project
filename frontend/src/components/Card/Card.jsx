@@ -25,7 +25,17 @@ const Card = ({ onClick, ...props }) => {
 
   const handleAddCart = async () => {
     console.log(`stock ${props.stock}`);
-
+    if (Number(localStorage.getItem("userID")) === 0){
+      Swal.fire({
+        icon: "info",
+        title: "You need to Login",
+        text: "Login or register a new account to enjoy your shopping spree!",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
     if (props.stock <= 0) {
       // Show a warning if the stock is insufficient
       Swal.fire({
@@ -114,7 +124,7 @@ const Card = ({ onClick, ...props }) => {
 
   return (
     <div
-      className="group flex w-full min-w-[318px] max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:cursor-pointer"
+      className="group flex w-full min-w-[318px] max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:cursor-pointer book-card"
       // onClick={() => onClick(props.id)}
     >
       <div
@@ -183,7 +193,7 @@ const Card = ({ onClick, ...props }) => {
         </svg>
         {/* <!-- <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> --> */}
       </div>
-      <div className="mt-4 px-5 pb-5">
+      <div className="mt-4 px-5 pb-5  card-content">
         <h5 className="text-xl tracking-tight text-slate-900">
           {props.title ? props.title : "title undefined"}
         </h5>

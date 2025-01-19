@@ -88,7 +88,7 @@ public class UserList {
             userList.add(userJson);
         }
 
-        try (FileWriter file = new FileWriter("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json")) {
+        try (FileWriter file = new FileWriter("src/main/resources/Data/UserData.json")) {
             file.write(userList.toJSONString());
             file.flush();
         } catch (IOException e) {
@@ -100,7 +100,7 @@ public class UserList {
         JSONParser parser = new JSONParser();
         try {
             JSONArray userList = (JSONArray) parser
-                    .parse(new FileReader("d:/CAT Project/Paperme/backend/src/main/resources/Data/UserData.json"));
+                    .parse(new FileReader("src/main/resources/Data/UserData.json"));
             this.users.clear(); // Clear the current list before loading
             for (Object obj : userList) {
                 JSONObject userJson = (JSONObject) obj;

@@ -66,8 +66,20 @@ public class UsersLoginServlet extends HttpServlet {
             userJson.addProperty("lastName", currentUser.getLastName());
             userJson.addProperty("phoneNumber", currentUser.getPhoneNumber());
             userJson.addProperty("role", currentUser.getRole());
+            String address = currentUser.getAddresses().get(0).getStreet() + ", " + currentUser.getAddresses().get(0).getzipcode() + " " + currentUser.getAddresses().get(0).getCity() + ", " + currentUser.getAddresses().get(0).getState() + ", " + currentUser.getAddresses().get(0).getCountry();
+            userJson.addProperty("address", address);
             jsonResponse.addProperty("user", userJson.toString());
             jsonResponse.addProperty("userRole", currentUser.getRole());
+
+            // Include the userJson object in the main response
+            jsonResponse.add("user", userJson);
+
+            // Optionally, if you want to send the userRole separately as well
+            // jsonResponse.addProperty("userID", Integer.parseInt(currentUser.getuserid()));
+            // jsonResponse.addProperty("userRole", currentUser.getRole());
+            
+
+            System.out.println("retrived info = " + currentUser.getuserid() + " " + currentUser.getRole() + " " + currentUser.getAddresses().get(0).toString());
         }
 
         // Write the response

@@ -35,6 +35,7 @@ export default function Home() {
     }
   };
 
+  console.log(localStorage.getItem('userID'), localStorage.getItem('role'))
   return (
     <>
       <Navbar />

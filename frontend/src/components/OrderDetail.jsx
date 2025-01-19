@@ -15,7 +15,7 @@ import warehouse from "../assets/images/warehouse.png";
 import back from "../assets/images/back.webp";
 
 const OrderDetail = () => {
-  // console.log("purchaseID: " + useParams().purchaseID);
+  console.log("purchaseID: " + useParams().purchaseID);
   const { purchaseID } = useParams();
   const navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState(null);
@@ -114,8 +114,8 @@ const OrderDetail = () => {
       // console.log("purchaseID: " + purchaseID);
       await updateQuantity(purchaseID, book.id, book.purchaseUnit);
     }
-    updateOrderStatus(purchaseID, orderDetails.purchaseStatus);
-    updateTotalAmount(purchaseID, orderDetails.totalAmount);
+    await updateOrderStatus(purchaseID, orderDetails.purchaseStatus);
+    await updateTotalAmount(purchaseID, orderDetails.totalAmount);
   }
 
   const statusImages = {
