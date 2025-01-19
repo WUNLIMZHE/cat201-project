@@ -28,7 +28,7 @@ function Login({setLoggedIn, setAuthUsername, handleSuccessfulLogin}) {
           handleSuccessfulLogin(userId, userRole, address);
           if (result.userRole === 'admin') {
             handleSuccessfulLogin();
-            navigate('/order');
+            navigate('/');
           } else {
             navigate('/');
           }

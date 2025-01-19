@@ -1,1 +1,47 @@
-[{"firstName":"user1FirstName","lastName":"user1LastName","password":"123456","addresses":[{"zipcode":"11900","country":"MALAYSIA","city":"BAYAN LEPAS","street":"123 JALAN DAMAI","state":"PULAU PINANG","addressid":"1"}],"phoneNumber":"0123456789","role":"user","payments":[],"userid":"1","email":"user1@gmail.com","username":"user1"},{"firstName":"admin","lastName":"admin","password":"123456","addresses":[],"phoneNumber":"123456","role":"admin","payments":[],"userid":"2","email":"admin@gmail.com","username":"admin"},{"firstName":"qwe","lastName":"qwe","password":"qwe","addresses":[],"phoneNumber":"123","role":"user","payments":[],"userid":"3","email":"123@gmail.com","username":"qwe"}]
+[
+  {
+    "firstName": "user1FirstName",
+    "lastName": "user1LastName",
+    "password": "123456",
+    "addresses": [
+      {
+        "zipcode": "11900",
+        "country": "MALAYSIA",
+        "city": "BAYAN LEPAS",
+        "street": "123 JALAN DAMAI",
+        "state": "PULAU PINANG",
+        "addressid": "1"
+      }
+    ],
+    "phoneNumber": "0123456789",
+    "role": "user",
+    "payments": [],
+    "userid": "1",
+    "email": "user1@gmail.com",
+    "username": "user1"
+  },
+  {
+    "firstName": "admin",
+    "lastName": "admin",
+    "password": "123456",
+    "addresses": [],
+    "phoneNumber": "123456",
+    "role": "admin",
+    "payments": [],
+    "userid": "2",
+    "email": "admin@gmail.com",
+    "username": "admin"
+  },
+  {
+    "firstName": "qwe",
+    "lastName": "qwe",
+    "password": "qwe",
+    "addresses": [],
+    "phoneNumber": "123",
+    "role": "user",
+    "payments": [],
+    "userid": "3",
+    "email": "123@gmail.com",
+    "username": "qwe"
+  }
+]

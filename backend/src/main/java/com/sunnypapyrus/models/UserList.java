@@ -19,6 +19,9 @@ public class UserList {
     public UserList() {
         this.users = new ArrayList<UserEntity>();
         loadUsers();
+        if (users.isEmpty()) {
+            System.out.println("Users list is empty.");
+        }
     }
 
     public void addUser(UserEntity user) {
@@ -143,6 +146,7 @@ public class UserList {
 
                 this.users.add(user);
             }
+            System.out.println("Loaded users: " + this.users.size());  // Debugging line
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -228,14 +232,23 @@ public class UserList {
     }
 
     public boolean loginUser(String username, String password) {
+        System.out.println("Login username: " + username + " login password: " + password);
+        if (users == null || users.isEmpty()) {
+            System.out.println("No users loaded or users list is null.");
+            return false;
+        }
         for (UserEntity user : users) {
+            System.out.println("Checking user: " + user.getUsername());
+            System.out.println("Current username: " + user.getUsername());
+            System.out.println("Current password: " + user.getPassword());
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                System.out.println("both username and password match!");
                 return true;
             }
         }
         return false;
     }
-
+    
     public UserEntity getUserByUsername(String username) {
         for (UserEntity user : users) {
             if (user.getUsername().equals(username)) {

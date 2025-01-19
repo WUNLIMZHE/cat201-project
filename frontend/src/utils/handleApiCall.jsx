@@ -42,6 +42,15 @@ const handleApiCall = async (
       console.log("User ID stored:", userId);
       console.log("User Role stored:", userRole);
       console.log("User address stored:", address);
+
+      // Perform redirection based on role
+      if (userRole === "admin") {
+        window.location.href = "/"; // Redirect admins to "/"
+      } else if (userRole === "user") {
+        window.location.href = "/"; // Redirect regular users to "/"
+      } else {
+        console.error("Unknown role:", userRole);
+      }
     } else {
       console.error("HTTP error", response.status, response.statusText);
       onError(response.statusText);

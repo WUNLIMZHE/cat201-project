@@ -26,9 +26,9 @@ import { useState } from "react";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
-  const [username, setAuthUsername] = useState("user1");
+  const [username, setAuthUsername] = useState("");
   const [purchaseID, setPurchaseID] = useState(null);
-  const [userID, setUserID] = useState(1);
+  const [userID, setUserID] = useState(0);
   const [role, setRole] = useState("user"); //user or admin
   const [address, setAddresses] = useState("");
 
