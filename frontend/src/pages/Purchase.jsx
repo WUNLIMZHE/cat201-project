@@ -17,15 +17,15 @@ const Purchase = ({
     const setStateColor = () => {
       if (purchaseStatus === "Pending") {
         setStatusColor("#ff6623");
-      } else if (purchaseStatus === "Confirmed") {
+      } else if (purchaseStatus === "Confirmed" || purchaseStatus === "Payment Pending") {
         setStatusColor("#00d26b");
-      } else if (purchaseStatus === "Processing") {
+      } else if (purchaseStatus === "Processing" || purchaseStatus === "In Warehouse") {
         setStatusColor("#ffad30");
-      } else if (purchaseStatus === "Shipped") {
+      } else if (purchaseStatus === "Shipped" || purchaseStatus === "Shipping") {
         setStatusColor("#00a7ec");
-      } else if (purchaseStatus === "Out for Delivery") {
+      } else if (purchaseStatus === "Out for Delivery" || purchaseStatus === "Delivering") {
         setStatusColor("#01a5ed");
-      } else if (purchaseStatus === "Delivered") {
+      } else if (purchaseStatus === "Delivered" || purchaseStatus === "Completed") {
         setStatusColor("#00d369");
       } else if (purchaseStatus === "Cancelled / Failed") {
         setStatusColor("#fc2f2a");

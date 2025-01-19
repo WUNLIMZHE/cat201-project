@@ -20,7 +20,7 @@
     "shippingAddress": "TESTING ADDRESS",
     "userID": 1,
     "totalAmount": 450.0,
-    "purchaseStatus": "Pending",
+    "purchaseStatus": "Payment Pending",
     "purchaseDate": "19-01-2025 09:02 am"
   },
   {
@@ -82,7 +82,7 @@
     "shippingAddress": "123 JALAN DAMAI, 11900 BAYAN LEPAS, PULAU PINANG, MALAYSIA",
     "userID": 1,
     "totalAmount": 135.0,
-    "purchaseStatus": "Pending",
+    "purchaseStatus": "Shipping",
     "purchaseDate": "19-01-2025 08:36 pm"
   }
 ]

@@ -4,6 +4,9 @@ import Swal from "sweetalert2";
 // import Sidebar from "../../components/AdminSidebar/Sidebar";
 // import books from "../../data/bookData";
 import "./Order.css";
+import Navbar from "../../components/Navbar/Navbar";
+import FooterContent from "../../components/FooterContent/FooterContent";
+import Footer from "../../components/Footer/Footer";
 
 const chunkbooks = (books, chunkSize) => {
   const result = [];
@@ -195,7 +198,9 @@ const Stock = () => {
   };
 
   return (
-    <div className="book-container">
+    <>
+    <Navbar />
+    <div className="book-container mt-[120px]">
       {/* <Sidebar /> */}
       <main className="book-content">
         <div className="header flex-col md:flex-row">
@@ -299,6 +304,9 @@ const Stock = () => {
         )}
       </main>
     </div>
+    <FooterContent />
+    <Footer /></>
+    
   );
 };
 

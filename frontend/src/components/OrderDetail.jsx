@@ -13,6 +13,7 @@ import returned from "../assets/images/returned.png";
 import shipping from "../assets/images/shipping.png";
 import warehouse from "../assets/images/warehouse.png";
 import back from "../assets/images/back.webp";
+import handleOrderApiCall from "../utils/handleOrderApiCall";
 
 const OrderDetail = () => {
   console.log("purchaseID: " + useParams().purchaseID);
@@ -22,7 +23,7 @@ const OrderDetail = () => {
   const [error, setError] = useState("");
 
   const fetchOrderDetails = async () => {
-    await handleApiCall(
+    await handleOrderApiCall(
       `admin/getdetails`,
       "GET",
       { purchaseID },

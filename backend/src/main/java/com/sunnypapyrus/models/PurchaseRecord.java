@@ -334,7 +334,7 @@ public class PurchaseRecord {
             
                 int purchaseID = ((Long) purchaseJSON.get("purchaseID")).intValue();
                 int userID = ((Long) purchaseJSON.get("userID")).intValue();
-                double totalAmount = ((Number) purchaseJSON.get("totalAmmount")).doubleValue();
+                double totalAmount = ((Number) purchaseJSON.get("totalAmount")).doubleValue();
                 String shippingAddress = (String) purchaseJSON.get("shippingAddress");
                 String purchaseStatus = (String) purchaseJSON.get("purchaseStatus");
                 String purchaseDateStr = (String) purchaseJSON.get("purchaseDate");
