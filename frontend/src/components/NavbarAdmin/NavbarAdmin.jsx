@@ -4,11 +4,9 @@ import logo from "../../assets/books.png";
 import { Link } from "react-router-dom";
 import Dropdown from "../Dropdown/dropdownAdmin";
 import Profile from "../Profile/Profile";
-
 const NavbarAdmin = () => {
   const [sticky, setSticky] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login state
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -16,6 +14,7 @@ const NavbarAdmin = () => {
     });
   }, []);
 
+  // Update the window width state on resize
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -23,21 +22,18 @@ const NavbarAdmin = () => {
 
     window.addEventListener("resize", handleResize);
 
+    // Clean up the event listener when the component is unmounted
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-  // Mock a function to toggle login status (for testing)
-  const toggleLogin = () => {
-    setIsLoggedIn(!isLoggedIn);
-  };
-
+  // Check if we are on a small screen
   const isSmallScreen = windowWidth <= 866.4;
 
   return (
     <nav className={`container ${sticky ? "dark-nav" : ""}`}>
-      <img src={logo} alt="Logo" className="logo" />
+      <img src={logo} alt="" className="logo" />
       {!isSmallScreen ? (
         <ul>
           <li className="fancy-hover relative">
@@ -52,16 +48,8 @@ const NavbarAdmin = () => {
           <li className="fancy-hover relative">
             <Link to="/admin-add-book">Add book</Link>
           </li>
-
-          {/* Conditional Rendering for Profile or Sign In */}
           <li>
-            {isLoggedIn ? (
-              <Profile />
-            ) : (
-              <button className="sign-in-btn" onClick={toggleLogin}>
-                Sign In
-              </button>
-            )}
+            <Profile/>
           </li>
         </ul>
       ) : (
