@@ -37,13 +37,13 @@ export default function Home() {
     <>
       <Navbar />
       <Brochure onExploreMore={scrollToTitle} />
-      <div className="container">
+      <div>
         <Title
           ref={titleRef}
           subTitle="What we have"
           title=" Your gateway to a world of imagination, knowledge, and inspiration, where every book shines like a ray of sunshine."
         />
-        <Program programs={programsData} />;
+        <Program programs={programsData}/>;
         <About />
         <Title subTitle="Gallery" title="Sunny Papyrus Best Seller" />
         <Gallery/>

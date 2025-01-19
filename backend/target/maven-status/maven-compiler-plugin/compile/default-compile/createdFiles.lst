@@ -1,14 +1,12 @@
-PurchaseRecord.class
 com\sunnypapyrus\api\UserSignUpServlet.class
 com\sunnypapyrus\api\CorsFilter.class
-Book.class
 CartItemServlet.class
 com\sunnypapyrus\api\UsersAddressServlet.class
+BookServlet.class
 com\sunnypapyrus\Main.class
 com\sunnypapyrus\api\GetPaymentServlet.class
 com\sunnypapyrus\models\Address.class
 PurchaseRecordServlet.class
-CartItem.class
 com\sunnypapyrus\api\RemovePaymentServlet.class
 com\sunnypapyrus\api\UserPaymentServlet.class
 com\sunnypapyrus\api\GetAddressServlet.class

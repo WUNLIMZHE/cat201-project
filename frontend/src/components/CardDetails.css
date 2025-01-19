@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+.book-title{
+  text-align: unset;
+}
+
+@media (max-width: 768px) {
+  .book-detail {
+      flex-direction: row !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .tag-container {
+      flex-direction: row !important;
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .btn {
       animation: button-pop var(--animation-btn, .25s) ease-out;
@@ -74,3 +90,4 @@
   background-color: rgb(236 110 92 / var(--tw-bg-opacity));
   border-width: 0;
 }
+

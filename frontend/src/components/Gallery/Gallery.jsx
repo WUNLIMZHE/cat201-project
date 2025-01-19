@@ -12,36 +12,66 @@ import img0 from "/src/assets/images/book-44.webp";
 export default function Gallery() {
   return (
     <div className="flex justify-center min-h-screen bg-gray-100 px-6">
-      <section className="mt-[42px] grid md:grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 justify-data-center mb-10">
-        <Link to="/books">
-          <img className="w-full h-[220px] rounded-[10px]" src={img1} />
+      <section className="mt-[42px] grid grid-cols-2 lg:grid-cols-5 gap-x-10 lg:gap-x-6 gap-y-8 mb-10">
+        <Link to="/books" className="flex justify-center">
+          <img
+            className="md:w-3/4 lg:w-full h-[220px] rounded-[10px] bg-center mx-auto"
+            src={img1}
+          />
         </Link>
-        <Link to="/books">
-          <img className="w-full h-[220px] rounded-[10px]" src={img2} />
+        <Link to="/books" className="flex justify-center">
+          <img
+            className="md:w-3/4 lg:w-full h-[220px] rounded-[10px] mx-auto"
+            src={img2}
+          />
         </Link>
-        <Link to="/books">
-          <img className="w-full h-[220px] rounded-[10px]" src={img3} />
+        <Link to="/books" className="flex justify-center">
+          <img
+            className="md:w-3/4 lg:w-full h-[220px] rounded-[10px] mx-auto"
+            src={img3}
+          />
         </Link>
-        <Link to="/books">
-          <img className="w-full h-[220px] rounded-[10px]" src={img4} />
+        <Link to="/books" className="flex justify-center">
+          <img
+            className="md:w-3/4 lg:w-full h-[220px] rounded-[10px] mx-auto"
+            src={img4}
+          />
         </Link>
-        <Link to="/books">
-          <img className="w-full h-[220px] rounded-[10px]" src={img5} />
+        <Link to="/books" className="flex justify-center">
+          <img
+            className="md:w-3/4 lg:w-full h-[220px] rounded-[10px] mx-auto"
+            src={img5}
+          />
         </Link>
-        <Link to="/books">
-          <img className="w-full h-[220px] rounded-[10px]" src={img6} />
+        <Link to="/books" className="flex justify-center">
+          <img
+            className="md:w-3/4 lg:w-full h-[220px] rounded-[10px] mx-auto"
+            src={img6}
+          />
         </Link>
-        <Link to="/books">
-          <img className="w-full h-[220px] rounded-[10px]" src={img7} />
+        <Link to="/books" className="flex justify-center">
+          <img
+            className="md:w-3/4 lg:w-full h-[220px] rounded-[10px] mx-auto"
+            src={img7}
+          />
         </Link>
-        <Link to="/books">
-          <img className="w-full h-[220px] rounded-[10px]" src={img8} />
+        <Link to="/books" className="flex justify-center">
+          <img
+            className="md:w-3/4 lg:w-full h-[220px] rounded-[10px] mx-auto"
+            src={img8}
+          />
         </Link>
-        <Link to="/books">
-          <img className="w-full h-[220px] rounded-[10px]" src={img9} />
+        <Link to="/books" className="flex justify-center">
+          <img
+            className="md:w-3/4 lg:w-full h-[220px] rounded-[10px] mx-auto"
+            src={img9}
+          />
         </Link>
-        <Link to="/books">
-          <img className="w-full h-[220px] rounded-[10px]" src={img0} />
+        <Link to="/books" className="flex justify-center">
+          <img
+            className="md:w-3/4 lg:w-full h-[220px] rounded-[10px] mx-auto"
+            src={img0}
+          />
         </Link>
       </section>
     </div>

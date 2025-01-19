@@ -8,9 +8,28 @@
     grid-template-rows: 1fr;
 }
 
+@media (max-width: 768px) {
+    .purchase-container {
+        display: flex;
+        flex-direction: row !important;
+    }
+
+    .badge {
+        padding: 0.8rem !important;
+    }
+
+    .total, .purchaseId{
+        font-size: 1.2rem !important;
+    }
+
+    .index{
+        font-size: 1.8rem !important;
+    }
+}
+
 .shipping, .purchaseId{
-    font-size: 1.2rem;
-    padding: 0.5rem 0 0 2rem;
+    /* font-size: 1.2rem; */
+    /* padding: 0.5rem 0 0 2rem; */
     margin: 0;
 }
 
@@ -18,7 +37,7 @@
     font-size: 2.5rem;
 }
 
-.total{
+.total, .purchaseId{
     font-size: 1.4rem;
     display: flex;
     align-items: center;
@@ -28,4 +47,9 @@
     height: 1rem;
     width: inherit;
     background-color: gray;
+}
+
+.badge {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
 }

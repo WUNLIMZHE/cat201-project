@@ -65,9 +65,9 @@
         flex-direction: column;
     }
 
-    .checkout .finalPrice{
+    /* .checkout .finalPrice{
         font-size: 1.2rem;
-    }
+    } */
     
     .emptyCart{
         width: 95vw;

@@ -50,18 +50,24 @@ const PurchaseRecord = ({ userID }) => {
   const book_from_latest = purchaseList.toReversed();
   let index = 0;
   const incrIndex = () => {
-      index+=1;
-      return index;
-  }
+    index += 1;
+    return index;
+  };
 
   return (
     <>
-      <Navbar/>
-      <div className="purchaseRecord title">Past Purchases</div>
-      <div className="purchase-list">
-        {book_from_latest.map((purchase) => (
-          <Purchase key={purchase.purchaseID} index={incrIndex()} {...purchase} />
-        ))}
+      <Navbar />
+      <div className="">
+        <div className="purchaseRecord title block">Past Purchases</div>
+        <div className="purchase-list">
+          {book_from_latest.map((purchase) => (
+            <Purchase
+              key={purchase.purchaseID}
+              index={incrIndex()}
+              {...purchase}
+            />
+          ))}
+        </div>
       </div>
     </>
   );

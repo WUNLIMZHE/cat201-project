@@ -20,15 +20,20 @@ const Stock = () => {
   const [products, setProducts] = useState([]); // To store list of books
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
+  const [filteredBooks, setFilteredBooks] = useState([]);
   // const [filteredProducts, setFilteredProducts] = useState([]); // To store filtered products
   // const [filters, setFilters] = useState({ languages: [], categories: [] });
 
-  const filteredbooks = products.filter(
-    (book) =>
-      book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      book.author.includes(searchQuery) ||
-      book.isbn.toString().includes(searchQuery)
-  );
+  const updateFilteredBooks = () => {
+    setFilteredBooks(
+      products.filter(
+        (book) =>
+          book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          book.isbn.toString().includes(searchQuery)
+      )
+    );
+  };
 
   const fetchProducts = async () => {
     try {
@@ -47,14 +52,17 @@ const Stock = () => {
 
   useEffect(() => {
     fetchProducts();
-
     // Cleanup function
     return () => {
       setLoading(false); // Optional: to stop loading if component unmounts
     };
   }, []);
 
-  const chunkedBooks = chunkbooks(products, 10);
+  useEffect(() => {
+    setFilteredBooks(products);
+  }, [products]);
+
+  const chunkedBooks = chunkbooks(filteredBooks, 10);
 
   const handleDeleteBook = (id) => {
     // Show a confirmation dialog
@@ -186,18 +194,21 @@ const Stock = () => {
     <div className="book-container">
       {/* <Sidebar /> */}
       <main className="book-content">
-        <div className="header">
-          <h1 className="font-semibold text-3xl">Stock</h1>
+        <div className="header flex-col md:flex-row">
+          <h1 className="font-semibold text-3xl mb-3 md:mb-0">Stock</h1>
           <input
             type="text"
             placeholder="Search by book ID, ISBN, or author"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              updateFilteredBooks();
+            }}
             className="search-bar"
           />
         </div>
 
-        {filteredbooks.length === 0 ? (
+        {filteredBooks.length === 0 ? (
           <div className="no-results">No books found.</div>
         ) : (
           <>
@@ -243,7 +254,7 @@ const Stock = () => {
                     <td>{book.author}</td>
                     <td>{book.soldUnits}</td>
                     <td>{book.stock}</td>
-                    <td className="flex items-center space-x-5">
+                    <td className="flex items-center content-center space-x-5">
                       {/* <!-- Delete Book Icon --> */}
                       <div className="relative group">
                         <svg
@@ -265,7 +276,7 @@ const Stock = () => {
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           viewBox="0 0 448 512"
-                          className="w-6 h-6 text-gray-700 p-1 rounded-md group-hover:bg-green-100 group-hover:text-green-500 hover:cursor-pointer transition-colors duration-200"
+                          className="w-6 h-6 text-gray-700 p-1 rounded-md group-hover:bg-green-100 group-hover:text-green-500 hover:cursor-pointer transition-colors duration-200 mt-1 md:mt-0 mr-5 md:mr-0"
                           onClick={() => handleChangeStock(book.id, book.stock)}
                         >
                           <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />

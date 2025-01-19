@@ -10,4 +10,7 @@ const Title = React.forwardRef(({ subTitle, title }, ref) => {
   );
 });
 
+// Set display name for debugging
+Title.displayName = "Title";
+
 export default Title;

@@ -49,10 +49,10 @@ public class UserPaymentServlet extends HttpServlet {
 
         // Extract fields from JSON
         String username = jsonObject.has("username") ? jsonObject.get("username").getAsString() : null;
-        String cardNumber = jsonObject.has("cardNumber") ? jsonObject.get("cardNumber").getAsString() : null;
         String cardHolder = jsonObject.has("cardholderName") ? jsonObject.get("cardholderName").getAsString() : null;
-        String cardType = jsonObject.has("cardType") ? jsonObject.get("cardType").getAsString() : null;
+        String cardNumber = jsonObject.has("cardNumber") ? jsonObject.get("cardNumber").getAsString() : null;
         String expiryDate = jsonObject.has("expiryDate") ? jsonObject.get("expiryDate").getAsString() : null;
+        String cardType = jsonObject.has("cardType") ? jsonObject.get("cardType").getAsString() : null;
         String cvv = jsonObject.has("cvv") ? jsonObject.get("cvv").getAsString() : null;
 
         // Validate fields

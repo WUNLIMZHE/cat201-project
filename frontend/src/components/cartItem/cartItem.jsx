@@ -1,6 +1,6 @@
 import Swal from "sweetalert2";
 import React, { useState } from "react";
-import "./cartItem.css"
+import "./cartItem.css";
 
 const cartItems = (props) => {
   const handleAddBook = () => {
@@ -19,7 +19,7 @@ const cartItems = (props) => {
   };
 
   const handleMinusBook = () => {
-    if ((props.purchaseUnit-1) === 0) {
+    if (props.purchaseUnit - 1 === 0) {
       // Show a delete confirmation dialog
       Swal.fire({
         icon: "warning",
@@ -33,8 +33,8 @@ const cartItems = (props) => {
       }).then((result) => {
         if (result.isConfirmed) {
           // If the user confirms, delete the book
-        //   handleBookDelete(props.id);
-        props.changeBookQty(props.id, props.purchaseUnit, -1);
+          //   handleBookDelete(props.id);
+          props.changeBookQty(props.id, props.purchaseUnit, -1);
         } else {
           // If the user cancels, simply return
           Swal.fire({
@@ -54,13 +54,37 @@ const cartItems = (props) => {
 
   return (
     <div className="cartItem">
-      <img src={props.image} className=" max-h-[300px] lg:max-w-fit"/>
+      <img src={props.image} className=" max-h-[300px] lg:max-w-fit" />
       <div className="right-sidebar md:ml-10">
         <h1 className="title">{props.title}</h1>
-        <div className="tag">
-          <p className="info genre">{props.genre}</p>
-          <p className="info category">{props.category}</p>
-          <p className="info language">{props.language}</p>
+        <div className="tag flex-wrap">
+          <p className="info language font-bold ">
+            {props.language
+              .split(" ")
+              .map(
+                (word) =>
+                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+              )
+              .join(" ")}
+          </p>
+          <p className="info category font-bold ">
+            {props.category
+              .split(" ")
+              .map(
+                (word) =>
+                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+              )
+              .join(" ")}
+          </p>
+          <p className="info genre font-bold">
+            {props.genre
+              .split(" ")
+              .map(
+                (word) =>
+                  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+              )
+              .join(" ")}
+          </p>
         </div>
 
         <div className="enlarged">
@@ -71,7 +95,10 @@ const cartItems = (props) => {
           <button className="changeQty addBook" onClick={handleAddBook}>
             +
           </button>
-          <p className="info quantity">{props.purchaseUnit} {`${props.purchaseUnit == 1 ? "copy" : "copies"}`} in cart</p>
+          <p className="info quantity">
+            {props.purchaseUnit}{" "}
+            {`${props.purchaseUnit == 1 ? "copy" : "copies"}`} in cart
+          </p>
           <button className="changeQty removeBook" onClick={handleMinusBook}>
             -
           </button>

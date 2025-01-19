@@ -83,6 +83,7 @@
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:01:20 +0800] "DELETE /api/users/deleteaddress?username=user1&addressid=1 HTTP/1.1" 200 43 http-bio-9000-exec-5 4
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:01:20 +0800] "OPTIONS /api/users/getaddress?username=user1 HTTP/1.1" 200 - http-bio-9000-exec-9 0
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:01:20 +0800] "GET /api/users/getaddress?username=user1 HTTP/1.1" 200 93 http-bio-9000-exec-5 1
+<<<<<<< HEAD
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:01:27 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-1 115
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:01:27 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-2 13
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:16:02:07 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-5 18
@@ -309,4 +310,47 @@
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:23:07:32 +0800] "POST /api/users/login HTTP/1.1" 200 32 http-bio-9000-exec-8 7
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:23:07:32 +0800] "POST /api/users/login HTTP/1.1" 200 32 http-bio-9000-exec-8 8
 0:0:0:0:0:0:0:1 - - [16/Jan/2025:23:07:36 +0800] "POST /api/users/login HTTP/1.1" 200 32 http-bio-9000-exec-8 15
+<<<<<<< HEAD
+=======
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:20 +0800] "OPTIONS /api/users/login HTTP/1.1" 200 - http-bio-9000-exec-1 27
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:20 +0800] "POST /api/users/login HTTP/1.1" 200 220 http-bio-9000-exec-2 40
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:56 +0800] "OPTIONS /api/users/login HTTP/1.1" 200 - http-bio-9000-exec-3 1
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:56 +0800] "POST /api/users/login HTTP/1.1" 200 220 http-bio-9000-exec-4 1
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:56 +0800] "OPTIONS /api/users/getaddress?username=user1 HTTP/1.1" 200 - http-bio-9000-exec-5 1
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:56 +0800] "OPTIONS /api/users/getpayment?username=user1 HTTP/1.1" 200 - http-bio-9000-exec-7 2
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:56 +0800] "GET /api/users/getaddress?username=user1 HTTP/1.1" 200 2 http-bio-9000-exec-6 5
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:56 +0800] "OPTIONS /api/users/getpayment?username=user1 HTTP/1.1" 200 - http-bio-9000-exec-8 0
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:56 +0800] "GET /api/users/getpayment?username=user1 HTTP/1.1" 200 2 http-bio-9000-exec-2 2
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:56 +0800] "GET /api/users/getaddress?username=user1 HTTP/1.1" 200 2 http-bio-9000-exec-10 2
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:18:56 +0800] "GET /api/users/getpayment?username=user1 HTTP/1.1" 200 2 http-bio-9000-exec-2 1
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:19:26 +0800] "GET /purchase-record?userID=undefined HTTP/1.1" 500 1880 http-bio-9000-exec-7 13
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:19:26 +0800] "GET /purchase-record?userID=undefined HTTP/1.1" 500 1880 http-bio-9000-exec-6 5
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:19:31 +0800] "GET /purchase-record?userID=undefined HTTP/1.1" 500 1880 http-bio-9000-exec-1 2
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:19:31 +0800] "GET /purchase-record?userID=undefined HTTP/1.1" 500 1880 http-bio-9000-exec-3 3
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:20:36 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-4 28
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:20:36 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-4 16
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:21:08 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-4 8
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:39:00 +0800] "GET /purchase-record?userID=1 HTTP/1.1" 200 246 http-bio-9000-exec-10 9
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:39:00 +0800] "GET /purchase-record?userID=1 HTTP/1.1" 200 246 http-bio-9000-exec-10 2
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:39:54 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-1 5
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:39:54 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-1 5
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:15:40:06 +0800] "GET /books HTTP/1.1" 200 22365 http-bio-9000-exec-1 3
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:26 +0800] "OPTIONS /api/users/login HTTP/1.1" 200 - http-bio-9000-exec-1 34
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:26 +0800] "POST /api/users/login HTTP/1.1" 200 32 http-bio-9000-exec-2 46
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:32 +0800] "OPTIONS /api/users/login HTTP/1.1" 200 - http-bio-9000-exec-3 1
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:32 +0800] "POST /api/users/login HTTP/1.1" 200 32 http-bio-9000-exec-4 2
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:34 +0800] "POST /api/users/login HTTP/1.1" 200 32 http-bio-9000-exec-6 2
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:44 +0800] "OPTIONS /api/users/login HTTP/1.1" 200 - http-bio-9000-exec-5 1
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:44 +0800] "POST /api/users/login HTTP/1.1" 200 223 http-bio-9000-exec-7 2
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:45 +0800] "OPTIONS /api/users/getaddress?username=chewhong HTTP/1.1" 200 - http-bio-9000-exec-8 4
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:45 +0800] "OPTIONS /api/users/getpayment?username=chewhong HTTP/1.1" 200 - http-bio-9000-exec-10 3
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:45 +0800] "OPTIONS /api/users/getpayment?username=chewhong HTTP/1.1" 200 - http-bio-9000-exec-8 0
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:45 +0800] "OPTIONS /api/users/getaddress?username=chewhong HTTP/1.1" 200 - http-bio-9000-exec-1 0
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:45 +0800] "GET /api/users/getaddress?username=chewhong HTTP/1.1" 200 2 http-bio-9000-exec-9 6
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:45 +0800] "GET /api/users/getpayment?username=chewhong HTTP/1.1" 200 2 http-bio-9000-exec-7 3
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:45 +0800] "GET /api/users/getaddress?username=chewhong HTTP/1.1" 200 2 http-bio-9000-exec-9 1
+0:0:0:0:0:0:0:1 - - [16/Jan/2025:18:06:45 +0800] "GET /api/users/getpayment?username=chewhong HTTP/1.1" 200 2 http-bio-9000-exec-7 1
+>>>>>>> ch/order-management
+=======
 >>>>>>> 85caa70987d91f864629d90bf6e31f5f16b42aa2
+>>>>>>> ca791c70e1b0df958443708917ecfef84796a615

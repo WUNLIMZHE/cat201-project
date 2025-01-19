@@ -4,9 +4,12 @@ import java.io.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.sunnypapyrus.models.CartItem;
+
 import javax.servlet.annotation.WebServlet;
 @WebServlet("/cart")
 public class CartItemServlet extends HttpServlet {
+    @SuppressWarnings("unused")
     private static boolean isLoadFromCart = false;
     private static int nextCartID;
     private static final String CART_FILE = "/data/cart.json"; // File path under webapp/data

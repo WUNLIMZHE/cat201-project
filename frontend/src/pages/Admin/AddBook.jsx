@@ -180,7 +180,7 @@ const AddBook = () => {
         </div>
         <form
           onSubmit={handleSubmit}
-          className="max-w-4xl mx-auto flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-8"
+          className="max-w-4xl mx-auto flex !flex-col gap-4 md:grid md:grid-cols-2 md:gap-8"
         >
           <div className="flex flex-col">
             <label htmlFor="title" className="text-sm font-medium">

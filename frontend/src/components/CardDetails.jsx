@@ -29,8 +29,8 @@ function CardDetails({ data }) {
           className="sm:float-right mx-auto sm:ml-6 sm:mr-0 rounded shadow mb-5 max-w-[300px]"
           // width={card.category === "tourist-spot" ? "400px" : "360px"}
         />
-        <h1 className="mb-3 text-4xl font-bold">{card.title}</h1>
-        <div className="flex gap-2">
+        <h1 className="mb-3 text-4xl font-bold book-title">{card.title}</h1>
+        <div className="flex gap-2 flex-wrap tag-container">
           <div className="badge border-0 p-3 font-bold text-white bg-theme-700 tag1">
             {card.language
               .split(" ")
@@ -49,7 +49,7 @@ function CardDetails({ data }) {
               )
               .join(" ")}
           </div>
-          <div className="badge border-0 p-3 font-bold text-black tag3">
+          <div className="badge border-0 p-3 font-bold text-black tag3 block">
             {card.genre
               .split(" ")
               .map(
@@ -60,7 +60,7 @@ function CardDetails({ data }) {
           </div>
         </div>
         <br />
-        <div className="flex gap-x-3 mb-1">
+        <div className="flex gap-x-3 mb-1 book-detail">
           <div className="grid gap-1 items-center text-theme-800 content-start mt-1">
             <svg
               width="1em"
@@ -83,7 +83,7 @@ function CardDetails({ data }) {
           </div>
         </div>
 
-        <div className="flex gap-x-3 mb-1">
+        <div className="flex gap-x-3 mb-1 book-detail">
           <div className="grid gap-1 items-center text-theme-800 content-start mt-1">
             <svg
               width="1em"
@@ -110,7 +110,7 @@ function CardDetails({ data }) {
           </div>
         </div>
 
-        <div className="flex gap-x-3 mb-1">
+        <div className="flex gap-x-3 mb-1 book-detail">
           <div className="grid gap-1 items-center text-theme-800 content-start mt-1">
             <svg
               width="1em"
@@ -132,7 +132,7 @@ function CardDetails({ data }) {
               <use xlinkHref="#rating:star"></use>
             </svg>
           </div>
-          <div className="flex items-center font-bold text-lg">
+          <div className="flex items-center font-bold text-lg book-detail">
             {card.review} / 5.0{" "}
             <span className="text-sm ml-2 text-gray-600">
               {card.soldUnits >= 1000
@@ -142,7 +142,7 @@ function CardDetails({ data }) {
             </span>
           </div>
         </div>
-        <div className="flex gap-x-3 mb-1">
+        <div className="flex gap-x-3 mb-1 book-detail">
           <div className="grid gap-1 items-center text-theme-800 content-start mt-1">
             <svg
               width="1em"
@@ -184,7 +184,7 @@ function CardDetails({ data }) {
             <span>{`RM ${card.price.toFixed(2)}`}</span>
           </div>
         </div>
-        <div className="flex gap-x-3 mb-5">
+        <div className="flex gap-x-3 mb-5 book-detail">
           <div className="grid gap-1 items-center text-theme-800 content-start mt-1">
             <svg
               width="1em"
