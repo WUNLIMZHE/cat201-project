@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import "./Navbar.css";
+import "./NavbarAdmin.css";
 import logo from "../../assets/books.png";
 import { Link } from "react-router-dom";
-import iconCart from "../../assets/iconCart.png";
-import Dropdown from "../Dropdown/dropdown";
+import Dropdown from "../Dropdown/dropdownAdmin";
 import Profile from "../Profile/Profile";
-const Navbar = () => {
+const NavbarAdmin = () => {
   const [sticky, setSticky] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -33,33 +32,24 @@ const Navbar = () => {
   const isSmallScreen = windowWidth <= 866.4;
 
   return (
-    <nav className={`${sticky ? "dark-nav" : ""}`}>
+    <nav className={`container ${sticky ? "dark-nav" : ""}`}>
       <img src={logo} alt="" className="logo" />
       {!isSmallScreen ? (
-        <ul >
+        <ul>
           <li className="fancy-hover relative">
-            <Link to="/">Home</Link>
+            <Link to="/admin">Home</Link>
           </li>
           <li className="fancy-hover relative">
-            <Link to="/books">Our Product</Link>
+            <Link to="/order">Order</Link>
           </li>
           <li className="fancy-hover relative">
-            <Link to="/Login">Login</Link>
+            <Link to="/inventory">Inventory</Link>
           </li>
-          <li className="hover:scale-110 transition-transform duration-300 ease-in-out">
-            <Link to="/login">
-              <button className="btn">Login</button>
-            </Link>
+          <li className="fancy-hover relative">
+            <Link to="/admin-add-book">Add book</Link>
           </li>
           <li>
-            <Link to='/view-my-cart'>
-              <img src={iconCart} alt='' className="iconCart"/>
-            </Link>
-          </li>
-          <li className="hover:scale-110 transition-transform duration-300 ease-in-out">
-            <Link to="/signup">
-              <button className="btn">Sign up</button>
-            </Link>
+            <Profile/>
           </li>
         </ul>
       ) : (
@@ -69,4 +59,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavbarAdmin;

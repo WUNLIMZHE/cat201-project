@@ -1,5 +1,6 @@
 com\sunnypapyrus\api\UserSignUpServlet.class
 com\sunnypapyrus\api\CorsFilter.class
+BookServlet$1.class
 CartItemServlet.class
 com\sunnypapyrus\api\UsersAddressServlet.class
 BookServlet.class

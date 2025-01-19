@@ -6,6 +6,7 @@ import Title from "../components/Title/Title";
 import Gallery from "../components/Gallery/Gallery"
 import About from "../components/About/About";
 import Footer from "../components/Footer/Footer";
+import FooterContent from "../components/FooterContent/FooterContent";
 import search_program from "../assets/read-book.webp";
 import cart_program from "../assets/bookstore-cashier.webp";
 import order_program from "../assets/receive-book.webp";
@@ -48,6 +49,7 @@ export default function Home() {
         <Title subTitle="Gallery" title="Sunny Papyrus Best Seller" />
         <Gallery/>
       </div>
+      <FooterContent/>
       <Footer/>
     </>
   );

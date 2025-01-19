@@ -3,7 +3,7 @@ import './style.css';
 import Home from "./pages/Home"
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import ProductPage from './pages/ProductPage'; // Adjust the path to your component
+import ProductPage from './pages/ProductPage';
 import CardDetailsPage from './pages/CardDetailsPage';
 import Cart from "./pages/Cart/Cart";
 import PurchaseRecord from './pages/PurchaseRecord';

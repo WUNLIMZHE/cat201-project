@@ -38,18 +38,9 @@ nav {
   z-index: 10;
 }
 
-nav ul{
-  display: flex;
-  align-items: center;
-}
-
 .logo {
-  width: 80px;
+  width: 100px;
   margin-left: 20px;
-}
-
-.iconCart{
-  width: 2rem;
 }
 
 nav ul {
