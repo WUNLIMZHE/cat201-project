@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './About.css'
 import about_img from '../../assets/prof-read-book.jpg'
 import play_icon from '../../assets/play.png'
@@ -33,7 +33,7 @@ const About = () => {
            bestsellers, inspiring nonfiction, and enchanting stories for all ages. Step inside 
            to explore a world of imagination and discovery, where every visit sparks joy and 
            every book brings a little sunshine to your day.</p>
-        <p>Whether you're a seasoned book lover or just beginning your literary journey, Sunny 
+        <p>Whether you&apos;re a seasoned book lover or just beginning your literary journey, Sunny 
            Papyrus Bookstore is the perfect place to find inspiration and escape. Our carefully 
            curated sections are designed to make browsing a delight, with knowledgeable staff ready 
            to guide you toward the perfect read.</p>

@@ -1,4 +1,5 @@
 import "./BookItem.css";
+import PropTypes from "prop-types"; // Import PropTypes
 
 export default function BookItem({
   index,
@@ -58,3 +59,14 @@ export default function BookItem({
     </li>
   );
 }
+
+// Prop validation
+BookItem.propTypes = {
+    title: PropTypes.string.isRequired,
+    index: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired,
+        purchaseUnit: PropTypes.number.isRequired,
+        totalPrice: PropTypes.number.isRequired,
+        price: PropTypes.number.isRequired,
+        id: PropTypes.number.isRequired,
+  };

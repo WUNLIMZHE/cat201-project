@@ -1,5 +1,6 @@
 // import React from 'react'
 import "./Brochure.css";
+import PropTypes from 'prop-types'; // Import PropTypes
 import searchGreen from "../../assets/search_iconGreen.png";
 // import { Link } from "react-router-dom";
 
@@ -25,6 +26,11 @@ const Brochure = ({ onExploreMore }) => {
       </div>
     </div>
   );
+};
+
+// Define PropTypes
+Brochure.propTypes = {
+  onExploreMore: PropTypes.func.isRequired, // onExploreMore should be a required function
 };
 
 export default Brochure;

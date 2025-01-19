@@ -1,19 +1,19 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/AdminSidebar/Sidebar";
+// import { useNavigate } from "react-router-dom";
+// import Sidebar from "../../components/AdminSidebar/Sidebar";
 import Swal from "sweetalert2";
 
-const languageOptions = [
-  { key: "chinese", value: "chinese", text: "Chinese" },
-  { key: "english", value: "english", text: "English" },
-  { key: "bahasa-melayu", value: "bahasa melayu", text: "Bahasa Melayu" },
-];
+// const languageOptions = [
+//   { key: "chinese", value: "chinese", text: "Chinese" },
+//   { key: "english", value: "english", text: "English" },
+//   { key: "bahasa-melayu", value: "bahasa melayu", text: "Bahasa Melayu" },
+// ];
 
-const categoryOptions = [
-  { key: "fiction", value: "fiction", text: "Fiction" },
-  { key: "historical", value: "historical", text: "Historical" },
-  { key: "non-fiction", value: "non-fiction", text: "Non-fiction" },
-];
+// const categoryOptions = [
+//   { key: "fiction", value: "fiction", text: "Fiction" },
+//   { key: "historical", value: "historical", text: "Historical" },
+//   { key: "non-fiction", value: "non-fiction", text: "Non-fiction" },
+// ];
 
 const AddBook = () => {
   const [htmlFormData, setHtmlFormData] = useState({
@@ -29,7 +29,7 @@ const AddBook = () => {
     description: "",
   });
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;

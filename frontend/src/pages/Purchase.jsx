@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import BookItem from "./BookItem/BookItem";
 import "./Purchase.css";
 

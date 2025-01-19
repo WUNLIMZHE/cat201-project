@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types"; // Import PropTypes
 import "./CardDetails.css";
 
 function CardDetails({ data }) {
   const card = data.card;
 
-  let backToPage, backToLabel;
+  // let backToPage, backToLabel;
 
   console.log("Received data from card", data);
 
@@ -242,5 +243,26 @@ function CardDetails({ data }) {
     </div>
   );
 }
+
+// Prop validation
+CardDetails.propTypes = {
+  data: PropTypes.shape({
+    card: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      isbn: PropTypes.number.isRequired,
+      description: PropTypes.string.isRequired,
+      image: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
+      language: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired,
+      genre: PropTypes.string.isRequired,
+      review: PropTypes.number.isRequired,
+      soldUnits: PropTypes.number.isRequired,
+      price: PropTypes.number.isRequired,
+      stock: PropTypes.number.isRequired,
+      seller: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+};
 
 export default CardDetails;

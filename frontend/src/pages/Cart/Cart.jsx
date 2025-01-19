@@ -6,6 +6,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import CartItems from "../../components/cartItem/cartItem";
 import emptyBox from "../../assets/emptyBox.png";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types"; // Import PropTypes
 
 const Cart = (props) => {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -153,7 +154,7 @@ const Cart = (props) => {
       const updatedData = {
         cartID: cart[cartContentIndex].cartID,
         purchaseUnit: newQuantity,
-        totalPrice: newQuantity * cart[cartContentIndex].price,
+        totalPrice: totalPrice,
       };
       updateBookDetails(bookId, updatedData); // Call PATCH request
 
@@ -266,5 +267,11 @@ const Cart = (props) => {
     </>
   );
 };
+
+// Prop validation
+Cart.propTypes = {
+    userID: PropTypes.number.isRequired,
+    totalPrice: PropTypes.number.isRequired
+  };
 
 export default Cart;

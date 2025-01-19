@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // import Sidebar from "../../components/AdminSidebar/Sidebar";
 // import books from "../../data/bookData";
 import "./Order.css";
@@ -16,7 +16,7 @@ const chunkbooks = (books, chunkSize) => {
 const Stock = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentChunk, setCurrentChunk] = useState(0);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [products, setProducts] = useState([]); // To store list of books
   const [loading, setLoading] = useState(true); // Loading state
   const [error, setError] = useState(null); // Error state
@@ -24,13 +24,17 @@ const Stock = () => {
   // const [filteredProducts, setFilteredProducts] = useState([]); // To store filtered products
   // const [filters, setFilters] = useState({ languages: [], categories: [] });
 
-  const updateFilteredBooks = () => {
+  const updateFilteredBooks = (query) => {
+    if (query === ""){
+      setFilteredBooks(products);
+      return;
+    }
     setFilteredBooks(
       products.filter(
         (book) =>
-          book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          book.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          book.isbn.toString().includes(searchQuery)
+          book.title.toLowerCase().includes(query.toLowerCase()) ||
+          book.author.toLowerCase().includes(query.toLowerCase()) ||
+          book.isbn.toString().includes(query)
       )
     );
   };
@@ -202,7 +206,7 @@ const Stock = () => {
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
-              updateFilteredBooks();
+              updateFilteredBooks(e.target.value);
             }}
             className="search-bar"
           />

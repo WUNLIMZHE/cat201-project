@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types"; // Import PropTypes
 import "./Title.css";
 
 const Title = React.forwardRef(({ subTitle, title }, ref) => {
@@ -12,5 +13,11 @@ const Title = React.forwardRef(({ subTitle, title }, ref) => {
 
 // Set display name for debugging
 Title.displayName = "Title";
+
+// Prop validation
+Title.propTypes = {
+  title: PropTypes.string.isRequired,
+  subTitle: PropTypes.string.isRequired,
+};
 
 export default Title;

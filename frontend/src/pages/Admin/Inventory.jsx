@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/AdminSidebar/Sidebar";
+// import Sidebar from "../../components/AdminSidebar/Sidebar";
 import orders from "../../data/orderData";
 import "./Order.css";
 
