@@ -156,8 +156,8 @@ function App() {
           <Route
             path="/product/:id"
             element={
-              (Number(localStorage.getItem("userID")) === 0 ||
-                !localStorage.getItem("userID")) &&
+              Number(localStorage.getItem("userID")) === 0 ||
+                !localStorage.getItem("userID") &&
               localStorage.getItem("role") === "user" ? (
                 <Home />
               ) : (
@@ -182,8 +182,8 @@ function App() {
           <Route
             path="/order"
             element={
-              (Number(localStorage.getItem("userID")) === 0 ||
-                !localStorage.getItem("userID")) &&
+              Number(localStorage.getItem("userID")) === 0 ||
+                !localStorage.getItem("userID") &&
               localStorage.getItem("role") === "admin" ? (
                 <Home />
               ) : (
@@ -196,7 +196,18 @@ function App() {
             path="/order/:purchaseID"
             element={<OrderDetail purchaseID={purchaseID} />}
           />
-          <Route path="/inventory" element={<Inventory />} />
+          <Route
+            path="/inventory"
+            element={
+              Number(localStorage.getItem("userID")) === 0 ||
+              !localStorage.getItem("userID")  &&
+              localStorage.getItem("role") === "admin" ? (
+                <Home />
+              ) : (
+                <Stock />
+              )
+            }
+          />
         </Routes>
       </Router>
     </>

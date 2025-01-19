@@ -309,29 +309,57 @@ public class PurchaseRecord {
         JSONParser jsonParser = new JSONParser();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy hh:mm a");
 
-        try (FileReader reader = new FileReader("D:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
+        try (FileReader reader = new FileReader("src/main/webapp/data/purchase.json")) {
             Object obj = jsonParser.parse(reader);
             if (obj == null) {
+                System.out.println("File is empty!!");
                 return purchaseRecords; // Return empty list if file is empty
             }
             JSONArray purchaseList = (JSONArray) obj;
 
             for (Object purchaseObj : purchaseList) {
                 JSONObject purchaseJSON = (JSONObject) purchaseObj;
-
+            
+                // Debugging logs
+                System.out.println("Processing Purchase Object: " + purchaseJSON);
+            
+                // Debugging for each field
+                System.out.println("Purchase ID: " + purchaseJSON.get("purchaseID"));
+                System.out.println("User ID: " + purchaseJSON.get("userID"));
+                System.out.println("Total Ammount: " + purchaseJSON.get("totalAmmount"));
+                System.out.println("Shipping Address: " + purchaseJSON.get("shippingAddress"));
+                System.out.println("Purchase Status: " + purchaseJSON.get("purchaseStatus"));
+                System.out.println("Purchase Date: " + purchaseJSON.get("purchaseDate"));
+                System.out.println("Books: " + purchaseJSON.get("books"));
+            
                 int purchaseID = ((Long) purchaseJSON.get("purchaseID")).intValue();
                 int userID = ((Long) purchaseJSON.get("userID")).intValue();
-                double totalAmount = ((Number) purchaseJSON.get("totalAmount")).doubleValue();
+                double totalAmount = ((Number) purchaseJSON.get("totalAmmount")).doubleValue();
                 String shippingAddress = (String) purchaseJSON.get("shippingAddress");
                 String purchaseStatus = (String) purchaseJSON.get("purchaseStatus");
                 String purchaseDateStr = (String) purchaseJSON.get("purchaseDate");
                 LocalDateTime purchaseDate = purchaseDateStr != null ? LocalDateTime.parse(purchaseDateStr, formatter) : null;
                 JSONArray booksJSON = (JSONArray) purchaseJSON.get("books");
-
+            
                 List<CartItem> books = new ArrayList<>();
                 for (Object bookObj : booksJSON) {
                     JSONObject bookJSON = (JSONObject) bookObj;
-
+            
+                    // Debugging for each book field
+                    System.out.println("Processing Book Object: " + bookJSON);
+                    System.out.println("Book ID: " + bookJSON.get("id"));
+                    System.out.println("Title: " + bookJSON.get("title"));
+                    System.out.println("Image: " + bookJSON.get("image"));
+                    System.out.println("Price: " + bookJSON.get("price"));
+                    System.out.println("Purchase Unit: " + bookJSON.get("purchaseUnit"));
+                    System.out.println("Total Price: " + bookJSON.get("totalPrice"));
+                    System.out.println("Cart ID: " + bookJSON.get("cartID"));
+                    System.out.println("Genre: " + bookJSON.get("genre"));
+                    System.out.println("Category: " + bookJSON.get("category"));
+                    System.out.println("Language: " + bookJSON.get("language"));
+                    System.out.println("Stock: " + bookJSON.get("stock"));
+                    System.out.println("Book User ID: " + bookJSON.get("userID"));
+            
                     int id = ((Long) bookJSON.get("id")).intValue();
                     String title = (String) bookJSON.get("title");
                     String image = (String) bookJSON.get("image");
@@ -344,7 +372,7 @@ public class PurchaseRecord {
                     String language = (String) bookJSON.get("language");
                     int stock = ((Long) bookJSON.get("stock")).intValue();
                     int bookUserID = ((Long) bookJSON.get("userID")).intValue();
-
+            
                     CartItem book = new CartItem(id, purchaseUnit);
                     book.setTitle(title);
                     book.setImage(image);
@@ -358,10 +386,11 @@ public class PurchaseRecord {
                     book.setLanguage(language);
                     books.add(book);
                 }
-
+            
                 PurchaseRecord purchaseRecord = new PurchaseRecord(purchaseID, userID, totalAmount, shippingAddress, purchaseDate, purchaseStatus, books);
                 purchaseRecords.add(purchaseRecord);
             }
+            
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -375,7 +404,7 @@ public class PurchaseRecord {
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeSerializer())
                 .setPrettyPrinting()
                 .create();
-        try (FileWriter file = new FileWriter("D:/CAT Project/Paperme/backend/src/main/webapp/data/purchase.json")) {
+        try (FileWriter file = new FileWriter("src/main/webapp/data/purchase.json")) {
             String json = gson.toJson(purchaseRecords);
             file.write(json);
             file.flush(); // Ensure all data is written to the file

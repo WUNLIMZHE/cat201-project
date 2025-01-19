@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/AdminSidebar/Sidebar";
 import handleApiCall from "../../utils/handleApiCall";
 import "./Order.css";
+import handleOrderApiCall from "../../utils/handleOrderApiCall";
 
 const chunkOrders = (orders, chunkSize) => {
   const result = [];
@@ -26,7 +27,7 @@ const Order = ({setPurchaseID}) => {
   }, []); // Add dependency array to ensure fetchOrders is called only once
   
   const fetchOrders = async () => {
-    await handleApiCall(
+    await handleOrderApiCall(
       "admin/getorderdetails",
       "GET",
       null,
@@ -48,8 +49,9 @@ const Order = ({setPurchaseID}) => {
 
   const filteredOrders = orders ? orders.filter(
     (order) =>
-      order.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.phone.includes(searchQuery) ||
+      order.userID ||
+      // order.userID.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      // order.phone.includes(searchQuery) ||
       order.purchaseID.toString().includes(searchQuery)
   ) : [];
 
@@ -57,7 +59,7 @@ const Order = ({setPurchaseID}) => {
 
   return (
     <div className="order-container">
-      <Sidebar />
+      {/* <Sidebar /> */}
       <main className="order-content">
         <div className="header">
           <h1>Orders</h1>
@@ -95,7 +97,7 @@ const Order = ({setPurchaseID}) => {
                   <th>Order ID</th>
                   <th>PurchaseDate</th>
                   <th>UserID</th>
-                  <th>Username</th>
+                  {/* <th>Username</th> */}
                   <th>Total Amount</th>
                   <th>Purchase Status</th>
                 </tr>
@@ -115,7 +117,7 @@ const Order = ({setPurchaseID}) => {
                     <td>{order.purchaseID}</td>
                     <td>{order.purchaseDate}</td>
                     <td>{order.userID}</td>
-                    <td>{order.username}</td>
+                    {/* <td>{order.username}</td> */}
                     <td>RM {order.totalAmount}</td>
                     <td>{order.purchaseStatus}</td>
                   </tr>

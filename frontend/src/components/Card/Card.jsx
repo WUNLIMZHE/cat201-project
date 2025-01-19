@@ -36,6 +36,18 @@ const Card = ({ onClick, ...props }) => {
       });
       return;
     }
+    if (localStorage.getItem("userRole") === "admin"){
+      Swal.fire({
+        icon: "info",
+        title: "You need to Login as User",
+        text: "You can't make purcahse using admin account. Login or register a new user account to enjoy your shopping spree!",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
+
     if (props.stock <= 0) {
       // Show a warning if the stock is insufficient
       Swal.fire({
@@ -48,7 +60,7 @@ const Card = ({ onClick, ...props }) => {
     } else {
       // Data to send in POST request
       const cartData = {
-        userID: props.userID,
+        userID: localStorage.getItem("userID"),
         id: props.id,
         title: props.title,
         image: props.image,

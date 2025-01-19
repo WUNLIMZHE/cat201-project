@@ -66,10 +66,27 @@ const Navbar = ({ userID, role }) => {
           <li className="fancy-hover relative">
             <Link to="/">Home</Link>
           </li>
+          {localStorage.getItem("role") !== "admin" && (
           <li className="fancy-hover relative">
             <Link to="/books">Our Product</Link>
           </li>
-          {loggedIn && (
+          )}
+          {loggedIn && (localStorage.getItem("userRole") === "admin") && (
+            <li className="fancy-hover relative">
+              <Link to="/order">Order</Link>
+            </li>
+          )}
+          {loggedIn && (localStorage.getItem("userRole") === "admin") && (
+            <li className="fancy-hover relative">
+              <Link to="/admin-add-book">Add Book</Link>
+            </li>
+          )}
+          {loggedIn && (localStorage.getItem("userRole") === "admin") && (
+            <li className="fancy-hover relative">
+              <Link to="/inventory">Inventory</Link>
+            </li>
+          )}
+          {loggedIn && (localStorage.getItem("userRole") === "user") && (
             <li className="fancy-hover relative">
               <Link to="/purchase-record">My purchase</Link>
             </li>
@@ -81,14 +98,14 @@ const Navbar = ({ userID, role }) => {
               </Link>
             </li>
           )}
-          {loggedIn && (
+          {loggedIn && localStorage.getItem("role") === "user" && (
             <li className="cart-icon">
               <Link to="/view-my-cart">
                 <img src={iconCart} alt="" className="iconCart" />
               </Link>
             </li>
           )}
-          {loggedIn && (
+          {loggedIn && localStorage.getItem("role") === "user" && (
             <li className="border-none">
               <Link to="/userprofile">
                 <Profile />

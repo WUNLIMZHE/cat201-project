@@ -1,4 +1,4 @@
-const handleApiCall = async (
+const handleOrderApiCall = async (
   url,
   method = "GET",
   body = null,
@@ -29,19 +29,6 @@ const handleApiCall = async (
       const result = await response.json();
       console.log("API call result: " + JSON.stringify(result));
       onSuccess(result);
-      const user = result.user; // The user is already an object, so no need to parse
-      const userId = parseInt(user.userid, 10); // Convert userID to an integer
-      const userRole = user.role; // Store the role as a string
-      const address = user.address; // Extract the address
-
-      // Store in localStorage
-      localStorage.setItem("userID", userId);
-      localStorage.setItem("userRole", userRole);
-      localStorage.setItem("address", address);
-
-      console.log("User ID stored:", userId);
-      console.log("User Role stored:", userRole);
-      console.log("User address stored:", address);
 
     } else {
       console.error("HTTP error", response.status, response.statusText);
@@ -53,4 +40,4 @@ const handleApiCall = async (
   }
 };
 
-export default handleApiCall;
+export default handleOrderApiCall;

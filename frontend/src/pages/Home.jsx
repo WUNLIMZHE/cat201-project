@@ -14,11 +14,23 @@ import search_icon from "../assets/search.png";
 import cart_icon from "../assets/shopping-cart.png";
 import order_icon from "../assets/test.png";
 import NavbarAdmin from "../components/NavbarAdmin/NavbarAdmin";
+import update_icon from "../assets/stack-of-books.png";
+import checklist_icon from "../assets/checklist.png";
+import addbook_icon from "../assets/addbook.png";
+import order_update_program from "../assets/book-update.webp";
+import update_program from "../assets/packing-book.webp";
+import addbook_program from "../assets/notification.webp";
 
 const programsData = [
   {mainImage: search_program, icon: search_icon, caption: "Search", link: "/books",},
   {mainImage: cart_program, icon: cart_icon, caption: "Cart",link: "/view-my-cart",},
   {mainImage: order_program,icon: order_icon,caption: "Order",link: "/purchase-record",},
+];
+
+const adminProgramsData = [
+  {mainImage: order_update_program, icon: checklist_icon, caption: "Order Management",link: "/order",},
+  {mainImage: update_program,icon: update_icon,caption: "Inventory Management",link: "/orders",}, //Replace the link pls
+  {mainImage: addbook_program,icon: addbook_icon,caption: "Add book",link: "/orders",},
 ];
 
 export default function Home({userID, role}) {
@@ -37,7 +49,8 @@ export default function Home({userID, role}) {
 
   return (
     <>
-      {localStorage.getItem("role") === 'user' ? <Navbar userID={userID} role={role}/> : <NavbarAdmin userID={userID} />}
+      {/* {localStorage.getItem("role") === 'user' ? <Navbar userID={userID} role={role}/> : <NavbarAdmin userID={userID} />} */}
+      <Navbar userID={userID} role={role}/>
       <Brochure onExploreMore={scrollToTitle} />
       <div>
         <Title
@@ -45,7 +58,7 @@ export default function Home({userID, role}) {
           subTitle="What we have"
           title=" Your gateway to a world of imagination, knowledge, and inspiration, where every book shines like a ray of sunshine."
         />
-        <Program programs={programsData}/>;
+        <Program programs={localStorage.getItem("role") === 'user' ? programsData : adminProgramsData}/>;
         <About />
         <Title subTitle="Gallery" title="Sunny Papyrus Best Seller" />
         <Gallery/>
