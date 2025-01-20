@@ -7,7 +7,7 @@ const FooterContent = () => {
       <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-8" />
       <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
         <div className="md:flex md:justify-between">
-          <div className="mb-6 md:mb-0 hover:scale-110 transition-transform duration-300 ease-in-out cursor-pointer">
+          <div className="mb-6 md:mb-0 hover:scale-110 transition-transform duration-300 ease-in-out cursor-pointer flex justify-center">
             <a href="#">
               <img src={logo} className="h-12 me-2" alt="Sunny Papyrus" />
               <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">

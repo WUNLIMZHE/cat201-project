@@ -204,7 +204,7 @@ const Stock = () => {
       {/* <Sidebar /> */}
       <main className="book-content">
         <div className="header flex-col md:flex-row">
-          <h1 className="font-semibold text-3xl mb-3 md:mb-0">Stock</h1>
+          <h1 className="font-semibold text-3xl mb-3 md:mb-0 ml-5">Inventory</h1>
           <input
             type="text"
             placeholder="Search by book ID, ISBN, or author"
