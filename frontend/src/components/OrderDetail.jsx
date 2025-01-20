@@ -1,189 +1,274 @@
-import { useLocation, useNavigate } from "react-router-dom";
+/* eslint-disable no-unused-vars */
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import handleApiCall from "../utils/handleApiCall";
 import "./OrderDetail.css"; // Ensure this is imported
-import back from "/back.webp";
-import cancel from "/cancelled.png";
-import complete from "/completed.png";
-import delivered from "/delivered.png";
-import delivering from "/delivering.png";
-import payment from "/payment.png";
-import pending from "/pending.png";
-import returned from "/returned.png";
-import shipping from "/shipping.png";
-import warehouse from "/warehouse.png";
-
-// Load order data from localStorage or fallback to initial orderData
-const getOrderData = () => {
-  const savedOrders = localStorage.getItem("orderData");
-  return savedOrders ? JSON.parse(savedOrders) : [];
-};
+import cancel from "../assets/images/cancelled.png";
+import complete from "../assets/images/completed.png";
+import delivered from "../assets/images/delivered.png";
+import delivering from "../assets/images/delivering.png";
+import payment from "../assets/images/payment.png";
+import pending from "../assets/images/pending.png";
+import returned from "../assets/images/returned.png";
+import shipping from "../assets/images/shipping.png";
+import warehouse from "../assets/images/warehouse.png";
+import back from "../assets/images/back.webp";
+import handleOrderApiCall from "../utils/handleOrderApiCall";
+import Footer from "./Footer/Footer";
+import FooterContent from "./FooterContent/FooterContent";
+import Navbar from "./Navbar/Navbar";
 
 const OrderDetail = () => {
-  const { state } = useLocation();
-  const { order } = state || {};
+  console.log("purchaseID: " + useParams().purchaseID);
+  const { purchaseID } = useParams();
   const navigate = useNavigate();
+  const [orderDetails, setOrderDetails] = useState(null);
+  const [error, setError] = useState("");
 
-  // Check if order exists before rendering
-  if (!order) {
-    return <p>Loading...</p>;
+  const fetchOrderDetails = async () => {
+    await handleOrderApiCall(
+      `admin/getdetails`,
+      "GET",
+      { purchaseID },
+      async (response) => {
+        setOrderDetails(response);
+      },
+      (error) => {
+        setError(error);
+      }
+    );
+  };
+
+  useEffect(() => {
+    if (purchaseID) {
+      fetchOrderDetails();
+    } else {
+      setError("Purchase ID is missing");
+    }
+  }, [purchaseID]);
+
+  const handleQuantityChange = (bookId, newQuantity) => {
+    setOrderDetails((prevDetails) => {
+      const updatedBooks = prevDetails.books.map((book) => {
+        if (book.id === bookId) {
+          return {
+            ...book,
+            purchaseUnit: newQuantity,
+            totalPrice: book.price * newQuantity,
+          };
+        }
+        return book;
+      });
+      const newTotalAmount = updatedBooks.reduce(
+        (total, book) => total + book.totalPrice,
+        0
+      );
+      return {
+        ...prevDetails,
+        books: updatedBooks,
+        totalAmount: newTotalAmount,
+      };
+    });
+  };
+
+  const updateQuantity = async (purchaseID, bookId, newQuantity) => {
+    await handleApiCall(
+      `admin/updatequantity`,
+      "POST",
+      { purchaseID, bookId, newQuantity },
+      async (response) => {
+        console.log("PASS: " + bookId);
+        fetchOrderDetails();
+      },
+      (error) => {
+        setError(error);
+      }
+    );
+  };
+
+  const updateOrderStatus = async (purchaseID, purchaseStatus) => {
+    await handleApiCall(
+      `admin/update`,
+      "POST",
+      { purchaseID, purchaseStatus },
+      async (response) => {
+        console.log("PASS: " + purchaseID);
+        navigate("/order");
+        if (response.message === "Order status updated successfully") {
+          alert("Order status updated successfully");
+        }
+      },
+      (error) => {
+        setError(error);
+      },
+
+      { "Content-Type": "application/json" }
+    );
+  };
+
+  const updateTotalAmount = async (purchaseID, totalAmount) => {
+    await handleApiCall(
+      `admin/updatetotal`,
+      "POST",
+      { purchaseID, totalAmount },
+      async (response) => {
+        console.log("PASS: " + purchaseID);
+        fetchOrderDetails();
+      },
+      (error) => {
+        setError(error);
+      }
+    );
+  };
+
+  const handleSaveChanges = async () => {
+    for (const book of orderDetails.books) {
+      console.log("book id: " + book.id);
+      console.log("book quantity: " + book.purchaseUnit);
+      // console.log("purchaseID: " + purchaseID);
+      await updateQuantity(purchaseID, book.id, book.purchaseUnit);
+    }
+    await updateOrderStatus(purchaseID, orderDetails.purchaseStatus);
+    await updateTotalAmount(purchaseID, orderDetails.totalAmount);
+  };
+
+  const statusImages = {
+    Pending: pending,
+    Shipping: shipping,
+    Delivered: delivered,
+    Cancelled: cancel,
+    Returned: returned,
+    "In Warehouse": warehouse,
+    Delivering: delivering,
+    "Payment Pending": payment,
+    Completed: complete,
+  };
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
-  const [newStatus, setNewStatus] = useState(order.status || "Pending");
-  const [books, setBooks] = useState(order.books); // Maintain state for books with quantities
-
-  const handleStatusChange = (e) => {
-    setNewStatus(e.target.value);
-  };
-
-  const handleSave = () => {
-    // Load existing orders from localStorage
-    const orders = getOrderData();
-
-    // Update the status of the current order
-    const updatedOrders = orders.map((o) => {
-      if (o.id === order.id) {
-        return { ...o, status: newStatus, books }; // Save the updated books as well
-      }
-      return o;
-    });
-
-    // Save the updated orders back to localStorage
-    localStorage.setItem("orderData", JSON.stringify(updatedOrders));
-
-    // Navigate back to the orders page
-    navigate("/order", { state: { updatedOrders } });
-  };
-
-  const getStatusImage = (status) => {
-    switch (status) {
-      case "Cancelled":
-        return cancel;
-      case "Completed":
-        return complete;
-      case "Delivered":
-        return delivered;
-      case "Delivering":
-        return delivering;
-      case "Payment Pending":
-        return payment;
-      case "Pending":
-        return pending;
-      case "Returned":
-        return returned;
-      case "Shipping":
-        return shipping;
-      case "In Warehouse":
-        return warehouse;
-      default:
-        return pending;
-    }
-  };
-
-  // Handle change in book quantity
-  const handleQuantityChange = (bookId, newQuantity) => {
-    if (newQuantity < 1) return; // Prevent negative or zero quantity
-
-    const updatedBooks = books.map((book) =>
-      book.bookId === bookId ? { ...book, quantity: newQuantity } : book
-    );
-
-    setBooks(updatedBooks); // Update the state with the new book quantities
-  };
-
-  // Calculate total price for the order and apply discount if available
-  const calculateTotalPrice = () => {
-    let total = books.reduce((acc, book) => acc + book.pricePerUnit * book.quantity, 0);
-
-    if (order.discount) {
-      total -= total * (order.discount / 100); // Apply discount percentage
-    }
-
-    return total.toFixed(2); // Return the total price with two decimal places
-  };
+  if (!orderDetails) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="order-detail-container">
-      <div className="header-container">
-        <button className="back-button" onClick={() => navigate("/order")}>
-          <img src={back} alt="back" className="back-image" />
-          Back to Order
-        </button>
-        <h1>Order Status</h1>
-      </div>
+    <>
+      <Navbar />
+      <div className="order-detail-container mt-24">
+        <div className="header-container">
+          <h1>Order Status</h1>
+          <button className="back-button mt-3 md:mt-0" onClick={() => navigate("/order")}>
+            <img src={back} alt="back" className="back-image" />
+            Back to Order
+          </button>
+        </div>
 
-      <div className="order-detail-wrapper">
-        {/* Order Details */}
-        <div className="order-detail-section">
-          <img src={getStatusImage(newStatus)} alt="Order Status" className="status-image" />
-          <div className="order-detail-content">
-            <p><strong>Purchase ID:</strong> {order.id}</p>
-            <p><strong>Full Name:</strong> {order.fullName}</p>
-            <p><strong>Mobile:</strong> {order.mobile}</p>
-            <p><strong>Total:</strong> RM {calculateTotalPrice()}</p>
-            <p><strong>Payment Type:</strong> {order.paymentType}</p>
-            <div className="status-container">
-              <label htmlFor="status"><strong>Order Status:</strong></label>
-              <select
-                id="status"
-                value={newStatus}
-                onChange={handleStatusChange}
-                className="status-select"
-              >
-                <option value="Pending">Pending</option>
-                <option value="Shipping">Shipping</option>
-                <option value="Delivered">Delivered</option>
-                <option value="Cancelled">Cancelled</option>
-                <option value="Returned">Returned</option>
-                <option value="In Warehouse">In Warehouse</option>
-                <option value="Delivering">Delivering</option>
-                <option value="Payment Pending">Payment Pending</option>
-                <option value="Completed">Completed</option>
-              </select>
+        <div className="order-detail-wrapper">
+          {/* Book Details Table */}
+          <div className="book-details">
+            <table className="">
+              <thead>
+                <tr>
+                  <th>Book ID</th>
+                  <th>Book Name</th>
+                  <th>Price Per Unit</th>
+                  <th>Quantity</th>
+                  <th>Total Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {orderDetails.books.map((book) => (
+                  <tr key={book.id}>
+                    <td>{book.id}</td>
+                    <td>{book.title}</td>
+                    <td>RM {book.price}</td>
+                    <td>
+                      <input
+                        type="number"
+                        value={book.purchaseUnit}
+                        min="0"
+                        className="quantity-input"
+                        onChange={(e) =>
+                          handleQuantityChange(
+                            book.id,
+                            parseInt(e.target.value, 10)
+                          )
+                        }
+                      />
+                    </td>
+                    <td>RM {book.totalPrice}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Order Details */}
+          <div className="order-detail-section px-20 md:px-0">
+            <img
+              src={statusImages[orderDetails.purchaseStatus]}
+              alt={orderDetails.purchaseStatus}
+              className="status-image align-middle"
+            />
+            <div className="order-detail-content">
+              <p>
+                <strong>Purchase ID:</strong> {orderDetails.purchaseID}
+              </p>
+              <p>
+                <strong>Full Name:</strong> {orderDetails.username}
+              </p>
+              <p>
+                <strong>Mobile:</strong> {orderDetails.phone}
+              </p>
+              <p>
+                <strong>Total:</strong> RM {orderDetails.totalAmount}
+              </p>
+              <p>
+                <strong>Payment Type:</strong> {orderDetails.paymentType}
+              </p>
+              <div className="status-container">
+                <label htmlFor="status">
+                  <strong>Order Status:</strong>
+                </label>
+                <select
+                  id="status"
+                  value={orderDetails.purchaseStatus}
+                  onChange={(e) =>
+                    setOrderDetails({
+                      ...orderDetails,
+                      purchaseStatus: e.target.value,
+                    })
+                  }
+                  className="status-select"
+                >
+                  <option value="Pending">Pending</option>
+                  <option value="Shipping">Shipping</option>
+                  <option value="Delivered">Delivered</option>
+                  <option value="Cancelled">Cancelled</option>
+                  <option value="Returned">Returned</option>
+                  <option value="In Warehouse">In Warehouse</option>
+                  <option value="Delivering">Delivering</option>
+                  <option value="Payment Pending">Payment Pending</option>
+                  <option value="Completed">Completed</option>
+                </select>
+              </div>
+              {/* Discount section */}
+              {orderDetails.discount && (
+                <p>
+                  <strong>Discount Applied:</strong> {orderDetails.discount}%
+                </p>
+              )}
+              <button className="back-button mt-3" onClick={handleSaveChanges}>
+                Save Changes
+              </button>
             </div>
-
-            {/* Discount section */}
-            {order.discount && (
-              <p><strong>Discount Applied:</strong> {order.discount}%</p>
-            )}
-            <button className="back-button" onClick={handleSave}>Save Changes</button>
           </div>
         </div>
-
-        {/* Book Details Table */}
-        <div className="book-details">
-          <table>
-            <thead>
-              <tr>
-                <th>Book ID</th>
-                <th>Book Name</th>
-                <th>Price Per Unit</th>
-                <th>Quantity</th>
-                <th>Total Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {books.map((book) => (
-                <tr key={book.bookId}>
-                  <td>{book.bookId}</td>
-                  <td>{book.bookName}</td>
-                  <td>RM {book.pricePerUnit}</td>
-                  <td>
-                    <input
-                      type="number"
-                      value={book.quantity}
-                      onChange={(e) => handleQuantityChange(book.bookId, parseInt(e.target.value))}
-                      min="1"
-                      className="quantity-input"
-                    />
-                  </td>
-                  <td>RM {book.pricePerUnit * book.quantity}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </div>
-    </div>
+      <FooterContent />
+      <Footer />
+    </>
   );
 };
 

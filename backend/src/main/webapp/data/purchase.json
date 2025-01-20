@@ -1,36 +1,88 @@
 [
   {
-    "purchaseID": 1,
-    "userID": 1,
-    "totalAmmount": 80,
-    "shippingAddress": "6-6-6, TAMAN PEKAKA",
     "books": [
       {
-        "id": 42,
-        "title": "Laut Bercerita",
-        "image": "/src/assets/images/book-42.webp",
-        "author": "Leila S. Chudori",
-        "price": 45,
-        "purchaseUnit": 2,
-        "totalPrice": 90
+        "cartID": 7,
+        "userID": 1,
+        "id": 1,
+        "title": "The Great Gatsby",
+        "image": "/src/assets/images/book-1.webp",
+        "genre": "Classic Fiction",
+        "category": "fiction",
+        "price": 45.0,
+        "purchaseUnit": 15,
+        "totalPrice": 675.0,
+        "stock": 164,
+        "language": "english"
       }
-    ]
+    ],
+    "purchaseID": 15,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmount": 675.0,
+    "purchaseStatus": "Payment Pending",
+    "purchaseDate": "19-01-2025 09:02 am"
   },
   {
-    "purchaseID": 2,
-    "userID": 2,
-    "totalAmmount": 80,
-    "shippingAddress": "6-6-6, USM",
     "books": [
       {
-        "id": 42,
-        "title": "Laut Bercerita",
-        "image": "/src/assets/images/book-42.webp",
-        "author": "Leila S. Chudori",
-        "price": 45,
-        "purchaseUnit": 2,
-        "totalPrice": 90
+        "cartID": 1,
+        "userID": 1,
+        "id": 1,
+        "title": "The Great Gatsby",
+        "image": "/src/assets/images/book-1.webp",
+        "genre": "Classic Fiction",
+        "category": "fiction",
+        "price": 45.0,
+        "purchaseUnit": 3,
+        "totalPrice": 135.0,
+        "stock": 154,
+        "language": "english"
+      },
+      {
+        "cartID": 2,
+        "userID": 1,
+        "id": 4,
+        "title": "活着",
+        "image": "/src/assets/images/book-4.webp",
+        "genre": "现代文学",
+        "category": "fiction",
+        "price": 48.0,
+        "purchaseUnit": 1,
+        "totalPrice": 48.0,
+        "stock": 323,
+        "language": "chinese"
       }
-    ]
+    ],
+    "purchaseID": 16,
+    "shippingAddress": "TESTING ADDRESS",
+    "userID": 1,
+    "totalAmount": 183.0,
+    "purchaseStatus": "Pending",
+    "purchaseDate": "19-01-2025 08:26 pm"
+  },
+  {
+    "books": [
+      {
+        "cartID": 1,
+        "userID": 1,
+        "id": 1,
+        "title": "The Great Gatsby",
+        "image": "/src/assets/images/book-1.webp",
+        "genre": "Classic Fiction",
+        "category": "fiction",
+        "price": 45.0,
+        "purchaseUnit": 3,
+        "totalPrice": 135.0,
+        "stock": 151,
+        "language": "english"
+      }
+    ],
+    "purchaseID": 17,
+    "shippingAddress": "123 JALAN DAMAI, 11900 BAYAN LEPAS, PULAU PINANG, MALAYSIA",
+    "userID": 1,
+    "totalAmount": 135.0,
+    "purchaseStatus": "Shipping",
+    "purchaseDate": "19-01-2025 08:36 pm"
   }
 ]

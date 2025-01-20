@@ -25,6 +25,28 @@ const Card = ({ onClick, ...props }) => {
 
   const handleAddCart = async () => {
     console.log(`stock ${props.stock}`);
+    if (Number(localStorage.getItem("userID")) === 0){
+      Swal.fire({
+        icon: "info",
+        title: "You need to Login",
+        text: "Login or register a new account to enjoy your shopping spree!",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
+    if (localStorage.getItem("userRole") === "admin"){
+      Swal.fire({
+        icon: "info",
+        title: "You need to Login as User",
+        text: "You can't make purcahse using admin account. Login or register a new user account to enjoy your shopping spree!",
+        showCancelButton: false,
+        confirmButtonColor: "#3085d6",
+        confirmButtonText: "Ok",
+      });
+      return;
+    }
 
     if (props.stock <= 0) {
       // Show a warning if the stock is insufficient
@@ -38,7 +60,7 @@ const Card = ({ onClick, ...props }) => {
     } else {
       // Data to send in POST request
       const cartData = {
-        userID: props.userID,
+        userID: localStorage.getItem("userID"),
         id: props.id,
         title: props.title,
         image: props.image,
@@ -77,10 +99,21 @@ const Card = ({ onClick, ...props }) => {
         } else {
           // Handle non-OK responses (like 4xx or 5xx)
           const errorMessage = await response.text(); // Retrieve plain text for error message
+
+          let messageToShow = "Something went wrong!";
+          try {
+            const errorJson = JSON.parse(errorMessage); // Parse the JSON response
+            if (errorJson.message) {
+              messageToShow = errorJson.message; // Extract the "message" property
+            }
+          } catch (e) {
+            console.error("Failed to parse error message as JSON:", e);
+          }
+
           Swal.fire({
             icon: "error",
             title: "Failed to add to cart",
-            text: errorMessage || "Something went wrong!",
+            text: messageToShow, // Show the extracted or fallback message
             showCancelButton: false,
             confirmButtonColor: "#d33",
             confirmButtonText: "Ok",
@@ -103,7 +136,7 @@ const Card = ({ onClick, ...props }) => {
 
   return (
     <div
-      className="group flex w-full min-w-[318px] max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:cursor-pointer"
+      className="group flex w-full min-w-[318px] max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md hover:cursor-pointer book-card"
       // onClick={() => onClick(props.id)}
     >
       <div
@@ -172,7 +205,7 @@ const Card = ({ onClick, ...props }) => {
         </svg>
         {/* <!-- <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">39% OFF</span> --> */}
       </div>
-      <div className="mt-4 px-5 pb-5">
+      <div className="mt-4 px-5 pb-5  card-content">
         <h5 className="text-xl tracking-tight text-slate-900">
           {props.title ? props.title : "title undefined"}
         </h5>

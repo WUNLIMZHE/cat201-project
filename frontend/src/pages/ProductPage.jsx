@@ -4,6 +4,9 @@ import CardsLayout from "../components/CardsLayout";
 import Filter from "../components/Filter";
 import SearchBar from "../components/SearchBar";
 import "./ProductPage.css";
+import Navbar from "../components/Navbar/Navbar";
+import Footer from "../components/Footer/Footer";
+import FooterContent from "../components/FooterContent/FooterContent";
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]); // To store list of books
@@ -109,7 +112,8 @@ const ProductPage = () => {
   // Render list of books if available
   return (
     <div>
-      <h1>Product Page</h1>
+      <Navbar />
+      <h1 className="mt-[10rem] font-bold md:font-extrabold text-xl md:text-2xl">Product Page</h1>
       <Filter products={products} onFilterChange={handleFilterChange} />
       <h1 className="center animate-heading">Book Search</h1>
       <SearchBar
@@ -120,6 +124,8 @@ const ProductPage = () => {
       {/* Pass search query, change handler, and submit handler */}
       <CardsLayout products={filteredProducts} />
       {/* Pass filtered products to CardsLayout */}
+      <FooterContent/>
+      <Footer /> 
     </div>
   );
 };

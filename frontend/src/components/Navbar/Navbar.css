@@ -26,7 +26,7 @@
 
 nav {
   width: 100%;
-  background: rgb(173, 220, 249);
+  background: rgb(32, 33, 33);
   color: whitesmoke;
   padding: 4px 0;
   position: fixed;
@@ -38,22 +38,58 @@ nav {
   z-index: 10;
 }
 
+nav ul{
+  display: flex;
+  align-items: center;
+}
+
 .logo {
-  width: 200px;
+  width: 80px;
+  margin-left: 20px;
+}
+
+.iconCart{
+  width: 2.5rem;
 }
 
 nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   white-space: nowrap;
 }
 
 nav ul li {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   list-style-type: none;
-  margin: 10px 20px;
+  margin: 0 20px;
   font-size: 20px;
+  padding: 0;
+  height: 60px; 
 }
 
 .dark-nav {
-  background: rgb(70, 113, 130);
+  background: rgb(32, 58, 136);
   transition: 0.5s;
+}
+
+.cart-icon {
+  width: 42px !important; 
+  height: 42px !important;
+  object-fit: contain; 
+  cursor: pointer; 
+}
+
+.cart-icon:hover {
+  transform: scale(1.2); 
+  transition: transform 0.2s ease-in-out;
+}
+
+.login, .cart-icon{
+  border-bottom: none;
+}
+
+#logout{
+  background-color: #ef4444;
 }

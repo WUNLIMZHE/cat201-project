@@ -1,92 +1,99 @@
-import React from "react";
-import "../style.css";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import handleApiCall from '../utils/handleApiCall';
+import './Login.css';
 
 function Signup() {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [error, setError] = useState('');
 
-    return (
-        <div className="container-signup100">
-            <div className="wrap-signup100">
-                <form className="signup100-form">
-                    <span className="signup100-form-title">Sign Up</span>
-                    <div className="wrap-input100" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <div style={{ flex: 1, marginRight: '10px' }}>
-                            <label className="label-input100">First Name:</label>
-                            <input
-                                type="text"
-                                placeholder="John"
-                                className="input input-bordered input-primary w-full max-w-xs" />
-                        </div>
-                        <div style={{ flex: 1, marginLeft: '10px' }}>
-                            <label className="label-input100">Last Name:</label>
-                            <input
-                                type="text"
-                                placeholder="Doe"
-                                className="input input-bordered input-primary w-full max-w-xs" />
-                        </div>
-                    </div>
-                    <div className="wrap-input100">
-                    </div>
-                    <div className="wrap-input100">
-                        <label className="input input-bordered flex items-center gap-2">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 16 16"
-                                fill="currentColor"
-                                className="h-4 w-4 opacity-70">
-                                <path
-                                    d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
-                            </svg>
-                            <input type="text" className="grow" placeholder="Username" />
-                        </label>
-                    </div>
-                    <div className="wrap-input100">
-                        <label className="label-input100">Phone number:</label>
-                        <input
-                            type="text"
-                            placeholder="0123456789"
-                            className="input input-bordered input-primary w-full max-w-xs" />
-                    </div>
-                    <div className="wrap-input100">
-                        <label className="input input-bordered flex items-center gap-2">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 16 16"
-                                fill="currentColor"
-                                className="h-4 w-4 opacity-70">
-                                <path
-                                    d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
-                                <path
-                                    d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z" />
-                            </svg>
-                            <input type="text" className="grow" placeholder="Email" />
-                        </label>
-                    </div>
-                    <div className="wrap-input100">
-                        <label className="input input-bordered flex items-center gap-2">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 16 16"
-                                fill="currentColor"
-                                className="h-4 w-4 opacity-70">
-                                <path
-                                    fillRule="evenodd"
-                                    d="M14 6a4 4 0 0 1-4.899 3.899l-1.955 1.955a.5.5 0 0 1-.353.146H5v1.5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-2.293a.5.5 0 0 1 .146-.353l3.955-3.955A4 4 0 1 1 14 6Zm-4-2a.75.75 0 0 0 0 1.5.5.5 0 0 1 .5.5.75.75 0 0 0 1.5 0 2 2 0 0 0-2-2Z"
-                                    clipRule="evenodd" />
-                            </svg>
-                            <input type="password" className="grow" />
-                        </label>
-                    </div>
-                    <div className="container-signup100-form-btn">
-                        <button className="btn btn-outline btn-primary" type="submit">Sign Up</button>
-                    </div>
-                    <div className="container-signup100-form-btn">
-                        <button className="btn btn-outline btn-primary" type="button" onClick={() => window.location.href = '/login'}>Back to Login</button>
+  const navigate = useNavigate();
 
-                    </div>
-                </form>
-            </div>
-        </div>
+  const validateUserSignupMethod = async (username, password, firstName, lastName, email, phoneNumber) => {
+    await handleApiCall(
+      "users/signup",
+      "POST",
+      { username, password, firstName, lastName, email, phoneNumber },
+      async (result) => {
+        if (result.signupStatus) {
+          localStorage.setItem("userLoginStatus", true); // Store login status in local storage
+          navigate('/');
+        } else {
+          setError("Error signing up: " + result.message);
+        }
+      },
+      (error) => setError("Error validating user signup: " + error)
     );
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    validateUserSignupMethod(username, password, firstName, lastName, email, phoneNumber);
+  };
+
+  return (
+    <div className='min-h-screen bg-gray-800 flex items-center justify-center'>
+      <div className='w-full max-w-4xl'>
+        <div className='bg-white shadow-md rounded-lg overflow-hidden'>
+          <div className='md:flex'>
+            <div className='md:w-1/2 hidden md:block'>
+              <img src='https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/img4.webp' alt="Sample photo" className="w-full h-full object-cover" />
+            </div>
+            <div className='md:w-1/2 p-8'>
+              <div className='text-black flex flex-col justify-center'>
+                <h3 className="mb-5 text-2xl font-bold uppercase">Registration form</h3>
+                <form onSubmit={handleSignup}>
+                  <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                    <div>
+                      <label className='block text-sm font-medium text-gray-700'>First Name</label>
+                      <input type='text' className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' id='firstName' value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                    </div>
+                    <div>
+                      <label className='block text-sm font-medium text-gray-700'>Last Name</label>
+                      <input type='text' className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' id='lastName' value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                    </div>
+                  </div>
+                  <div className='mt-4'>
+                    <label className='block text-sm font-medium text-gray-700'>Username</label>
+                    <input type='text' className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' id='username' value={username} onChange={(e) => setUsername(e.target.value)} />
+                  </div>
+                  <div className='mt-4'>
+                    <label className='block text-sm font-medium text-gray-700'>Password</label>
+                    <input type='password' className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' id='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                  </div>
+                  <div className='mt-4'>
+                    <label className='block text-sm font-medium text-gray-700'>Email</label>
+                    <input type='email' className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' id='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+                  </div>
+                  <div className='mt-4'>
+                    <label className='block text-sm font-medium text-gray-700'>Phone Number</label>
+                    <input type='tel' className='mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm' id='phoneNumber' value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                  </div>
+                  {error && <div role="alert" className="error-message alert alert-error mt-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    {error}
+                  </div>}
+                  <div className="flex justify-end pt-3">
+                    <Link to="/login" className="btn btn-light btn-lg bg-gray-200 text-gray-700 px-4 py-2 rounded-md shadow-sm">
+                      Back to Login
+                    </Link>
+                    <button type='submit' className='btn btn-warning btn-lg bg-yellow-500 text-gray-700 px-4 py-2 rounded-md shadow-sm ml-2'>Register</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default Signup;

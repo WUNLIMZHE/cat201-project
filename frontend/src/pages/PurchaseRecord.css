@@ -1,0 +1,42 @@
+.purchaseRecord.title {
+  margin: 8rem 0 0 20%;
+  text-align: left;
+  font-size: 3rem;
+  font-family: "Times New Roman", Times, serif;
+  color: black;
+  text-transform: none;
+  font-weight: normal;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.purchase-list {
+  margin-left: 18vw;
+  padding: 1rem;
+  background-color: black;
+  width: 60vw;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  border-radius: 1rem;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .purchase-list {
+    margin-left: 3vw;
+    padding: 1rem;
+    background-color: black;
+    width: fit-content;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    border-radius: 1rem;
+    color: white;
+  }
+
+  .purchaseRecord.title {
+    margin-left: 1rem;
+
+  }
+}

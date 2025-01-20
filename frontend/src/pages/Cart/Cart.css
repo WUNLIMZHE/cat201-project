@@ -1,8 +1,79 @@
-.title{
-    margin: 2rem 0;
+.cartTitle{
+    margin: 2rem 0 0 20%;
     font-size: 3rem;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+}
+
+.items{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .return{
     padding: 0;
+}
+
+.checkout{
+    display: flex;
+    justify-content: right;
+    padding-right: 20%;
+    padding-bottom: 2rem;
+}
+
+.checkout .finalPrice{
+    margin-right: 2rem;
+    font-size: 1.8rem;
+}
+
+.checkout-button{
+    margin: 0.2rem;
+    padding: 0.2rem 1.2rem;
+    color: white;
+    background-color: orange;
+    font-size: 1.2rem;
+}
+
+.emptyCart{
+    background-color: rgb(65, 65, 65);
+    margin-bottom: 2rem;
+    min-height:60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.emptyCart .NoItems{
+    height: 50vh;
+}
+
+.emptyCart p{
+    font-size: 1.5rem;
+    font-family: 'Times New Roman', Times, serif;
+    color: rgb(150, 150, 150);
+}
+
+@media only screen and (max-width: 850px){
+    .checkout{
+        display: flex;
+        justify-content: left;
+        margin-left: 10%;
+        width: 80%;
+        flex-direction: column;
+    }
+
+    /* .checkout .finalPrice{
+        font-size: 1.2rem;
+    } */
+    
+    .emptyCart{
+        width: 95vw;
+    }
+
+    .emptyCart .NoItems{
+        height: 45vh;
+    }
 }
