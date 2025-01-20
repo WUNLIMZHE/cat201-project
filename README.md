@@ -1,4 +1,4 @@
-# Book Selling Website
+# Sunny Papyrus Book Store
 
 About this application
 -------------------------------------------------------
