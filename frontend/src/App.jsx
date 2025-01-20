@@ -22,7 +22,7 @@ import UserProfile from "./pages/UserProfile";
 import PaymentCard from "./components/User/PaymentCard";
 import AddressCard from "./components/User/AddressCard";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(true);
@@ -40,13 +40,25 @@ function App() {
     setUserID(id);
     setRole(role);
     setAddresses(address);
+    
     localStorage.setItem("userID", id);
-    localStorage.setItem("role", role);
+    localStorage.setItem("userRole", role);
     localStorage.setItem("address", address);
-    console.log(userID, role, address);
   };
+  
+  useEffect(() => {
+    const storedUserID = localStorage.getItem("userID");
+    const storedRole = localStorage.getItem("userRole");
+    const storedAddress = localStorage.getItem("address");
+    
+    if (storedUserID && storedRole) {
+      setUserID(storedUserID);
+      setRole(storedRole);
+      setAddresses(storedAddress);
+    }
+  }, []);
 
-  console.log(localStorage.getItem("userID")); // Check the raw value in localStorage
+  // console.log(localStorage.getItem("userID")); // Check the raw value in localStorage
 
   return (
     <>
@@ -78,11 +90,19 @@ function App() {
           />
           <Route
             path="/editprofile"
-            element={<EditProfile loggedIn={loggedIn} username={username} />}
+            element={(Number(localStorage.getItem("userID")) === 0 ||
+              !localStorage.getItem("userID")) &&
+            localStorage.getItem("role") === "user" ? (
+              <Home />
+            ) : (<EditProfile loggedIn={loggedIn} username={username} />)}
           />
           <Route
             path="/userprofile"
-            element={<UserProfile loggedIn={loggedIn} username={username} />}
+            element={(Number(localStorage.getItem("userID")) === 0 ||
+              !localStorage.getItem("userID")) &&
+            localStorage.getItem("role") === "user" ? (
+              <Home />
+            ) : (<UserProfile loggedIn={loggedIn} username={username} />)}
           />
           <Route
             path="/editpayment"
@@ -108,7 +128,11 @@ function App() {
               )
             }
           />
-          <Route path="/admin-add-book" element={<AddBook userID={userID} />} />
+          <Route path="/admin-add-book" element={(Number(localStorage.getItem("userID")) === 0 ||
+                !localStorage.getItem("userID")) ||
+              localStorage.getItem("role") === "user" ? (
+                <Home />
+              ) : (<AddBook userID={userID} />)} />
 
           {/* User */}
           <Route

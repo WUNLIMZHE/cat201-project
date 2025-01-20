@@ -47,9 +47,15 @@ const Navbar = ({ userID, role }) => {
     });
 
     // Update user-related data in localStorage
-    localStorage.setItem("userID", "0"); // Set userID to "0"
-    localStorage.setItem("role", "user"); // Set role to "user"
-    localStorage.setItem("address", ""); // Set address to an empty string
+    // localStorage.setItem("userID", "0"); // Set userID to "0"
+    // localStorage.setItem("role", "user"); // Set role to "user"
+    // localStorage.setItem("userRole", ""); // Set role to "user"
+    // localStorage.setItem("address", ""); // Set address to an empty string
+    localStorage.removeItem("userID");
+    localStorage.removeItem("role");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("address");
+    localStorage.setItem("userLoginStatus", false); // Store login status in local storage
 
     // Update the loggedIn state to trigger re-render
     setLoggedIn(false);
@@ -58,7 +64,11 @@ const Navbar = ({ userID, role }) => {
   return (
     <nav className={`${sticky ? "dark-nav" : ""}`}>
       <Link to="/">
-        <img src={logo} alt="" className="logo transition-transform duration-300 ease-in-out transform hover:scale-110" />
+        <img
+          src={logo}
+          alt=""
+          className="logo transition-transform duration-300 ease-in-out transform hover:scale-110"
+        />
       </Link>
 
       {!isSmallScreen ? (
@@ -66,27 +76,27 @@ const Navbar = ({ userID, role }) => {
           <li className="fancy-hover relative">
             <Link to="/">Home</Link>
           </li>
-          {localStorage.getItem("role") !== "admin" && (
-          <li className="fancy-hover relative">
-            <Link to="/books">Our Product</Link>
-          </li>
+          {localStorage.getItem("userRole") !== "admin" && (
+            <li className="fancy-hover relative">
+              <Link to="/books">Our Product</Link>
+            </li>
           )}
-          {loggedIn && (localStorage.getItem("userRole") === "admin") && (
+          {loggedIn && localStorage.getItem("userRole") === "admin" && (
             <li className="fancy-hover relative">
               <Link to="/order">Order</Link>
             </li>
           )}
-          {loggedIn && (localStorage.getItem("userRole") === "admin") && (
+          {loggedIn && localStorage.getItem("userRole") === "admin" && (
             <li className="fancy-hover relative">
               <Link to="/admin-add-book">Add Book</Link>
             </li>
           )}
-          {loggedIn && (localStorage.getItem("userRole") === "admin") && (
+          {loggedIn && localStorage.getItem("userRole") === "admin" && (
             <li className="fancy-hover relative">
               <Link to="/inventory">Inventory</Link>
             </li>
           )}
-          {loggedIn && (localStorage.getItem("userRole") === "user") && (
+          {loggedIn && localStorage.getItem("userRole") === "user" && (
             <li className="fancy-hover relative">
               <Link to="/purchase-record">My purchase</Link>
             </li>
@@ -98,14 +108,14 @@ const Navbar = ({ userID, role }) => {
               </Link>
             </li>
           )}
-          {loggedIn && localStorage.getItem("role") === "user" && (
+          {loggedIn && localStorage.getItem("userRole") === "user" && (
             <li className="cart-icon">
               <Link to="/view-my-cart">
                 <img src={iconCart} alt="" className="iconCart" />
               </Link>
             </li>
           )}
-          {loggedIn && localStorage.getItem("role") === "user" && (
+          {loggedIn && localStorage.getItem("userRole") === "user" && (
             <li className="border-none">
               <Link to="/userprofile">
                 <Profile />
@@ -130,7 +140,7 @@ const Navbar = ({ userID, role }) => {
         <Dropdown
           logo="../../assets/hamburger_icon.png"
           userID={userID}
-          loggedIn={loggedIn}
+          handleLogout={handleLogout}
         ></Dropdown>
       )}
     </nav>

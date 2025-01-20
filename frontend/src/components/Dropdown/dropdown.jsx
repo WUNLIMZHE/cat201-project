@@ -4,28 +4,15 @@ import down_arrow from "../../assets/down-arrow.png";
 import "./dropdown.css";
 import Swal from "sweetalert2";
 
-export default function Dropdown({ userID, loggedIn }) {
+export default function Dropdown({ userID, handleLogout}) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   // Toggle the dropdown menu when the button is clicked
   const handleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
-
-  const handleLogout = () => {
-      Swal.fire({
-        icon: "success",
-        title: "Logged Out",
-        text: "You have been successfully logged out!",
-        showConfirmButton: false,
-        timer: 1000, // Auto-close after 1 second
-      });
-  
-      // Update user-related data in localStorage
-      localStorage.setItem("userID", "0"); // Set userID to "0"
-      localStorage.setItem("role", "user"); // Set role to "user"
-      localStorage.setItem("address", ""); // Set address to an empty string
-  
-    };
+  const [loggedIn, setLoggedIn] = useState(
+    Number(localStorage.getItem("userID")) !== 0
+  );
 
   return (
     <>
@@ -64,14 +51,14 @@ export default function Dropdown({ userID, loggedIn }) {
               <Link to="/purchase-record">My purchase</Link>
             </li>
           )}
-          {loggedIn && localStorage.getItem("role") === "user" && (
+          {loggedIn && localStorage.getItem("userRole") === "user" && (
             <li>
               <Link to="/view-my-cart">
                 <span className="fancy-hover relative">Cart</span>
               </Link>
             </li>
           )}
-          {loggedIn && localStorage.getItem("role") === "user" && (
+          {loggedIn && localStorage.getItem("userRole") === "user" && (
             <li>
               <Link to="/userprofile">
                 <span className="fancy-hover relative">Profile</span>
@@ -88,7 +75,7 @@ export default function Dropdown({ userID, loggedIn }) {
           {loggedIn && (
             <li>
               <Link to="/">
-                <span className="fancy-hover relative" onClick={handleLogout}>Logout</span>
+                <span className="fancy-hover relative" onClick={() => {handleLogout(); setLoggedIn(false)}}>Logout</span>
               </Link>
             </li>
           )}

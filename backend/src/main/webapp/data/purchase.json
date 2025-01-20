@@ -10,8 +10,8 @@
         "genre": "Classic Fiction",
         "category": "fiction",
         "price": 45.0,
-        "purchaseUnit": 10,
-        "totalPrice": 450.0,
+        "purchaseUnit": 15,
+        "totalPrice": 675.0,
         "stock": 164,
         "language": "english"
       }
@@ -19,7 +19,7 @@
     "purchaseID": 15,
     "shippingAddress": "TESTING ADDRESS",
     "userID": 1,
-    "totalAmount": 450.0,
+    "totalAmount": 675.0,
     "purchaseStatus": "Payment Pending",
     "purchaseDate": "19-01-2025 09:02 am"
   },
