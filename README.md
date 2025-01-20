@@ -20,8 +20,8 @@ This project is a full-featured book selling website with two distinct user inte
 #### Admin UI
 1. **Order Management:** Admins can update customers' order statuses.
 2. **Stock Management:**
+   - Search books based on the book ID, ISBN, or author.
    - Update stock levels.
-   - Receive alerts for low stock.
 3. **Product Management:** Admins can add new products to the catalog.
 
 Running the program
